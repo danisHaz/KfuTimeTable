@@ -1,6 +1,9 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.android.extensions'
+    id 'org.jetbrains.kotlin.kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -33,11 +36,60 @@ android {
 
 dependencies {
 
+    def material_version = "1.6.1"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'
-    implementation 'com.google.android.material:material:1.6.1'
+    implementation "com.google.android.material:material:$material_version"
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+
+    //-- DataStore
+    def dataStore = "1.0.0-rc01"
+    implementation "androidx.datastore:datastore-preferences:$dataStore"
+
+    // -- Lifecycle Components (ViewModel, LiveData and ReactiveStreams)
+    def lifecycle_ver = "2.5.1"
+    implementation "androidx.lifecycle:lifecycle-runtime:$lifecycle_ver"
+    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_ver"
+
+    def fragment = "1.4.0-alpha04"
+    implementation "androidx.fragment:fragment-ktx:$fragment"
+
+    //-- Gson
+    def gson_version = "2.8.8"
+    implementation "com.google.code.gson:gson:$gson_version"
+
+    //-- Retrofit2
+    def retrofit2_version = "2.9.0"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit2_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit2_version"
+
+    //-- Room
+    def room_version = "2.3.0"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    // Kotlin Extensions and Coroutines support for Room
+    implementation "androidx.room:room-ktx:$room_version"
+
+    //-- Hilt
+    def hilt_version = "2.37"
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
+    //-- jetpack navigation component
+    def nav_version = "2.4.0-alpha04"
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-runtime:$nav_version"
+
+    //-- okhttp3
+    def okhttp_version = "3.14.6"
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+
 }
