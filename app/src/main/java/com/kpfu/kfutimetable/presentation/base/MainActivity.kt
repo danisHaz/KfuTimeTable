@@ -1,9 +1,10 @@
-package com.kpfu.kfutimetable
+package com.kpfu.kfutimetable.presentation.base
 
-import androidx.appcompat.app.AppCompatActivity
+import android.app.Activity
 import android.os.Bundle
+import com.kpfu.kfutimetable.R
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
