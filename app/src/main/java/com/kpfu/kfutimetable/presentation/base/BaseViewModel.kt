@@ -9,3 +9,8 @@ abstract class BaseViewModel<S : BaseState>(
 
     private var state: S = initialState()
 }
+
+fun interface BaseViewModelProvider<T> {
+
+    fun createInstance(): T
+}
