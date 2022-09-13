@@ -7,7 +7,7 @@ abstract class BaseViewModel<S : BaseState>(
     initialState: () -> S,
 ) : ViewModel() {
 
-    private var state: S = initialState()
+    var state: S = initialState()
 }
 
 fun interface BaseViewModelProvider<T> {
