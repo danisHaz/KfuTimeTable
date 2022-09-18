@@ -16,7 +16,9 @@ class CalendarFragment @Inject constructor(
     viewStateMapper = calendarViewStateMapper,
     viewModelProvider = calendarViewModelProvider,
 ) {
-
+    override fun render(state: CalendarState) {
+        TODO("Not yet implemented")
+    }
 
 
 }

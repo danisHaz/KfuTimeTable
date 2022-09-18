@@ -16,10 +16,8 @@ abstract class BaseFragment<S : BaseState, VS : BaseViewState, VM : BaseViewMode
     protected val viewModel: VM = viewModelProvider.createInstance()
 
     protected var _viewState: VS? = initialViewState?.invoke()
-        get() {
-            if (viewModel.state != )
-            return viewStateMapper.mapToViewState(viewModel.state)
-        }
+        get() = viewStateMapper.mapToViewState(viewModel.state)
+
     protected var viewState: VS? = _viewState
 
     abstract fun render(state: S)
