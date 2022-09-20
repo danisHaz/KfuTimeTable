@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <!--  Common Widgets Styles  -->
+
+    <!-- DayItemView -->
+    <style name="DayItemViewStyle" parent="CardView.Light">
+        <item name="backgroundColor">?attr/backgroundColor</item>
+        <item name="dateNumberColor">?attr/dateNumberColor</item>
+    </style>
+
+</resources>
