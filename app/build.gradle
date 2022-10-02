@@ -49,6 +49,7 @@ def versions = [
         hilt_version: "2.38.1",
         nav_version: "2.4.0-alpha04",
         okhttp_version: "3.14.6",
+        adapter_delegate: "4.3.2"
 ]
 
 
@@ -100,4 +101,5 @@ dependencies {
     //-- okhttp3
     implementation "com.squareup.okhttp3:okhttp:${versions.okhttp_version}"
 
+    implementation "com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:${versions.adapter_delegate}"
 }
