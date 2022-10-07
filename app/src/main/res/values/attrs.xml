@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="DayItemView">
-        <attr name="dateNumberColor" format="color" />
-        <attr name="dayOfWeekColor" format="color" />
-        <attr name="backgroundColor" format="color" />
-        <attr name="cornerRadius" format="dimension" />
+        <attr name="dayItemDateNumberColor" format="color" />
+        <attr name="dayItemDayOfWeekColor" format="color" />
+        <attr name="dayItemBackgroundColor" format="color" />
+        <attr name="dayItemCornerRadius" format="dimension" />
     </declare-styleable>
 </resources>

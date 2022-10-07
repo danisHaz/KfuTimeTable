@@ -4,8 +4,9 @@
 
     <!-- DayItemView -->
     <style name="DayItemViewStyle" parent="CardView.Light">
-        <item name="backgroundColor">?attr/backgroundColor</item>
-        <item name="dateNumberColor">?attr/dateNumberColor</item>
+        <item name="backgroundColor">@color/timetableColor_primary</item>
+        <item name="dayItemDateNumberColor">@color/timetableColor_accent_primary</item>
+        <item name="dayItemDayOfWeekColor">@color/timetableColor_accent_primary</item>
     </style>
 
 </resources>

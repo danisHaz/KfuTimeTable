@@ -6,7 +6,8 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/parentLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
 
         <TextView
             android:id="@+id/date"
