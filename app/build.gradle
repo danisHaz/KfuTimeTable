@@ -40,51 +40,32 @@ android {
 
 dependencies {
 
+    kapt libs("lifecycle-compiler")
+    kapt libs("room-compiler")
+    kapt libs("hilt")
+
     implementation libs("kotlin-std")
     implementation libs("core-ktx")
     implementation libs("appcompat")
     implementation libs("material")
     implementation libs("constraintlayout")
-    testImplementation libs("junit")
-    androidTestImplementation libs("junit-ext")
-    androidTestImplementation libs("espresso")
-
-    implementation libs("swiperefreshlayout")
-
-    //-- DataStore
-    implementation libs("datastore")
-
-    //-- Lifecycle Components (ViewModel, LiveData and ReactiveStreams)
-    implementation libs("lifecycle-runtime")
-    kapt libs("lifecycle-compiler")
-
-    //-- fragment extensions for kotlin
-    implementation libs("fragment-ktx")
-
-    //-- Gson
-    implementation libs("gson")
-
-    //-- Retrofit2
-    implementation libs("retrofit")
-    implementation libs("retrofit-converter")
-
-    //-- Room
-    implementation libs("room")
-    kapt libs("room-compiler")
-    // Kotlin Extensions and Coroutines support for Room
-    implementation libs("room-ktx")
-
-    //-- Hilt
-    implementation libs("dagger")
-    kapt libs("hilt")
-
-    //-- jetpack navigation component
     implementation libs("navigation-fragment-ktx")
     implementation libs("navigation-ui-ktx")
     implementation libs("navigation-runtime")
-
-    //-- okhttp3
     implementation libs("okhttp3")
-
+    implementation libs("swiperefreshlayout")
+    implementation libs("datastore")
+    implementation libs("lifecycle-runtime")
+    implementation libs("fragment-ktx")
+    implementation libs("gson")
+    implementation libs("retrofit")
+    implementation libs("retrofit-converter")
+    implementation libs("room")
+    implementation libs("room-ktx")
+    implementation libs("dagger")
     implementation libs("adapterdelegate")
+
+    testImplementation libs("junit")
+    androidTestImplementation libs("junit-ext")
+    androidTestImplementation libs("espresso")
 }
