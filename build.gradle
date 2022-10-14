@@ -28,7 +28,6 @@ ext {
         retrofit2_version:          "2.9.0",
         room_version:               "2.3.0",
         hilt_version:               "2.38.1",
-        nav_version:                "2.4.0-alpha04",
         okhttp_version:             "3.14.6",
         adapter_delegate:           "4.3.2",
         core_ktx_version:           "1.7.0",
@@ -85,12 +84,6 @@ def libs(libname) {
             return "com.google.dagger:hilt-android:${versions.hilt_version}"
         case "hilt":
             return "com.google.dagger:hilt-compiler:${versions.hilt_version}"
-        case "navigation-fragment-ktx":
-            return "androidx.navigation:navigation-fragment-ktx:${versions.nav_version}"
-        case "navigation-ui-ktx":
-            return "androidx.navigation:navigation-ui-ktx:${versions.nav_version}"
-        case "navigation-runtime":
-            return "androidx.navigation:navigation-runtime:${versions.nav_version}"
         case "okhttp3":
             return "com.squareup.okhttp3:okhttp:${versions.okhttp_version}"
         case "adapterdelegate":
