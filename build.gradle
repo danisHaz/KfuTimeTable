@@ -8,10 +8,7 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:4.0.1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.38.1'
+        classpath "com.google.dagger:hilt-android-gradle-plugin:2.38.1"
     }
 }
 
@@ -19,6 +16,88 @@ plugins {
     id 'com.android.application' version '7.2.1' apply false
     id 'com.android.library' version '7.2.1' apply false
     id 'org.jetbrains.kotlin.android' version '1.6.10' apply false
+}
+
+ext {
+    versions = [
+        material_version:           "1.6.1",
+        dataStore:                  "1.0.0-rc01",
+        lifecycle_ver:              "2.5.1",
+        fragment:                   "1.4.0-alpha04",
+        gson_version:               "2.8.8",
+        retrofit2_version:          "2.9.0",
+        room_version:               "2.3.0",
+        hilt_version:               "2.38.1",
+        nav_version:                "2.4.0-alpha04",
+        okhttp_version:             "3.14.6",
+        adapter_delegate:           "4.3.2",
+        core_ktx_version:           "1.7.0",
+        appcompat_version:          "1.4.2",
+        constraintlayout_version:   "2.1.4",
+        junit_version:              "4.13.2",
+        junit_ext_version:          "1.1.3",
+        espresso_core_version:      "3.4.0",
+        swiperefreshlayout_version: "1.1.0",
+    ]
+}
+
+def libs(libname) {
+    switch (libname) {
+        case "material":
+            return "com.google.android.material:material:${versions.material_version}"
+        case "kotlin-std":
+            return "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+        case "core-ktx":
+            return "androidx.core:core-ktx:${versions.core_ctx_version}"
+        case "appcompat":
+            return "androidx.appcompat:appcompat:${versions.appcompat_version}"
+        case "constraintlayout":
+            return "androidx.constraintlayout:constraintlayout:${versions.constraintlayout_version}"
+        case "junit":
+            return "junit:junit:${versions.junit_version}"
+        case "junit-ext":
+            return "androidx.test.ext:junit:${versions.junit_ext_version}"
+        case "espresso":
+            return "androidx.test.espresso:espresso-core:${versions.espresso_version}"
+        case "swiperefreshlayout":
+            return "androidx.swiperefreshlayout:swiperefreshlayout:${versions.swiperefreshlayout_version}"
+        case "datastore":
+            return "androidx.datastore:datastore-preferences:${versions.dataStore}"
+        case "lifecycle-runtime":
+            return "androidx.lifecycle:lifecycle-runtime:${versions.lifecycle_ver}"
+        case "lifecycle-compiler":
+            return "androidx.lifecycle:lifecycle-compiler:${versions.lifecycle_ver}"
+        case "fragment-ktx":
+            return "androidx.fragment:fragment-ktx:${versions.fragment}"
+        case "gson":
+            return "com.google.code.gson:gson:${versions.gson_version}"
+        case "retrofit":
+            return "com.squareup.retrofit2:retrofit:${versions.retrofit2_version}"
+        case "retrofit-converter":
+            return "com.squareup.retrofit2:converter-gson:${versions.retrofit2_version}"
+        case "room":
+            return "androidx.room:room-runtime:${versions.room_version}"
+        case "room-compiler":
+            return "androidx.room:room-compiler:${versions.room_version}"
+        case "room-ktx":
+            return "androidx.room:room-ktx:${versions.room_version}"
+        case "dagger":
+            return "com.google.dagger:hilt-android:${versions.hilt_version}"
+        case "hilt":
+            return "com.google.dagger:hilt-compiler:${versions.hilt_version}"
+        case "navigation-fragment-ktx":
+            return "androidx.navigation:navigation-fragment-ktx:${versions.nav_version}"
+        case "navigation-ui-ktx":
+            return "androidx.navigation:navigation-ui-ktx:${versions.nav_version}"
+        case "navigation-runtime":
+            return "androidx.navigation:navigation-runtime:${versions.nav_version}"
+        case "okhttp3":
+            return "com.squareup.okhttp3:okhttp:${versions.okhttp_version}"
+        case "adapterdelegate":
+            return "com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:${versions.adapter_delegate}"
+        default:
+            throw new IllegalArgumentException("No mapping exists for name: $name.")
+    }
 }
 
 task clean(type: Delete) {
