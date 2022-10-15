@@ -6,4 +6,7 @@
         <attr name="dayItemBackgroundColor" format="color" />
         <attr name="dayItemCornerRadius" format="dimension" />
     </declare-styleable>
+
+    <attr name="dayItem_DayOfWeekText" format="string" />
+    <attr name="dayItem_DateNumberText" format="string" />
 </resources>

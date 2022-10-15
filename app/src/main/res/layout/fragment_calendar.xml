@@ -10,6 +10,8 @@
         style="@style/DayItemViewStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:dayItem_DayOfWeekText="Sat"
+        app:dayItem_DateNumberText="15"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

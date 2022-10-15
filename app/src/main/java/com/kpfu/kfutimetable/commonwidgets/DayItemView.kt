@@ -6,6 +6,7 @@ import android.content.res.TypedArray
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.cardview.widget.CardView
 import com.kpfu.kfutimetable.R
@@ -60,6 +61,9 @@ class DayItemView(
             setCornerRadius(cornerRadius)
             color = ColorStateList.valueOf(background)
         }
+
+        date.text = styleArray.getString(R.attr.dayItem_DateNumberText)
+        dayOfWeek.text = styleArray.getString(R.attr.dayItem_DayOfWeekText)
     }
 
     override fun render(state: State) {
