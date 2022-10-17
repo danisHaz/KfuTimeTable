@@ -1,6 +1,5 @@
 package com.kpfu.kfutimetable.presentation.mainscreen
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,11 +9,15 @@ import com.kpfu.kfutimetable.presentation.base.BaseFragment
 import com.kpfu.kfutimetable.presentation.mainscreen.entities.CalendarState
 import com.kpfu.kfutimetable.presentation.mainscreen.entities.CalendarViewState
 import com.kpfu.kfutimetable.presentation.mainscreen.providers.CalendarViewModelProvider
+import com.kpfu.kfutimetable.utils.routing.Router
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class CalendarFragment @Inject constructor(
     calendarViewStateMapper: CalendarViewStateMapper,
     calendarViewModelProvider: CalendarViewModelProvider,
+    private val router: Router,
 ) : BaseFragment<CalendarState, CalendarViewState, CalendarViewModel>(
     initialViewState = {
         CalendarViewState(listOf())
@@ -37,6 +40,5 @@ class CalendarFragment @Inject constructor(
     override fun render(state: CalendarState) {
 
     }
-
 
 }
