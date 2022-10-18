@@ -1,6 +1,7 @@
 package com.kpfu.kfutimetable.presentation.base
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelStoreOwner
 import com.kpfu.kfutimetable.presentation.base.utils.BaseState
 
 abstract class BaseViewModel<S : BaseState>(
@@ -12,5 +13,5 @@ abstract class BaseViewModel<S : BaseState>(
 
 fun interface BaseViewModelProvider<T> {
 
-    fun createInstance(): T
+    fun createInstance(owner: ViewModelStoreOwner): T
 }

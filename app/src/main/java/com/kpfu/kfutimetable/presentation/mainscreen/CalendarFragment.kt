@@ -1,6 +1,8 @@
 package com.kpfu.kfutimetable.presentation.mainscreen
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +25,7 @@ class CalendarFragment @Inject constructor(
         CalendarViewState(listOf())
     },
     viewStateMapper = calendarViewStateMapper,
-    viewModelProvider = calendarViewModelProvider,
+    viewModelProvider = calendarViewModelProvider
 ) {
 
     private lateinit var binding: FragmentCalendarBinding
@@ -33,12 +35,17 @@ class CalendarFragment @Inject constructor(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.e("kekos", "in fragment")
         binding = FragmentCalendarBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        super.onAttachedToOwner(this)
     }
 
     override fun render(state: CalendarState) {
 
     }
-
 }
