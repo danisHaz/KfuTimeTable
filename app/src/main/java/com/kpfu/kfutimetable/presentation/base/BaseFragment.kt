@@ -9,7 +9,7 @@ import com.kpfu.kfutimetable.presentation.base.utils.BaseViewState
 import com.kpfu.kfutimetable.presentation.base.utils.BaseViewStateMapper
 
 abstract class BaseFragment<S : BaseState, VS : BaseViewState, VM : BaseViewModel<S>>(
-    private val initialViewState: (() -> VS)?,
+    initialViewState: (() -> VS)?,
     private val viewModelProvider: BaseViewModelProvider<VM>,
     private val viewStateMapper: BaseViewStateMapper<S, VS>
 ) : Fragment() {

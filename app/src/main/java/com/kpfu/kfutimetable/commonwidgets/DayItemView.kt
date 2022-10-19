@@ -6,14 +6,14 @@ import android.content.res.TypedArray
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import com.kpfu.kfutimetable.R
 import com.kpfu.kfutimetable.databinding.ViewDayItemBinding
 import com.kpfu.kfutimetable.utils.dpToPxF
 
-class DayItemView(
+class DayItemView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -33,6 +33,18 @@ class DayItemView(
     }
 
     private fun setStyle(styleArray: TypedArray) = with(binding) {
+
+        val backgroundColor = styleArray.getColor(
+            R.styleable.DayItemView_dayItemBackgroundColor,
+            BACKGROUND_COLOR
+        )
+        // TODO: pass here different color states when pressed or not
+        background = (ContextCompat.getDrawable(
+            context,
+            R.drawable.day_item_view_background
+        ) as GradientDrawable).apply {
+            color = ColorStateList.valueOf(backgroundColor)
+        }
         val dateNumberColor = styleArray.getColor(
             R.styleable.DayItemView_dayItemDateNumberColor,
             DATE_NUMBER_COLOR
@@ -43,27 +55,10 @@ class DayItemView(
             DAY_OF_WEEK_COLOR
         )
 
-        val background = styleArray.getColor(
-            R.styleable.DayItemView_dayItemBackgroundColor,
-            BACKGROUND_COLOR
-        )
-
-        val cornerRadius = styleArray.getDimension(
-            R.styleable.DayItemView_dayItemCornerRadius,
-            CORNER_RADIUS
-        )
-
         date.setTextColor(dateNumberColor)
         dayOfWeek.setTextColor(dayOfWeekColor)
-
-        // TODO: pass here different color states when pressed or not
-        root.background = GradientDrawable().apply {
-            setCornerRadius(cornerRadius)
-            color = ColorStateList.valueOf(background)
-        }
-
-        date.text = styleArray.getString(R.attr.dayItem_DateNumberText)
-        dayOfWeek.text = styleArray.getString(R.attr.dayItem_DayOfWeekText)
+        date.text = styleArray.getString(R.styleable.DayItemView_dayItem_DateNumberText)
+        dayOfWeek.text = styleArray.getString(R.styleable.DayItemView_dayItem_DayOfWeekText)
     }
 
     override fun render(state: State) {

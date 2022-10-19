@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dayItemView_textDividerMarginBottom">5dp</dimen>
+    <dimen name="dayItemView_cornerradiusBackground">16dp</dimen>
+    <dimen name="dayItemView_paddingHorizontal">16dp</dimen>
+    <dimen name="dayItemView_paddingVertical">4dp</dimen>
+</resources>
