@@ -34,10 +34,7 @@ class DayItemView @JvmOverloads constructor(
 
     private fun setStyle(styleArray: TypedArray) = with(binding) {
 
-        val backgroundColor = styleArray.getColor(
-            R.styleable.DayItemView_dayItemBackgroundColor,
-            BACKGROUND_COLOR
-        )
+        val backgroundColor = BACKGROUND_COLOR
         // TODO: pass here different color states when pressed or not
         background = (ContextCompat.getDrawable(
             context,
@@ -57,12 +54,13 @@ class DayItemView @JvmOverloads constructor(
 
         date.setTextColor(dateNumberColor)
         dayOfWeek.setTextColor(dayOfWeekColor)
-        date.text = styleArray.getString(R.styleable.DayItemView_dayItem_DateNumberText)
-        dayOfWeek.text = styleArray.getString(R.styleable.DayItemView_dayItem_DayOfWeekText)
     }
 
     override fun render(state: State) {
-
+        with(binding) {
+            dayOfWeek.text = state.dayOfWeek
+            date.text = state.date
+        }
         currentState = state
     }
 

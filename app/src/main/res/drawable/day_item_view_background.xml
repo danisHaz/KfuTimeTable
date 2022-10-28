@@ -2,7 +2,6 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
     <corners android:radius="@dimen/dayItemView_cornerradiusBackground" />
-    <solid android:color="?attr/dayItemBackgroundColor" />
     <padding
         android:bottom="@dimen/dayItemView_paddingVertical"
         android:left="@dimen/dayItemView_paddingHorizontal"

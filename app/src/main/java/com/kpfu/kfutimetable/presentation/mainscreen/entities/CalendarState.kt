@@ -5,7 +5,7 @@ import java.util.Date
 
 data class CalendarState(
     val date: Date,
-    val lessons: List<Lesson>
+    val lessons: List<Lesson>,
 ) : BaseState
 
 data class Lesson(

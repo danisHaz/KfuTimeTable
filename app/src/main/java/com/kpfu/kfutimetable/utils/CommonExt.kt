@@ -3,7 +3,10 @@ package com.kpfu.kfutimetable.utils
 import android.util.DisplayMetrics
 import android.util.Log
 import android.util.TypedValue
+import androidx.lifecycle.LifecycleCoroutineScope
 import com.kpfu.kfutimetable.presentation.base.utils.BaseApplication
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlin.math.roundToInt
 
 private val displayMetrics: DisplayMetrics? by lazy {
@@ -41,3 +44,9 @@ val Int.pxToDp: Int get() = this.pxToDpF.roundToInt()
 val Float.pxToDpF: Float get() = this / screenDensity
 
 val Float.pxToDp: Int get() = this.pxToDpF.roundToInt()
+
+fun <T> Flow<T>.launchWhenStarted(scope: LifecycleCoroutineScope) {
+    scope.launchWhenStarted {
+        this@launchWhenStarted.collect()
+    }
+}

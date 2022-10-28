@@ -2,10 +2,11 @@ package com.kpfu.kfutimetable.presentation.mainscreen
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
+import com.kpfu.kfutimetable.commonwidgets.DayItemView
 import com.kpfu.kfutimetable.databinding.FragmentCalendarBinding
 import com.kpfu.kfutimetable.presentation.base.BaseFragment
 import com.kpfu.kfutimetable.presentation.mainscreen.entities.CalendarState
@@ -21,9 +22,6 @@ class CalendarFragment @Inject constructor(
     calendarViewModelProvider: CalendarViewModelProvider,
     private val router: Router,
 ) : BaseFragment<CalendarState, CalendarViewState, CalendarViewModel>(
-    initialViewState = {
-        CalendarViewState(listOf())
-    },
     viewStateMapper = calendarViewStateMapper,
     viewModelProvider = calendarViewModelProvider
 ) {
@@ -35,7 +33,6 @@ class CalendarFragment @Inject constructor(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.e("kekos", "in fragment")
         binding = FragmentCalendarBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -45,7 +42,7 @@ class CalendarFragment @Inject constructor(
         super.onAttachedToOwner(this)
     }
 
-    override fun render(state: CalendarState) {
-
+    override fun render(currentViewState: CalendarViewState) = with(binding) {
+        sampleDayItem.render(currentViewState.dayItemViewState)
     }
 }

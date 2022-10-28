@@ -3,9 +3,6 @@
     <declare-styleable name="DayItemView">
         <attr name="dayItemDateNumberColor" format="color" />
         <attr name="dayItemDayOfWeekColor" format="color" />
-        <attr name="dayItemBackgroundColor" format="color" />
         <attr name="dayItemCornerRadius" format="dimension" />
-        <attr name="dayItem_DayOfWeekText" format="string" />
-        <attr name="dayItem_DateNumberText" format="string" />
     </declare-styleable>
 </resources>
