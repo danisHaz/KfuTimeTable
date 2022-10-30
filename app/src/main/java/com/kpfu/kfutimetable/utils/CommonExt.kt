@@ -1,5 +1,7 @@
 package com.kpfu.kfutimetable.utils
 
+import android.content.Context
+import android.graphics.Color
 import android.util.DisplayMetrics
 import android.util.Log
 import android.util.TypedValue
@@ -48,5 +50,15 @@ val Float.pxToDp: Int get() = this.pxToDpF.roundToInt()
 fun <T> Flow<T>.launchWhenStarted(scope: LifecycleCoroutineScope) {
     scope.launchWhenStarted {
         this@launchWhenStarted.collect()
+    }
+}
+
+fun Context.fromAttr(attrId: Int): Int? {
+    val typedValue = TypedValue()
+    return if (theme.resolveAttribute(attrId, typedValue, true)) {
+        typedValue.data
+    } else {
+      Log.e("ColorExt", "Color not found for resource")
+      null
     }
 }

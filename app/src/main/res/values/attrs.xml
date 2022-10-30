@@ -5,4 +5,9 @@
         <attr name="dayItemDayOfWeekColor" format="color" />
         <attr name="dayItemCornerRadius" format="dimension" />
     </declare-styleable>
+
+    <declare-styleable name="SubjectView">
+        <attr name="subjectViewBackgroundLectureColor" format="color" />
+        <attr name="subjectViewBackgroundSeminarColor" format="color" />
+    </declare-styleable>
 </resources>

@@ -1,5 +1,6 @@
 package com.kpfu.kfutimetable.presentation.base
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
@@ -20,7 +21,7 @@ abstract class BaseFragment<S : BaseState, VS : BaseViewState, VM : BaseViewMode
 
     protected lateinit var viewModel: VM
 
-    protected val viewState: VS?
+    protected val viewState: VS
         get() = viewModel.viewStateFlow.value
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,8 +31,9 @@ abstract class BaseFragment<S : BaseState, VS : BaseViewState, VM : BaseViewMode
             .launchWhenStarted(lifecycleScope)
     }
 
-    fun onAttachedToOwner(owner: ViewModelStoreOwner) {
-        viewModel = viewModelProvider.createInstance(owner)
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        viewModel = viewModelProvider.createInstance(this)
     }
 
     abstract fun render(currentViewState: VS)

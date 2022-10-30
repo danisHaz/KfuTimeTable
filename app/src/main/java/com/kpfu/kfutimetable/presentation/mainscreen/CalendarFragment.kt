@@ -37,12 +37,8 @@ class CalendarFragment @Inject constructor(
         return binding.root
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        super.onAttachedToOwner(this)
-    }
-
     override fun render(currentViewState: CalendarViewState) = with(binding) {
         sampleDayItem.render(currentViewState.dayItemViewState)
+        sampleSubject.render(currentViewState.subjectViewState)
     }
 }

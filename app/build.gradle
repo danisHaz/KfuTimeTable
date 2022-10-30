@@ -62,6 +62,7 @@ dependencies {
     implementation libs("room-ktx")
     implementation libs("dagger")
     implementation libs("adapterdelegate")
+    implementation libs("support-annotations")
 
     testImplementation libs("junit")
     androidTestImplementation libs("junit-ext")

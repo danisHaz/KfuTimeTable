@@ -6,6 +6,9 @@
     <style name="DayItemViewStyle" parent="CardView.Light">
         <item name="dayItemDateNumberColor">@color/timetableColor_accent_primary</item>
         <item name="dayItemDayOfWeekColor">@color/timetableColor_accent_primary</item>
+
+        <item name="subjectViewBackgroundLectureColor">@color/subjectColor_lecture</item>
+        <item name="subjectViewBackgroundSeminarColor">@color/subjectColor_seminar</item>
     </style>
 
 </resources>
