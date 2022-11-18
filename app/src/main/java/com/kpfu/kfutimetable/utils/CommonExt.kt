@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.util.DisplayMetrics
 import android.util.Log
 import android.util.TypedValue
+import androidx.annotation.IdRes
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.kpfu.kfutimetable.presentation.base.utils.BaseApplication
 import kotlinx.coroutines.flow.Flow
@@ -53,7 +54,7 @@ fun <T> Flow<T>.launchWhenStarted(scope: LifecycleCoroutineScope) {
     }
 }
 
-fun Context.fromAttr(attrId: Int): Int? {
+fun Context.fromAttr(@IdRes attrId: Int): Int? {
     val typedValue = TypedValue()
     return if (theme.resolveAttribute(attrId, typedValue, true)) {
         typedValue.data

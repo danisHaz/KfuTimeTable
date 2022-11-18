@@ -13,7 +13,7 @@ class CalendarViewStateMapper : BaseViewStateMapper<CalendarState, CalendarViewS
             SubjectView.State(
                 "Math",
                 SubjectView.State.SubjectType.Lecture,
-            "Kremlevskaya, 35",
+                "Kremlevskaya, 35",
                 "Askhatov",
                 "12"
             ),
