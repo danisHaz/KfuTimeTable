@@ -8,4 +8,11 @@
         <item name="dayItemDayOfWeekColor">@color/timetableColor_accent_primary</item>
     </style>
 
+    <!-- SubjectView -->
+    <style name="SubjectViewStyle" parent="CardView.Light">
+        <item name="subjectViewBackgroundLectureColor">@color/subjectColor_lecture</item>
+        <item name="subjectViewBackgroundSeminarColor">@color/subjectColor_seminar</item>
+        <item name="subjectViewTextColor">@color/timetableColor_accent_primary</item>
+    </style>
+
 </resources>

@@ -1,6 +1,7 @@
 package com.kpfu.kfutimetable.utils
 
 import android.content.Context
+import android.content.res.TypedArray
 import android.graphics.Color
 import android.util.DisplayMetrics
 import android.util.Log
@@ -62,4 +63,9 @@ fun Context.fromAttr(@IdRes attrId: Int): Int? {
       Log.e("ColorExt", "Color not found for resource")
       null
     }
+}
+
+fun Color.changeAlpha(alphaCoef: Float = 0.1f): Color {
+    val alpha = alpha() * alphaCoef
+    return Color.valueOf(Color.argb(alpha, red(), green(), blue()))
 }

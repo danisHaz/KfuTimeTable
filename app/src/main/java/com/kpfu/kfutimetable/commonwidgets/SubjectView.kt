@@ -1,14 +1,17 @@
 package com.kpfu.kfutimetable.commonwidgets
 
 import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.StateListDrawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.kpfu.kfutimetable.R
 import com.kpfu.kfutimetable.databinding.ViewSubjectBinding
-import com.kpfu.kfutimetable.utils.fromAttr
+import com.kpfu.kfutimetable.utils.changeAlpha
 
 class SubjectView @JvmOverloads constructor(
     context: Context,
@@ -20,13 +23,29 @@ class SubjectView @JvmOverloads constructor(
 
     init {
         setStyle()
+        isClickable = true
     }
 
-    private fun setStyle() {
-        binding.root.background = ContextCompat.getDrawable(
+    private fun setStyle() = with(binding) {
+        root.background = ContextCompat.getDrawable(
             context,
             R.drawable.view_subject_background
         )
+
+        val typedArray = context.obtainStyledAttributes(
+            R.style.SubjectViewStyle,
+            intArrayOf(R.attr.subjectViewTextColor)
+        )
+
+        typedArray.getColor(
+            0,
+            ContextCompat.getColor(context, R.color.timetableColor_accent_primary)
+        ).let {
+            listOf(name, room, teacher, address).forEach { view ->
+                view.setTextColor(createColorStateList(it))
+            }
+        }
+        typedArray.recycle()
     }
 
     override fun render(state: State) = with(binding) {
@@ -36,8 +55,30 @@ class SubjectView @JvmOverloads constructor(
         room.text = state.roomNumber
 
         root.background = (root.background as GradientDrawable).apply {
-            context.fromAttr(state.subjectType.backgroundColorAttr)?.let { setBackgroundColor(it) }
+            val typedArray = context.obtainStyledAttributes(
+                R.style.SubjectViewStyle,
+                intArrayOf(state.subjectType.backgroundColorAttr)
+            )
+
+            typedArray.getColor(
+                0,
+                ContextCompat.getColor(context, R.color.subjectColor_lecture)
+            ).let { color = createColorStateList(it) }
+
+            typedArray.recycle()
         }
+    }
+
+    private fun createColorStateList(color: Int): ColorStateList {
+        val pressedColor = Color.valueOf(color).changeAlpha(OPACITY_COEF)
+
+        return ColorStateList(
+            arrayOf(
+                intArrayOf(android.R.attr.state_pressed),
+                intArrayOf(android.R.attr.state_enabled),
+            ),
+            intArrayOf(pressedColor.toArgb(), color)
+        )
     }
 
     data class State(
@@ -51,5 +92,9 @@ class SubjectView @JvmOverloads constructor(
             object Lecture : SubjectType(R.attr.subjectViewBackgroundLectureColor)
             object Seminar : SubjectType(R.attr.subjectViewBackgroundSeminarColor)
         }
+    }
+
+    private companion object {
+        const val OPACITY_COEF = 0.5f
     }
 }

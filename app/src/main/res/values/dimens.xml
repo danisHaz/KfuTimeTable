@@ -7,4 +7,6 @@
 
     <dimen name="subjectView_cornerradiusBackground">16dp</dimen>
     <dimen name="subjectView_padding">12dp</dimen>
+    <dimen name="subjectView_inner_margin">12dp</dimen>
+    <dimen name="subjectView_subject_name_bottom_margin">8dp</dimen>
 </resources>

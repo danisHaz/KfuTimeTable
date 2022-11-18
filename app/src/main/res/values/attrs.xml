@@ -9,5 +9,6 @@
     <declare-styleable name="SubjectView">
         <attr name="subjectViewBackgroundLectureColor" format="color" />
         <attr name="subjectViewBackgroundSeminarColor" format="color" />
+        <attr name="subjectViewTextColor" format="color" />
     </declare-styleable>
 </resources>
