@@ -18,4 +18,8 @@
     <!--  subject view colors  -->
     <color name="subjectColor_lecture">#FF18D008</color>
     <color name="subjectColor_seminar">#FF0894D0</color>
+
+    <!--  time line view colors  -->
+    <color name="timeLineColor_accent">#FF004F8C</color>
+    <color name="timeLineColor_base">#FFF06292</color>
 </resources>

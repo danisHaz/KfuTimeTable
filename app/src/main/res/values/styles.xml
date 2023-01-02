@@ -2,6 +2,16 @@
 <resources>
         <!--  Common Widgets Styles  -->
 
+    <style name="BaseStyle" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="dayItemDateNumberColor">@color/timetableColor_accent_primary</item>
+        <item name="dayItemDayOfWeekColor">@color/timetableColor_accent_primary</item>
+        <item name="subjectViewBackgroundLectureColor">@color/subjectColor_lecture</item>
+        <item name="subjectViewBackgroundSeminarColor">@color/subjectColor_seminar</item>
+        <item name="subjectViewTextColor">@color/timetableColor_accent_primary</item>
+        <item name="timeLineViewAccentColor">@color/timeLineColor_accent</item>
+        <item name="timeLineViewBaseColor">@color/timeLineColor_base</item>
+    </style>
+
     <!-- DayItemView -->
     <style name="DayItemViewStyle" parent="CardView.Light">
         <item name="dayItemDateNumberColor">@color/timetableColor_accent_primary</item>
@@ -13,6 +23,13 @@
         <item name="subjectViewBackgroundLectureColor">@color/subjectColor_lecture</item>
         <item name="subjectViewBackgroundSeminarColor">@color/subjectColor_seminar</item>
         <item name="subjectViewTextColor">@color/timetableColor_accent_primary</item>
+    </style>
+
+    <style name="TimeLineViewStyle" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="timeLineViewAccentColor">@color/timeLineColor_accent</item>
+        <item name="timeLineViewBaseColor">@color/timeLineColor_base</item>
+        <item name="timeLineViewAccentColor">@color/timeLineColor_accent</item>
+        <item name="timeLineViewBaseColor">@color/timeLineColor_base</item>
     </style>
 
 </resources>

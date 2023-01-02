@@ -11,4 +11,9 @@
         <attr name="subjectViewBackgroundSeminarColor" format="color" />
         <attr name="subjectViewTextColor" format="color" />
     </declare-styleable>
+
+    <declare-styleable name="TimeLineView">
+        <attr name="timeLineViewAccentColor" format="color" />
+        <attr name="timeLineViewBaseColor" format="color" />
+    </declare-styleable>
 </resources>
