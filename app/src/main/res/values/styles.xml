@@ -32,4 +32,13 @@
         <item name="timeLineViewBaseColor">@color/timeLineColor_base</item>
     </style>
 
+    <style name="NextFloatingButtonStyle">
+        <item name="android:background">@drawable/next_button_background</item>
+    </style>
+
+    <style name="PrevFloatingButtonStyle">
+        <item name="android:background">@drawable/prev_button_background</item>
+        <item name="android:rotation">180</item>
+    </style>
+
 </resources>
