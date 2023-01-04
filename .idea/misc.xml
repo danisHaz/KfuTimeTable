@@ -16,6 +16,7 @@
         <entry key="app/src/main/res/layout/view_day_item.xml" value="0.18072916666666666" />
         <entry key="app/src/main/res/layout/view_subject.xml" value="0.2520833333333333" />
         <entry key="app/src/main/res/layout/view_time_line.xml" value="0.2520833333333333" />
+        <entry key="app/src/main/res/layout/viewholder_month.xml" value="0.2520833333333333" />
       </map>
     </option>
   </component>
