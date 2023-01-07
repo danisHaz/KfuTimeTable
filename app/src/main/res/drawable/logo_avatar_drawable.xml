@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:width="50dp" android:height="50dp">
+        <shape android:shape="oval" android:tint="@color/white"/>
+    </item>
+
+    <item android:drawable="@drawable/avatar_24_drawable"
+        android:height="32dp"
+        android:width="32dp"
+        android:gravity="center"/>
+</layer-list>

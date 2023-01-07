@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-        <!--  Common Widgets Styles  -->
-
-    <style name="BaseStyle" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="dayItemDateNumberColor">@color/timetableColor_accent_primary</item>
-        <item name="dayItemDayOfWeekColor">@color/timetableColor_accent_primary</item>
-        <item name="subjectViewBackgroundLectureColor">@color/subjectColor_lecture</item>
-        <item name="subjectViewBackgroundSeminarColor">@color/subjectColor_seminar</item>
-        <item name="subjectViewTextColor">@color/timetableColor_accent_primary</item>
-        <item name="timeLineViewAccentColor">@color/timeLineColor_accent</item>
-        <item name="timeLineViewBaseColor">@color/timeLineColor_base</item>
-    </style>
+    <!--  Common Widgets Styles  -->
 
     <!-- DayItemView -->
     <style name="DayItemViewStyle" parent="CardView.Light">
@@ -40,10 +30,20 @@
         <item name="android:background">@drawable/next_button_background</item>
         <item name="android:rotation">180</item>
     </style>
-    
+
     <style name="TextStyle.Month" parent="TextAppearance.AppCompat.Large">
         <item name="android:textSize">48sp</item>
         <item name="android:textColor">@color/primary</item>
+    </style>
+    
+    <style name="TextStyle.Body" parent="TextAppearance.AppCompat.Medium">
+        <item name="fontFamily">PT Sans</item>
+    </style>
+
+    <style name="TextStyle.Body.Medium" parent="TextStyle.Body">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:maxWidth">150dp</item>
     </style>
 
 </resources>
