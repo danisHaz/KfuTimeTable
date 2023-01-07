@@ -17,6 +17,16 @@ class CalendarViewStateMapper : BaseViewStateMapper<CalendarState, CalendarViewS
                 "Askhatov",
                 "12"
             ),
+            listOf(
+                DayItemView.State("1", "Sat"),
+                DayItemView.State("2", "Sat"),
+                DayItemView.State("3", "Sat"),
+                DayItemView.State("4", "Sat"),
+                DayItemView.State("5", "Sat"),
+                DayItemView.State("6", "Sat"),
+                DayItemView.State("7", "Sat"),
+                DayItemView.State("8", "Sat"),
+            )
         )
     }
 }

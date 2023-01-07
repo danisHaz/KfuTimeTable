@@ -20,8 +20,12 @@ class DayItemView @JvmOverloads constructor(
 ) : CardView(context, attrs, defStyleAttr), BaseView<DayItemView.State> {
 
     private val binding = ViewDayItemBinding.inflate(LayoutInflater.from(context), this)
+    lateinit var currentState: State
 
-    private lateinit var currentState: State
+    var onClick: OnClickListener? = null
+    fun updateOnClick(newOnClick: () -> Unit) {
+        onClick = OnClickListener { newOnClick.invoke() }
+    }
 
     init {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.DayItemView)
@@ -30,6 +34,8 @@ class DayItemView @JvmOverloads constructor(
         } finally {
             typedArray.recycle()
         }
+
+        setOnClickListener(onClick)
     }
 
     private fun setStyle(styleArray: TypedArray) = with(binding) {
