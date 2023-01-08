@@ -62,10 +62,14 @@ class MonthCarousel(
             monthHolder,
             "translationX", transitionFrom, transitionTo
         ).apply {
-            duration = 500
+            duration = ANIMATION_DURATION
             interpolator = animationInterpolator
             doOnEnd { doOnEndCallback() }
             start()
         }
+    }
+
+    companion object {
+        const val ANIMATION_DURATION: Long = 500
     }
 }

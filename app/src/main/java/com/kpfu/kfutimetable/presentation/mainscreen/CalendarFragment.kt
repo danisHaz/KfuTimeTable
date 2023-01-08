@@ -70,7 +70,7 @@ class CalendarFragment @Inject constructor(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.dayItemCarousel.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-//        binding.dayItemCarousel.adapter = adapter
+        binding.dayItemCarousel.adapter = adapter
         monthCarousel = MonthCarousel(monthList, binding.monthList)
         setListeners()
     }
