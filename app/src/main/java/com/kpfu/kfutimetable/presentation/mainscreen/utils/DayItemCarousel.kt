@@ -1,5 +1,6 @@
 package com.kpfu.kfutimetable.presentation.mainscreen.utils
 
+import android.util.Log
 import android.view.ViewGroup
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.kpfu.kfutimetable.commonwidgets.DayItemView
@@ -16,7 +17,9 @@ fun dayItemAdapterDelegate(onClick: (() -> Unit)? = null) =
             ViewDayItemBinding.inflate(layoutInflater, DayItemView(root.context))
         }
     ) {
-        onClick?.let { binding.root.setOnClickListener { onClick() } }
+        onClick?.let {
+            (binding.root as? DayItemView)?.updateOnClick(it)
+        }
 
         onViewAttachedToWindow {
             (binding.root.layoutParams as? ViewGroup.MarginLayoutParams)?.apply {

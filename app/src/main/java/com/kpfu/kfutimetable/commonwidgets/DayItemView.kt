@@ -22,10 +22,16 @@ class DayItemView @JvmOverloads constructor(
     private val binding = ViewDayItemBinding.inflate(LayoutInflater.from(context), this)
     lateinit var currentState: State
 
-    var onClick: OnClickListener? = null
-    fun updateOnClick(newOnClick: () -> Unit) {
-        onClick = OnClickListener { newOnClick.invoke() }
+    fun updateOnClick(newOnClick: () -> Unit) = setOnClickListener {
+        newOnClick.invoke()
+        isChecked = !isChecked
     }
+
+    var isChecked: Boolean = false
+        set(value) {
+            field = value
+            changeCheckedState()
+        }
 
     init {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.DayItemView)
@@ -34,20 +40,28 @@ class DayItemView @JvmOverloads constructor(
         } finally {
             typedArray.recycle()
         }
+    }
 
-        setOnClickListener(onClick)
+    private fun changeCheckedState() {
+        binding.root.background = if (isChecked) {
+            ContextCompat.getDrawable(
+                context,
+                R.drawable.day_item_view_background_checked
+            )
+        } else {
+            ContextCompat.getDrawable(
+                context,
+                R.drawable.day_item_view_background
+            )
+        }
     }
 
     private fun setStyle(styleArray: TypedArray) = with(binding) {
 
-        val backgroundColor = BACKGROUND_COLOR
-        // TODO: pass here different color states when pressed or not
-        background = (ContextCompat.getDrawable(
+        background = ContextCompat.getDrawable(
             context,
             R.drawable.day_item_view_background
-        ) as GradientDrawable).apply {
-            color = ColorStateList.valueOf(backgroundColor)
-        }
+        )
         val dateNumberColor = styleArray.getColor(
             R.styleable.DayItemView_dayItemDateNumberColor,
             DATE_NUMBER_COLOR
@@ -80,7 +94,5 @@ class DayItemView @JvmOverloads constructor(
     private companion object {
         const val DATE_NUMBER_COLOR = Color.WHITE
         const val DAY_OF_WEEK_COLOR = Color.WHITE
-        val BACKGROUND_COLOR = Color.parseColor("#004F8C")
-        val CORNER_RADIUS = 16.dpToPxF
     }
 }

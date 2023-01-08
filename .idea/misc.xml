@@ -5,6 +5,7 @@
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.25769927536231885" />
         <entry key="app/src/main/res/drawable/day_item_view_background.xml" value="0.189" />
+        <entry key="app/src/main/res/drawable/day_item_view_background_checked.xml" value="0.2575" />
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_forward_24.xml" value="0.2585" />
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_forward_8.xml" value="0.2585" />
         <entry key="app/src/main/res/drawable/ic_baseline_menu_24.xml" value="0.218" />

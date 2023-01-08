@@ -4,6 +4,8 @@
         <attr name="dayItemDateNumberColor" format="color" />
         <attr name="dayItemDayOfWeekColor" format="color" />
         <attr name="dayItemCornerRadius" format="dimension" />
+        <attr name="dayItemViewBackgroundCheckedColor" format="color" />
+        <attr name="dayItemViewBackgroundBaseColor" format="color" />
     </declare-styleable>
 
     <declare-styleable name="SubjectView">

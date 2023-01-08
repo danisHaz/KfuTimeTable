@@ -23,6 +23,8 @@
         <item name="dayItemDayOfWeekColor">@color/timetableColor_accent_primary</item>
         <item name="subjectViewBackgroundLectureColor">@color/subjectColor_lecture</item>
         <item name="subjectViewBackgroundSeminarColor">@color/subjectColor_seminar</item>
+        <item name="dayItemViewBackgroundCheckedColor">@color/dayItemViewColor_checked</item>
+        <item name="dayItemViewBackgroundBaseColor">?attr/colorPrimary</item>
         <item name="subjectViewTextColor">@color/timetableColor_accent_primary</item>
         <item name="timeLineViewAccentColor">@color/timeLineColor_accent</item>
         <item name="timeLineViewBaseColor">@color/timeLineColor_base</item>

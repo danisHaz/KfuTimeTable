@@ -5,7 +5,7 @@
 <!--    </item>-->
     <item>
         <shape>
-            <solid android:color="@color/primary"/>
+            <solid android:color="@color/dayItemViewColor_checked"/>
             <corners android:radius="@dimen/dayItemView_cornerradiusBackground" />
             <padding
                 android:bottom="@dimen/dayItemView_paddingVertical"

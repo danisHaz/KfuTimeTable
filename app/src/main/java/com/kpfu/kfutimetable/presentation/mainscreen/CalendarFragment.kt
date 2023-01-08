@@ -54,7 +54,7 @@ class CalendarFragment @Inject constructor(
                 ): Boolean = oldItem.date == newItem.date
                         && oldItem.dayOfWeek == newItem.dayOfWeek
             }, AdapterDelegatesManager(
-                dayItemAdapterDelegate { }
+                dayItemAdapterDelegate {  }
             )
         )
 

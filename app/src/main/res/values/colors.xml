@@ -16,6 +16,8 @@
     <color name="timetableColor_accent_primary">#FFFFFFFF</color>
     <color name="timetableColor_accent_secondary">#FF000000</color>
 
+    <color name="dayItemViewColor_checked">#FF0894D0</color>
+
     <!--  subject view colors  -->
     <color name="subjectColor_lecture">#FF18D008</color>
     <color name="subjectColor_seminar">#FF0894D0</color>
