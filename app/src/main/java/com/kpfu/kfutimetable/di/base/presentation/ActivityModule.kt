@@ -3,6 +3,7 @@ package com.kpfu.kfutimetable.di.base.presentation
 import com.kpfu.kfutimetable.presentation.mainscreen.CalendarViewStateMapper
 import com.kpfu.kfutimetable.presentation.mainscreen.providers.CalendarScreen
 import com.kpfu.kfutimetable.presentation.mainscreen.providers.CalendarViewModelProvider
+import com.kpfu.kfutimetable.presentation.signinscreen.providers.SignInScreen
 import com.kpfu.kfutimetable.utils.routing.RouteManager
 import com.kpfu.kfutimetable.utils.routing.Router
 import com.kpfu.kfutimetable.utils.routing.ScreenProvider
@@ -26,4 +27,8 @@ object ActivityModule {
         CalendarViewModelProvider(),
         router,
     )
+
+    @Provides
+    fun provideSignInScreen(router: Router, screenProvider: ScreenProvider) =
+        SignInScreen(router, screenProvider)
 }

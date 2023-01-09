@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         // initial navigation to calendar fragment (now by default)
         RouteManager.router?.navigate(
-            screenProvider.get(ScreenProvider.ScreenType.CalendarFragment)
+            screenProvider.get(ScreenProvider.ScreenType.SignInFragment)
         )
     }
 
