@@ -46,7 +46,7 @@ class SignInFragment @Inject constructor(
     private fun setListeners() {
         binding.loginOrRegister.setOnClickListener {
             router.navigate(
-                screenProvider.get(ScreenProvider.ScreenType.SignInFragment)
+                screenProvider.get(ScreenProvider.ScreenType.CalendarFragment)
             )
         }
     }
