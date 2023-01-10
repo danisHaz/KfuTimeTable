@@ -81,6 +81,8 @@ class DayItemView @JvmOverloads constructor(
             dayOfWeek.text = state.dayOfWeek
             date.text = state.date
         }
+        state.isChecked?.let { isChecked = it }
+
         currentState = state
     }
 
@@ -89,6 +91,7 @@ class DayItemView @JvmOverloads constructor(
     data class State(
         val date: String,
         val dayOfWeek: String,
+        val isChecked: Boolean? = null
     )
 
     private companion object {

@@ -66,7 +66,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
+        <com.kpfu.kfutimetable.presentation.mainscreen.utils.DayItemCarousel
             android:id="@+id/dayItemCarousel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
