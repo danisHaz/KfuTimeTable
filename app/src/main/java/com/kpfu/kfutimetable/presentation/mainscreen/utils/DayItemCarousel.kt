@@ -26,6 +26,7 @@ class DayItemCarousel @JvmOverloads constructor(
 
     init {
         (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+        overScrollMode = OVER_SCROLL_NEVER
     }
 
     private val _adapter: AbsDelegationAdapter<List<DayItemView.State>> =

@@ -23,6 +23,6 @@
     <color name="subjectColor_seminar">#FF0894D0</color>
 
     <!--  time line view colors  -->
-    <color name="timeLineColor_accent">#FF004F8C</color>
+    <color name="timeLineColor_accent">@color/timetableColor_primary</color>
     <color name="timeLineColor_base">#FFF06292</color>
 </resources>

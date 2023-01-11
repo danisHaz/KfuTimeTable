@@ -1,17 +1,14 @@
 package com.kpfu.kfutimetable.commonwidgets
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.content.res.TypedArray
 import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.kpfu.kfutimetable.R
 import com.kpfu.kfutimetable.databinding.ViewDayItemBinding
-import com.kpfu.kfutimetable.utils.dpToPxF
 
 class DayItemView @JvmOverloads constructor(
     context: Context,

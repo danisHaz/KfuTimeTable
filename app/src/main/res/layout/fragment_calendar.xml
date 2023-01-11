@@ -8,16 +8,17 @@
 
     <include layout="@layout/toolbar_main" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="4dp">
+        android:orientation="vertical"
+        android:padding="30dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/monthsContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="24dp"
+            android:layout_marginBottom="30dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -69,11 +70,11 @@
         <com.kpfu.kfutimetable.presentation.mainscreen.utils.DayItemCarousel
             android:id="@+id/dayItemCarousel"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:overScrollMode="never"
-            app:layout_constraintTop_toBottomOf="@id/monthsContainer" />
+            android:layout_height="wrap_content" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.kpfu.kfutimetable.presentation.mainscreen.utils.TimetableView
+            android:id="@+id/timetableView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </LinearLayout>
