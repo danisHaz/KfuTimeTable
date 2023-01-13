@@ -14,7 +14,8 @@ class TimeLineView @JvmOverloads constructor(
     context: Context,
     attributeSet: AttributeSet? = null,
     defStyleAttrs: Int = 0,
-) : View(context, attributeSet, defStyleAttrs), BaseView<TimeLineView.State> {
+    defStyleRes: Int = 0,
+) : View(context, attributeSet, defStyleAttrs, defStyleRes), BaseView<TimeLineView.State> {
 
     private val paint: Paint = Paint()
 
