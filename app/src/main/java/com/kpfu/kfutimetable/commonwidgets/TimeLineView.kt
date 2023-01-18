@@ -19,9 +19,7 @@ class TimeLineView @JvmOverloads constructor(
 
     private val paint: Paint = Paint()
 
-    init {
-        setStyle()
-    }
+    init { setStyle() }
 
     override fun render(state: State) {
         val color = context.fromAttr(state.colorAttr) ?: BASE_COLOR

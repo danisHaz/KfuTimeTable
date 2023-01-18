@@ -2,11 +2,14 @@ package com.kpfu.kfutimetable.presentation.mainscreen.utils
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.view.marginTop
 import com.kpfu.kfutimetable.R
 import com.kpfu.kfutimetable.commonwidgets.BaseView
 import com.kpfu.kfutimetable.commonwidgets.TimeLineView
@@ -17,6 +20,16 @@ class TimetableView @JvmOverloads constructor(
     attributeSet: AttributeSet? = null,
     defStyleAttr: Int = 0,
 ) : ConstraintLayout(context, attributeSet, defStyleAttr), BaseView<Any> {
+
+    private val timeViewLayout: LinearLayout = LinearLayout(context).apply {
+        layoutParams = LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+        )
+        orientation = LinearLayout.VERTICAL
+        gravity = Gravity.CENTER or Gravity.TOP
+        this@TimetableView.addView(this)
+    }
 
     override fun render(state: Any) {
         var prevMemberId = 0
@@ -30,7 +43,9 @@ class TimetableView @JvmOverloads constructor(
             } else {
                 TimeViewHolder(this@TimetableView, this.last().id)
             }
-            timeVH.render(i)
+            timeVH.updateParams(i)
+            timeViewLayout.addView(timeVH.textView)
+            this@TimetableView.addView(timeVH.timeLineView)
             add(timeVH)
         }
     }
@@ -43,7 +58,7 @@ class TimetableView @JvmOverloads constructor(
 private class TimeViewHolder(
     private val timeTable: TimetableView,
     private val prevMemberId: Int = timeTable.id
-) : BaseView<Int> {
+) {
 
     private val ITEMS_MARGIN =
         timeTable.context.resources.getDimension(R.dimen.calendar_time_marginTop).roundToInt()
@@ -55,16 +70,16 @@ private class TimeViewHolder(
         get() = textView.id
     private val time: String
         get() = "${currentState + 7}:00"
-    private lateinit var textView: TextView
+    lateinit var textView: TextView
+    lateinit var timeLineView: TimeLineView
 
-    override fun render(state: Int) {
+    fun updateParams(state: Int) {
         textView = createTimeView()
-        timeTable.addView(textView)
-        if (state == 0) {
-            textView.updateLayout(state, timeTable.id)
-        } else {
-            textView.updateLayout(state, prevMemberId)
-        }
+        timeLineView = createTimeLine()
+
+        textView.updateLayout(state, timeTable.id, prevMemberId)
+        timeLineView.updateLayout()
+
         currentState = state
         textView.text = time
     }
@@ -75,6 +90,15 @@ private class TimeViewHolder(
 
     private fun createTimeLine(): TimeLineView =
         TimeLineView(timeTable.context, null, 0, R.style.TimeLineViewStyle)
+            .apply {
+                id = View.generateViewId()
+                layoutParams = ViewGroup.LayoutParams(
+                    0,
+                    timeTable.context.resources.getDimension(
+                        R.dimen.timeLineView_layoutHeight_default
+                    ).roundToInt()
+                )
+            }
 
     private fun TextView.updateMargins() {
         layoutParams =
@@ -82,7 +106,17 @@ private class TimeViewHolder(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )).apply {
-                setMargins(40, ITEMS_MARGIN, HORIZONTAL_MARGIN, 0)
+                setMargins(0, ITEMS_MARGIN, 0, 0)
+            }
+    }
+
+    private fun TimeLineView.updateMargins() {
+        layoutParams =
+            (layoutParams as? ViewGroup.MarginLayoutParams ?: ViewGroup.MarginLayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )).apply {
+                marginStart = HORIZONTAL_MARGIN
             }
     }
 
@@ -113,12 +147,47 @@ private class TimeViewHolder(
         }
     }
 
-    private fun TextView.updateLayout(index: Int, prevMemberId: Int) {
+    private fun TimeLineView.updateConstraints(
+        topViewId: Int,
+        startViewId: Int,
+    ) {
+        ConstraintSet().apply {
+            clone(timeTable)
+            connect(
+                this@updateConstraints.id,
+                ConstraintSet.TOP,
+                topViewId,
+                ConstraintSet.TOP
+            )
+
+            connect(
+                this@updateConstraints.id,
+                ConstraintSet.BOTTOM,
+                topViewId,
+                ConstraintSet.BOTTOM
+            )
+
+            connect(
+                this@updateConstraints.id,
+                ConstraintSet.START,
+                startViewId,
+                ConstraintSet.END
+            )
+
+            applyTo(timeTable)
+        }
+    }
+
+    private fun TextView.updateLayout(index: Int, parentId: Int, prevMemberId: Int) {
         if (index != 0) {
-            updateConstraints(prevMemberId, timeTable.id)
+            updateConstraints(prevMemberId, parentId)
             updateMargins()
         } else {
-            updateConstraints(prevMemberId, timeTable.id, true)
+            updateConstraints(prevMemberId, parentId, true)
         }
+    }
+    private fun TimeLineView.updateLayout() {
+        updateMargins()
+        updateConstraints(textView.id, textView.id)
     }
 }
