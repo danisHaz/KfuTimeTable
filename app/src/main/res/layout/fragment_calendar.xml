@@ -81,7 +81,8 @@
             <com.kpfu.kfutimetable.presentation.mainscreen.utils.TimetableView
                 android:id="@+id/timetableView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/timeTableView_marginTop"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

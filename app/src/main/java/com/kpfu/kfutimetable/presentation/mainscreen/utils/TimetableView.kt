@@ -13,6 +13,7 @@ import androidx.core.view.marginTop
 import com.kpfu.kfutimetable.R
 import com.kpfu.kfutimetable.commonwidgets.BaseView
 import com.kpfu.kfutimetable.commonwidgets.TimeLineView
+import kotlinx.android.synthetic.main.fragment_calendar.view.*
 import kotlin.math.roundToInt
 
 class TimetableView @JvmOverloads constructor(
@@ -20,16 +21,6 @@ class TimetableView @JvmOverloads constructor(
     attributeSet: AttributeSet? = null,
     defStyleAttr: Int = 0,
 ) : ConstraintLayout(context, attributeSet, defStyleAttr), BaseView<Any> {
-
-    private val timeViewLayout: LinearLayout = LinearLayout(context).apply {
-        layoutParams = LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-        )
-        orientation = LinearLayout.VERTICAL
-        gravity = Gravity.CENTER or Gravity.TOP
-        this@TimetableView.addView(this)
-    }
 
     override fun render(state: Any) {
         var prevMemberId = 0
@@ -43,9 +34,9 @@ class TimetableView @JvmOverloads constructor(
             } else {
                 TimeViewHolder(this@TimetableView, this.last().id)
             }
-            timeVH.updateParams(i)
-            timeViewLayout.addView(timeVH.textView)
-            this@TimetableView.addView(timeVH.timeLineView)
+            timetableView.addView(timeVH.textView)
+            timetableView.addView(timeVH.timeLineView)
+            timeVH.render(i)
             add(timeVH)
         }
     }
@@ -58,7 +49,7 @@ class TimetableView @JvmOverloads constructor(
 private class TimeViewHolder(
     private val timeTable: TimetableView,
     private val prevMemberId: Int = timeTable.id
-) {
+) : BaseView<Int> {
 
     private val ITEMS_MARGIN =
         timeTable.context.resources.getDimension(R.dimen.calendar_time_marginTop).roundToInt()
@@ -70,13 +61,10 @@ private class TimeViewHolder(
         get() = textView.id
     private val time: String
         get() = "${currentState + 7}:00"
-    lateinit var textView: TextView
-    lateinit var timeLineView: TimeLineView
+    val textView: TextView = createTimeView()
+    val timeLineView: TimeLineView = createTimeLine()
 
-    fun updateParams(state: Int) {
-        textView = createTimeView()
-        timeLineView = createTimeLine()
-
+    override fun render(state: Int) {
         textView.updateLayout(state, timeTable.id, prevMemberId)
         timeLineView.updateLayout()
 
@@ -190,4 +178,5 @@ private class TimeViewHolder(
         updateMargins()
         updateConstraints(textView.id, textView.id)
     }
+
 }
