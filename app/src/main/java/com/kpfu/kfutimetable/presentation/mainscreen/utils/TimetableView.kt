@@ -21,9 +21,11 @@ class TimetableView @JvmOverloads constructor(
     defStyleAttr: Int = 0,
 ) : ConstraintLayout(context, attributeSet, defStyleAttr), BaseView<Any> {
 
+    private var timeViewHoldersList: List<TimeViewHolder> = listOf()
+
     override fun render(state: Any) {
         var prevMemberId = 0
-        createTimeViewHolders(HOURS_PER_DAY_COUNT)
+        timeViewHoldersList = createTimeViewHolders(HOURS_PER_DAY_COUNT)
     }
 
     private fun createTimeViewHolders(count: Int) = mutableListOf<TimeViewHolder>().apply {

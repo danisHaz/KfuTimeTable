@@ -5,6 +5,8 @@
     <dimen name="dayItemView_paddingHorizontal">16dp</dimen>
     <dimen name="dayItemView_paddingVertical">4dp</dimen>
 
+    <dimen name="dayItemViewCarousel_marginStart">16dp</dimen>
+
     <dimen name="subjectView_cornerradiusBackground">16dp</dimen>
     <dimen name="subjectView_padding">12dp</dimen>
     <dimen name="subjectView_inner_margin">12dp</dimen>

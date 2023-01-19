@@ -21,7 +21,6 @@ class DayItemView @JvmOverloads constructor(
 
     fun updateOnClick(newOnClick: () -> Unit) = setOnClickListener {
         newOnClick.invoke()
-        isChecked = !isChecked
     }
 
     var isChecked: Boolean = false
