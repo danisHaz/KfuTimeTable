@@ -5,15 +5,14 @@ import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
-import androidx.core.view.marginTop
 import com.kpfu.kfutimetable.R
 import com.kpfu.kfutimetable.commonwidgets.BaseView
 import com.kpfu.kfutimetable.commonwidgets.TimeLineView
 import kotlinx.android.synthetic.main.fragment_calendar.view.*
+import java.util.*
 import kotlin.math.roundToInt
 
 class TimetableView @JvmOverloads constructor(
@@ -57,24 +56,42 @@ private class TimeViewHolder(
         timeTable.context.resources.getDimension(R.dimen.calendar_time_marginEnd).roundToInt()
 
     var currentState: Int = -1
-    val id
-        get() = textView.id
-    private val time: String
-        get() = "${currentState + 7}:00"
+    val id get() = textView.id
     val textView: TextView = createTimeView()
     val timeLineView: TimeLineView = createTimeLine()
 
+    private val time: String get() = "${currentState + 7}:00"
+    private val isCurrentTime get() = time.split(":")[0] ==
+            Calendar.getInstance().get(Calendar.HOUR_OF_DAY).toString()
+
     override fun render(state: Int) {
-        textView.updateLayout(state, timeTable.id, prevMemberId)
+        currentState = state
+
+        textView.apply {
+            updateLayout(state, timeTable.id, prevMemberId)
+            text = time
+        }
         timeLineView.updateLayout()
 
-        currentState = state
-        textView.text = time
+        if (isCurrentTime) {
+            TimeLineView.State.CURRENT_TIME
+        } else {
+            TimeLineView.State.BASE_TIME
+        }.also { timeLineView.render(it) }
     }
 
     private fun createTimeView(): TextView =
         TextView(timeTable.context, null, 0, R.style.TextStyle_Time)
-            .apply { id = View.generateViewId() }
+            .apply {
+                id = View.generateViewId()
+                layoutParams = ViewGroup.LayoutParams(
+                    timeTable.context.resources.getDimension(
+                        R.dimen.timeTableView_textView_layoutWidth
+                    ).roundToInt(),
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+                gravity = Gravity.CENTER_HORIZONTAL
+            }
 
     private fun createTimeLine(): TimeLineView =
         TimeLineView(timeTable.context, null, 0, R.style.TimeLineViewStyle)
@@ -174,6 +191,7 @@ private class TimeViewHolder(
             updateConstraints(prevMemberId, parentId, true)
         }
     }
+
     private fun TimeLineView.updateLayout() {
         updateMargins()
         updateConstraints(textView.id, textView.id)
