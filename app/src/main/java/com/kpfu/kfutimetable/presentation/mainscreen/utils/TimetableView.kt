@@ -2,7 +2,6 @@ package com.kpfu.kfutimetable.presentation.mainscreen.utils
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +13,7 @@ import com.kpfu.kfutimetable.R
 import com.kpfu.kfutimetable.commonwidgets.BaseView
 import com.kpfu.kfutimetable.commonwidgets.SubjectView
 import com.kpfu.kfutimetable.commonwidgets.TimeLineView
+import com.kpfu.kfutimetable.utils.dpToPx
 import java.util.*
 import kotlin.math.roundToInt
 
@@ -75,8 +75,9 @@ class TimetableView @JvmOverloads constructor(
     ) {
         val startIndex = startTime.get(Calendar.HOUR_OF_DAY) - HOURS_START_DAY_FROM
         val endIndex = endTime.get(Calendar.HOUR_OF_DAY) - HOURS_START_DAY_FROM
+        val needToHideCurrentHour = if (startTime.get(Calendar.MINUTE) < 5) 0 else 1
 
-        (startIndex..endIndex).forEach {
+        ((startIndex + needToHideCurrentHour)..endIndex).forEach {
             timeViewHoldersList[it].changeTimeLineVisibility(false)
         }
 
@@ -120,10 +121,9 @@ class TimetableView @JvmOverloads constructor(
                 marginStart = HORIZONTAL_MARGIN
                 val additionalMargin = resources.getDimension(
                     R.dimen.timeLineView_layoutHeight_default
-                ) / 2 + ITEMS_MARGIN * (startTime.get(Calendar.MINUTE) / 60)
+                ) / 2f + ITEMS_MARGIN * (startTime.get(Calendar.MINUTE) / 60f)
 
-                Log.e("kek", additionalMargin.toString())
-                setMargins(0, additionalMargin.roundToInt() * 10, 0, 0)
+                setMargins(0, additionalMargin.dpToPx, 0, 0)
             }
         }
     }

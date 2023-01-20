@@ -52,7 +52,7 @@ class CalendarFragment @Inject constructor(
 
     override fun render(currentViewState: CalendarViewState) = with(binding) {
         dayItemCarousel.render(currentViewState.dayItemCarouselState)
-        timetableView.render(listOf(currentViewState.subjectViewState))
+        timetableView.render(currentViewState.subjectViewState)
     }
 
     private fun setListeners() = with(binding) {

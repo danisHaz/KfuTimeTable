@@ -4,17 +4,13 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.StateListDrawable
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
-import androidx.core.view.updateLayoutParams
 import com.kpfu.kfutimetable.R
 import com.kpfu.kfutimetable.databinding.ViewSubjectBinding
 import com.kpfu.kfutimetable.utils.changeAlpha
-import java.lang.Exception
 import java.util.*
 
 class SubjectView @JvmOverloads constructor(
