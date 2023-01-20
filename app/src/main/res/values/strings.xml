@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">KfuTimeTable</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="prompt_email">Логин</string>
+    <string name="prompt_password">Пароль</string>
+    <string name="action_sign_in">Войти</string>
+    <string name="person_page">Личный кабинет</string>
+    <string name="TODO">TODO</string>
 </resources>

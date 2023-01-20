@@ -72,7 +72,7 @@ class TimetableView @JvmOverloads constructor(
         val endIndex = endTime.get(Calendar.HOUR_OF_DAY) - HOURS_START_DAY_FROM
 
         (startIndex..endIndex).forEach {
-            timeViewHoldersList[it].timeLineId
+            timeViewHoldersList[it]
         }
 
         val hourHeightInDp = resources.getDimension(R.dimen.timeTableView_marginTop)
