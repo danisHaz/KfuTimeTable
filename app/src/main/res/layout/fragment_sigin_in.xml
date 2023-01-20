@@ -8,11 +8,12 @@
     android:background="#fff"
     tools:ignore="MissingClass">
 
+    <include layout="@layout/two_icons"/>
     <!-- TODO: Update blank fragment layout -->
     <View
         android:id="@+id/rectangle_1"
-        android:layout_width="415dp"
-        android:layout_height="525dp"
+        android:layout_width="416dp"
+        android:layout_height="553dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
@@ -20,25 +21,25 @@
         android:background="#004F8C"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="240dp"
         android:layout_height="240dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/TODO"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo"
-        android:contentDescription="@string/TODO" />
+        app:srcCompat="@drawable/logo" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="472dp"
+        android:layout_marginBottom="468dp"
         android:text="@string/person_page"
         android:textColor="@color/white"
         android:textSize="24sp"
@@ -53,7 +54,7 @@
         android:layout_width="323dp"
         android:layout_height="42dp"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="275dp"
+        android:layout_marginTop="300dp"
         android:autofillHints="@string/prompt_email"
         android:hint="@string/prompt_email"
         android:inputType="textEmailAddress"
@@ -74,7 +75,7 @@
         android:layout_width="323dp"
         android:layout_height="42dp"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="345dp"
+        android:layout_marginTop="370dp"
         android:autofillHints="@string/prompt_email"
         android:hint="@string/prompt_password"
         android:inputType="textPassword"
@@ -82,61 +83,30 @@
         app:layout_constraintEnd_toEndOf="@id/textView"
         app:layout_constraintStart_toStartOf="@id/textView"
         app:layout_constraintTop_toTopOf="parent">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password"
-            android:background="@drawable/formsradius"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            />
+            android:background="@drawable/formsradius" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/loginOrRegister"
         android:layout_width="246dp"
         android:layout_height="60dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginStart="0dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/formsradius"
         android:text="@string/action_sign_in"
+        android:textColor="#004F8C"
         android:textSize="26sp"
         android:textStyle="bold"
-        android:textColor="#004F8C"
-        android:background="@drawable/formsradius"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password_input_layout"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/password_input_layout" />
 
-    <ImageButton
-        android:id="@+id/imageButton1"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_marginTop="75dp"
-        android:layout_marginStart="40dp"
-        android:elevation="6dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        app:layout_constraintStart_toStartOf="@id/username_input_layout"
-        app:layout_constraintTop_toBottomOf="@+id/loginOrRegister"
-        android:src="@drawable/buttonone"
-        android:background="@drawable/but11"
-        android:contentDescription="@string/TODO" />
-
-    <ImageButton
-        android:id="@+id/imageButton2"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_marginTop="75dp"
-        android:layout_marginStart="200dp"
-        android:elevation="6dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        app:layout_constraintStart_toStartOf="@id/username_input_layout"
-        app:layout_constraintTop_toBottomOf="@+id/loginOrRegister"
-        android:src="@drawable/buttontwo"
-        android:background="@drawable/but11"
-        android:contentDescription="@string/TODO"
-        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

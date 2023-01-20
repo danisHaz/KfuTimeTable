@@ -18,8 +18,6 @@
     <style name="TimeLineViewStyle" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="timeLineViewAccentColor">@color/timeLineColor_accent</item>
         <item name="timeLineViewBaseColor">@color/timeLineColor_base</item>
-        <item name="timeLineViewAccentColor">@color/timeLineColor_accent</item>
-        <item name="timeLineViewBaseColor">@color/timeLineColor_base</item>
     </style>
 
     <style name="NextFloatingButtonStyle">
@@ -44,6 +42,34 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:maxWidth">150dp</item>
+    </style>
+
+    <style name="TextStyle.Body.BoldSubtitle" parent="TextStyle.Body">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    
+    <style name="TextStyle.Body.BoldTitle" parent="TextStyle.Body">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TextStyle.Body.Header" parent="TextStyle.Body">
+        <item name="android:text">48sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/primary</item>
+    </style>
+
+    <style name="TextStyle.Body.Small" parent="TextStyle.Body">
+        <item name="android:text">12sp</item>
+        <item name="android:color">@color/white</item>
+    </style>
+    
+    <style name="TextStyle.Body.SmallMain" parent="TextStyle.Body">
+        <item name="android:text">18sp</item>
+        <item name="android:color">@color/white</item>
     </style>
 
 </resources>
