@@ -8,8 +8,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.view.forEach
 import com.kpfu.kfutimetable.R
 import com.kpfu.kfutimetable.commonwidgets.BaseView
+import com.kpfu.kfutimetable.commonwidgets.SubjectView
 import com.kpfu.kfutimetable.commonwidgets.TimeLineView
 import kotlinx.android.synthetic.main.fragment_calendar.view.*
 import java.util.*
@@ -19,12 +21,35 @@ class TimetableView @JvmOverloads constructor(
     context: Context,
     attributeSet: AttributeSet? = null,
     defStyleAttr: Int = 0,
-) : ConstraintLayout(context, attributeSet, defStyleAttr), BaseView<Any> {
+) : ConstraintLayout(context, attributeSet, defStyleAttr), BaseView<List<SubjectView.State>> {
 
     private var timeViewHoldersList: List<TimeViewHolder> = listOf()
 
-    override fun render(state: Any) {
-        timeViewHoldersList = createTimeViewHolders(HOURS_PER_DAY_COUNT)
+    init {
+        initialize()
+    }
+
+    override fun render(state: List<SubjectView.State>) {
+        state.forEach { subject ->
+            val startTime = subject.startTime.clone()
+            val endHour: Calendar
+            with(subject.startTime.clone() as Calendar) {
+                add(Calendar.HOUR_OF_DAY, 1)
+                add(Calendar.MINUTE, 30)
+                endHour = this
+            }
+
+
+        }
+    }
+
+    private fun initialize() {
+        timeViewHoldersList = createTimeViewHolders(HOURS_PER_DAY_COUNT).also {
+            it.forEachIndexed { index, timeVH ->
+                timeVH.bindToTimeTable()
+                timeVH.render(index)
+            }
+        }
     }
 
     private fun createTimeViewHolders(count: Int) = mutableListOf<TimeViewHolder>().apply {
@@ -34,14 +59,36 @@ class TimetableView @JvmOverloads constructor(
             } else {
                 TimeViewHolder(this@TimetableView, this.last().id)
             }
-            timeVH.bindToTimeTable()
-            timeVH.render(i)
             add(timeVH)
         }
     }
 
+    private fun addSubject(
+        startTime: Calendar,
+        endTime: Calendar,
+        subjectState: SubjectView.State
+    ) {
+        val startIndex = startTime.get(Calendar.HOUR_OF_DAY) - HOURS_START_DAY_FROM
+        val endIndex = endTime.get(Calendar.HOUR_OF_DAY) - HOURS_START_DAY_FROM
+
+        (startIndex..endIndex).forEach {
+            timeViewHoldersList[it].timeLineId
+        }
+
+        val hourHeightInDp = resources.getDimension(R.dimen.timeTableView_marginTop)
+
+        val subjectView = SubjectView(context, null, 0).apply {
+            layoutParams = ViewGroup.LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                (hourHeightInDp * LESSON_DURATION_HOURS).roundToInt()
+            )
+        }
+    }
+
     companion object {
+        const val HOURS_START_DAY_FROM = 7
         const val HOURS_PER_DAY_COUNT = 15
+        const val LESSON_DURATION_HOURS = 1.5
     }
 }
 
@@ -61,8 +108,9 @@ private class TimeViewHolder(
     private val timeLineView: TimeLineView = createTimeLine()
 
     private val time: String get() = "${currentState + 7}:00"
-    private val isCurrentTime get() = time.split(":")[0] ==
-            Calendar.getInstance().get(Calendar.HOUR_OF_DAY).toString()
+    private val isCurrentTime
+        get() = time.split(":")[0] ==
+                Calendar.getInstance().get(Calendar.HOUR_OF_DAY).toString()
 
     override fun render(state: Int) {
         currentState = state
