@@ -6,11 +6,14 @@ import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import androidx.annotation.ColorInt
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import com.kpfu.kfutimetable.R
 import com.kpfu.kfutimetable.databinding.ViewSubjectBinding
 import com.kpfu.kfutimetable.utils.changeAlpha
+import com.kpfu.kfutimetable.utils.fromAttr
 import java.util.*
 
 class SubjectView @JvmOverloads constructor(
@@ -33,17 +36,10 @@ class SubjectView @JvmOverloads constructor(
         room.text = state.roomNumber
 
         root.background = (root.background as GradientDrawable).apply {
-            val typedArray = context.obtainStyledAttributes(
-                R.style.SubjectViewStyle,
-                intArrayOf(state.subjectType.backgroundColorAttr)
-            )
-
-            typedArray.getColor(
-                0,
-                ContextCompat.getColor(context, R.color.subjectColor_lecture)
-            ).let { color = createColorStateList(it) }
-
-            typedArray.recycle()
+            context.fromAttr(state.subjectType.backgroundColorAttr)?.let {
+                mutate()
+                color = createColorStateList(it)
+            }
         }
     }
 
@@ -53,23 +49,14 @@ class SubjectView @JvmOverloads constructor(
             R.drawable.view_subject_background
         )
 
-        val typedArray = context.obtainStyledAttributes(
-            R.style.SubjectViewStyle,
-            intArrayOf(R.attr.subjectViewTextColor)
-        )
-
-        typedArray.getColor(
-            0,
-            ContextCompat.getColor(context, R.color.timetableColor_accent_primary)
-        ).let {
+        context.fromAttr(R.attr.subjectViewTextColor)?.let {
             listOf(name, room, teacher, address).forEach { view ->
                 view.setTextColor(createColorStateList(it))
             }
         }
-        typedArray.recycle()
     }
 
-    private fun createColorStateList(color: Int): ColorStateList {
+    private fun createColorStateList(@ColorInt color: Int): ColorStateList {
         val pressedColor = Color.valueOf(color).changeAlpha(OPACITY_COEF)
 
         return ColorStateList(
@@ -96,6 +83,6 @@ class SubjectView @JvmOverloads constructor(
     }
 
     private companion object {
-        const val OPACITY_COEF = 0.5f
+        const val OPACITY_COEF = 0.7f
     }
 }
