@@ -21,4 +21,6 @@
     <dimen name="timeTableView_textView_layoutWidth">52dp</dimen>
 
     <dimen name="timeLineView_layoutHeight_default">10dp</dimen>
+
+    <dimen name="elevation_m">38dp</dimen>
 </resources>
