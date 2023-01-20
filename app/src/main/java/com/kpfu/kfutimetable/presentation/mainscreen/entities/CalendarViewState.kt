@@ -6,6 +6,6 @@ import com.kpfu.kfutimetable.presentation.base.utils.BaseViewState
 
 data class CalendarViewState(
     val dayItemViewState: DayItemView.State,
-    val subjectViewState: SubjectView.State,
+    val subjectViewState: List<SubjectView.State>,
     val dayItemCarouselState: List<DayItemView.State>
 ) : BaseViewState

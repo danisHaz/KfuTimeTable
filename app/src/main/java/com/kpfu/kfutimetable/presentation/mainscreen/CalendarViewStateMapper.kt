@@ -11,13 +11,25 @@ class CalendarViewStateMapper : BaseViewStateMapper<CalendarState, CalendarViewS
     override fun mapToViewState(state: CalendarState): CalendarViewState {
         return CalendarViewState(
             DayItemView.State("15", "Sat"),
-            SubjectView.State(
-                "Math",
-                SubjectView.State.SubjectType.Seminar,
-                "Kremlevskaya, 35",
-                "Askhatov",
-                "12",
-                Calendar.getInstance()
+            listOf(
+                SubjectView.State(
+                    "(Л) Математический анализ",
+                    SubjectView.State.SubjectType.Lecture,
+                    "ул. Кремлевская, 35",
+                    "Асхатов Р.М.",
+                    "ауд. 216",
+                    Calendar.Builder().set(Calendar.HOUR_OF_DAY, 10).set(Calendar.MINUTE, 10)
+                        .build()
+                ),
+                SubjectView.State(
+                    "(П) Дифференциальные и разностные уравнения",
+                    SubjectView.State.SubjectType.Seminar,
+                    "ул. Кремлевская, 35",
+                    "Соловьев С.И.",
+                    "ауд. 1010",
+                    Calendar.Builder().set(Calendar.HOUR_OF_DAY, 15).set(Calendar.MINUTE, 40)
+                        .build()
+                ),
             ),
             listOf(
                 DayItemView.State("1", "Sat"),

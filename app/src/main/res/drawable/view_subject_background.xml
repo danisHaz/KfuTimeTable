@@ -6,5 +6,5 @@
         android:left="@dimen/subjectView_padding"
         android:right="@dimen/subjectView_padding"
         android:top="@dimen/subjectView_padding" />
-    <solid android:color="@color/subjectColor_lecture"/>
+    <solid android:color="@color/purple_200"/>
 </shape>
