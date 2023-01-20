@@ -2,18 +2,18 @@ package com.kpfu.kfutimetable.presentation.mainscreen.utils
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
-import androidx.core.view.forEach
+import androidx.core.view.isVisible
 import com.kpfu.kfutimetable.R
 import com.kpfu.kfutimetable.commonwidgets.BaseView
 import com.kpfu.kfutimetable.commonwidgets.SubjectView
 import com.kpfu.kfutimetable.commonwidgets.TimeLineView
-import kotlinx.android.synthetic.main.fragment_calendar.view.*
 import java.util.*
 import kotlin.math.roundToInt
 
@@ -23,6 +23,11 @@ class TimetableView @JvmOverloads constructor(
     defStyleAttr: Int = 0,
 ) : ConstraintLayout(context, attributeSet, defStyleAttr), BaseView<List<SubjectView.State>> {
 
+    private val ITEMS_MARGIN =
+        resources.getDimension(R.dimen.calendar_time_marginTop).roundToInt()
+    private val HORIZONTAL_MARGIN =
+        resources.getDimension(R.dimen.calendar_time_marginEnd).roundToInt()
+
     private var timeViewHoldersList: List<TimeViewHolder> = listOf()
 
     init {
@@ -31,15 +36,15 @@ class TimetableView @JvmOverloads constructor(
 
     override fun render(state: List<SubjectView.State>) {
         state.forEach { subject ->
-            val startTime = subject.startTime.clone()
-            val endHour: Calendar
+            val startTime = subject.startTime.clone() as Calendar
+            val endTime: Calendar
             with(subject.startTime.clone() as Calendar) {
                 add(Calendar.HOUR_OF_DAY, 1)
                 add(Calendar.MINUTE, 30)
-                endHour = this
+                endTime = this
             }
 
-
+            addSubject(startTime, endTime, subject)
         }
     }
 
@@ -72,16 +77,54 @@ class TimetableView @JvmOverloads constructor(
         val endIndex = endTime.get(Calendar.HOUR_OF_DAY) - HOURS_START_DAY_FROM
 
         (startIndex..endIndex).forEach {
-            timeViewHoldersList[it]
+            timeViewHoldersList[it].changeTimeLineVisibility(false)
         }
 
         val hourHeightInDp = resources.getDimension(R.dimen.timeTableView_marginTop)
 
         val subjectView = SubjectView(context, null, 0).apply {
-            layoutParams = ViewGroup.LayoutParams(
-                LayoutParams.MATCH_PARENT,
-                (hourHeightInDp * LESSON_DURATION_HOURS).roundToInt()
+            id = View.generateViewId()
+            render(subjectState)
+        }
+        addView(subjectView)
+
+        ConstraintSet().apply {
+            clone(this@TimetableView)
+            connect(
+                subjectView.id,
+                ConstraintSet.START,
+                timeViewHoldersList[startIndex].id,
+                ConstraintSet.END
             )
+
+            connect(
+                subjectView.id,
+                ConstraintSet.END,
+                this@TimetableView.id,
+                ConstraintSet.END
+            )
+
+            connect(
+                subjectView.id,
+                ConstraintSet.TOP,
+                timeViewHoldersList[startIndex].id,
+                ConstraintSet.TOP
+            )
+            applyTo(this@TimetableView)
+        }
+        subjectView.apply {
+            layoutParams = (layoutParams?.apply {
+                width = 0
+                height = (hourHeightInDp * LESSON_DURATION_HOURS).roundToInt()
+            } as? MarginLayoutParams)?.apply {
+                marginStart = HORIZONTAL_MARGIN
+                val additionalMargin = resources.getDimension(
+                    R.dimen.timeLineView_layoutHeight_default
+                ) / 2 + ITEMS_MARGIN * (startTime.get(Calendar.MINUTE) / 60)
+
+                Log.e("kek", additionalMargin.toString())
+                setMargins(0, additionalMargin.roundToInt() * 10, 0, 0)
+            }
         }
     }
 
@@ -131,6 +174,11 @@ private class TimeViewHolder(
     fun bindToTimeTable() {
         timeTable.addView(textView)
         timeTable.addView(timeLineView)
+    }
+
+    fun changeTimeLineVisibility(isVisible: Boolean? = null) {
+        isVisible?.let { timeLineView.isVisible = it }
+            ?: run { timeLineView.isVisible = !timeLineView.isVisible }
     }
 
     private fun createTimeView(): TextView =

@@ -12,11 +12,11 @@ class CalendarViewStateMapper : BaseViewStateMapper<CalendarState, CalendarViewS
         return CalendarViewState(
             DayItemView.State("15", "Sat"),
             SubjectView.State(
-                "Math",
+                "(Л) Математический анализ",
                 SubjectView.State.SubjectType.Seminar,
-                "Kremlevskaya, 35",
-                "Askhatov",
-                "12",
+                "ул. Кремлевская, 35",
+                "Асхатов Р.М.",
+                "ауд. 216",
                 Calendar.getInstance()
             ),
             listOf(
