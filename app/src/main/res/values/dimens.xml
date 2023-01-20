@@ -5,6 +5,8 @@
     <dimen name="dayItemView_paddingHorizontal">16dp</dimen>
     <dimen name="dayItemView_paddingVertical">4dp</dimen>
 
+    <dimen name="dayItemViewCarousel_marginStart">16dp</dimen>
+
     <dimen name="subjectView_cornerradiusBackground">16dp</dimen>
     <dimen name="subjectView_padding">12dp</dimen>
     <dimen name="subjectView_inner_margin">12dp</dimen>
@@ -12,4 +14,11 @@
 
     <dimen name="avatar_logo_minHeight">50dp</dimen>
 
+    <dimen name="calendar_time_marginTop">28dp</dimen>
+    <dimen name="calendar_time_marginEnd">16dp</dimen>
+
+    <dimen name="timeTableView_marginTop">52dp</dimen>
+    <dimen name="timeTableView_textView_layoutWidth">52dp</dimen>
+
+    <dimen name="timeLineView_layoutHeight_default">10dp</dimen>
 </resources>

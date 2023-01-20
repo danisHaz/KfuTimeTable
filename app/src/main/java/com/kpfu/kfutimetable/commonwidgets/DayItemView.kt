@@ -1,17 +1,14 @@
 package com.kpfu.kfutimetable.commonwidgets
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.content.res.TypedArray
 import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.kpfu.kfutimetable.R
 import com.kpfu.kfutimetable.databinding.ViewDayItemBinding
-import com.kpfu.kfutimetable.utils.dpToPxF
 
 class DayItemView @JvmOverloads constructor(
     context: Context,
@@ -24,7 +21,6 @@ class DayItemView @JvmOverloads constructor(
 
     fun updateOnClick(newOnClick: () -> Unit) = setOnClickListener {
         newOnClick.invoke()
-        isChecked = !isChecked
     }
 
     var isChecked: Boolean = false
@@ -81,6 +77,8 @@ class DayItemView @JvmOverloads constructor(
             dayOfWeek.text = state.dayOfWeek
             date.text = state.date
         }
+        state.isChecked?.let { isChecked = it }
+
         currentState = state
     }
 
@@ -89,6 +87,7 @@ class DayItemView @JvmOverloads constructor(
     data class State(
         val date: String,
         val dayOfWeek: String,
+        val isChecked: Boolean? = null
     )
 
     private companion object {

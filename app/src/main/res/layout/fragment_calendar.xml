@@ -8,73 +8,81 @@
 
     <include layout="@layout/toolbar_main" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="4dp">
+        android:overScrollMode="never"
+        android:scrollbars="none">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/monthsContainer"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="24dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:orientation="vertical"
+            android:padding="30dp">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/prev_button"
-                style="@style/PrevFloatingButtonStyle"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
-                app:layout_constraintEnd_toStartOf="@id/month_list"
-                app:layout_constraintHorizontal_chainStyle="spread"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <LinearLayout
-                android:id="@+id/month_list"
-                android:layout_width="0dp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/monthsContainer"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal"
-                android:paddingStart="4dp"
-                android:paddingEnd="4dp"
-                app:layout_constraintBottom_toBottomOf="@id/prev_button"
-                app:layout_constraintEnd_toStartOf="@id/next_button"
-                app:layout_constraintHorizontal_weight="2"
-                app:layout_constraintStart_toEndOf="@id/prev_button"
-                app:layout_constraintTop_toTopOf="@id/prev_button">
+                android:layout_marginBottom="30dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:id="@+id/month_holder"
-                    android:layout_width="match_parent"
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/prev_button"
+                    style="@style/PrevFloatingButtonStyle"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    app:layout_constraintEnd_toStartOf="@id/month_list"
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/month_list"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textAppearance="@style/TextStyle.Month"
-                    tools:text="Default text" />
-            </LinearLayout>
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"
+                    app:layout_constraintBottom_toBottomOf="@id/prev_button"
+                    app:layout_constraintEnd_toStartOf="@id/next_button"
+                    app:layout_constraintHorizontal_weight="2"
+                    app:layout_constraintStart_toEndOf="@id/prev_button"
+                    app:layout_constraintTop_toTopOf="@id/prev_button">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/next_button"
-                style="@style/NextFloatingButtonStyle"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintStart_toEndOf="@id/month_list"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:id="@+id/month_holder"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textAppearance="@style/TextStyle.Month"
+                        tools:text="Default text" />
+                </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/dayItemCarousel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:overScrollMode="never"
-            app:layout_constraintTop_toBottomOf="@id/monthsContainer" />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/next_button"
+                    style="@style/NextFloatingButtonStyle"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toEndOf="@id/month_list"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <include layout="@layout/two_icons"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.kpfu.kfutimetable.presentation.mainscreen.utils.DayItemCarousel
+                android:id="@+id/dayItemCarousel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.kpfu.kfutimetable.presentation.mainscreen.utils.TimetableView
+                android:id="@+id/timetableView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/timeTableView_marginTop"/>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

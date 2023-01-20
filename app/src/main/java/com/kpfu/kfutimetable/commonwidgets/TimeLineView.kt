@@ -7,19 +7,19 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.kpfu.kfutimetable.R
+import com.kpfu.kfutimetable.utils.dpToPxF
 import com.kpfu.kfutimetable.utils.fromAttr
 
 class TimeLineView @JvmOverloads constructor(
     context: Context,
     attributeSet: AttributeSet? = null,
     defStyleAttrs: Int = 0,
-) : View(context, attributeSet, defStyleAttrs), BaseView<TimeLineView.State> {
+    defStyleRes: Int = 0,
+) : View(context, attributeSet, defStyleAttrs, defStyleRes), BaseView<TimeLineView.State> {
 
     private val paint: Paint = Paint()
 
-    init {
-        setStyle()
-    }
+    init { setStyle() }
 
     override fun render(state: State) {
         val color = context.fromAttr(state.colorAttr) ?: BASE_COLOR
@@ -36,9 +36,9 @@ class TimeLineView @JvmOverloads constructor(
         )
         canvas?.drawOval(
             0f,
-            height.toFloat() / 2 - DEFAULT_CIRCLE_DIAMETER,
-            (DEFAULT_CIRCLE_DIAMETER * 2).toFloat(),
-            height.toFloat() / 2 + DEFAULT_CIRCLE_DIAMETER,
+            height.toFloat() / 2 - DEFAULT_CIRCLE_DIAMETER.dpToPxF,
+            DEFAULT_CIRCLE_DIAMETER.dpToPxF * 2,
+            height.toFloat() / 2 + DEFAULT_CIRCLE_DIAMETER.dpToPxF,
             paint
         )
     }
