@@ -25,7 +25,7 @@ class CalendarViewStateMapper : BaseViewStateMapper<CalendarState, CalendarViewS
                     "(П) Дифференциальные и разностные уравнения",
                     SubjectView.State.SubjectType.Seminar,
                     "ул. Кремлевская, 35",
-                    "Соловьев С.И.",
+                    "Гайнуллина А.А.",
                     "ауд. 1010",
                     Calendar.Builder().set(Calendar.HOUR_OF_DAY, 15).set(Calendar.MINUTE, 40)
                         .build()
