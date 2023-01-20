@@ -24,7 +24,6 @@ class TimetableView @JvmOverloads constructor(
     private var timeViewHoldersList: List<TimeViewHolder> = listOf()
 
     override fun render(state: Any) {
-        var prevMemberId = 0
         timeViewHoldersList = createTimeViewHolders(HOURS_PER_DAY_COUNT)
     }
 
@@ -35,8 +34,7 @@ class TimetableView @JvmOverloads constructor(
             } else {
                 TimeViewHolder(this@TimetableView, this.last().id)
             }
-            timetableView.addView(timeVH.textView)
-            timetableView.addView(timeVH.timeLineView)
+            timeVH.bindToTimeTable()
             timeVH.render(i)
             add(timeVH)
         }
@@ -59,8 +57,8 @@ private class TimeViewHolder(
 
     var currentState: Int = -1
     val id get() = textView.id
-    val textView: TextView = createTimeView()
-    val timeLineView: TimeLineView = createTimeLine()
+    private val textView: TextView = createTimeView()
+    private val timeLineView: TimeLineView = createTimeLine()
 
     private val time: String get() = "${currentState + 7}:00"
     private val isCurrentTime get() = time.split(":")[0] ==
@@ -80,6 +78,11 @@ private class TimeViewHolder(
         } else {
             TimeLineView.State.BASE_TIME
         }.also { timeLineView.render(it) }
+    }
+
+    fun bindToTimeTable() {
+        timeTable.addView(textView)
+        timeTable.addView(timeLineView)
     }
 
     private fun createTimeView(): TextView =
@@ -198,5 +201,4 @@ private class TimeViewHolder(
         updateMargins()
         updateConstraints(textView.id, textView.id)
     }
-
 }
