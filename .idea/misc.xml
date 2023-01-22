@@ -7,6 +7,7 @@
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.219" />
         <entry key="app/src/main/res/drawable/day_item_view_background.xml" value="0.189" />
         <entry key="app/src/main/res/drawable/day_item_view_background_checked.xml" value="0.2575" />
+        <entry key="app/src/main/res/drawable/formsradius.xml" value="0.2655" />
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_forward_24.xml" value="0.2585" />
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_forward_8.xml" value="0.2585" />
         <entry key="app/src/main/res/drawable/ic_baseline_menu_24.xml" value="0.218" />
@@ -20,6 +21,7 @@
         <entry key="app/src/main/res/drawable/view_subject_background.xml" value="0.19" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.17777777777777778" />
         <entry key="app/src/main/res/layout/fragment_calendar.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_sigin_in.xml" value="0.33" />
         <entry key="app/src/main/res/layout/toolbar_main.xml" value="0.5" />
         <entry key="app/src/main/res/layout/view_day_item.xml" value="0.18072916666666666" />
         <entry key="app/src/main/res/layout/view_subject.xml" value="0.2520833333333333" />
