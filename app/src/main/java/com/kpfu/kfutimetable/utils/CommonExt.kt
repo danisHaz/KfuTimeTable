@@ -1,6 +1,7 @@
 package com.kpfu.kfutimetable.utils
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.content.res.TypedArray
 import android.graphics.Color
 import android.util.DisplayMetrics
@@ -8,6 +9,8 @@ import android.util.Log
 import android.util.TypedValue
 import androidx.annotation.AttrRes
 import androidx.annotation.IdRes
+import androidx.annotation.StyleableRes
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.kpfu.kfutimetable.presentation.base.utils.BaseApplication
 import kotlinx.coroutines.flow.Flow
@@ -61,9 +64,25 @@ fun Context.fromAttr(@AttrRes attrId: Int): Int? {
     return if (theme.resolveAttribute(attrId, typedValue, true)) {
         typedValue.data
     } else {
-      Log.e("ColorExt", "Color not found for resource")
-      null
+        Log.e("ColorExt", "Color not found for resource")
+        null
     }
+}
+
+fun Context.getColorStateList(
+    attributes: TypedArray, @StyleableRes index: Int
+): ColorStateList? {
+    if (attributes.hasValue(index)) {
+        val resourceId = attributes.getResourceId(index, 0)
+        if (resourceId != 0) {
+            val value = AppCompatResources.getColorStateList(this, resourceId)
+            if (value != null) {
+                return value
+            }
+        }
+    }
+
+    return attributes.getColorStateList(index)
 }
 
 fun Color.changeAlpha(alphaCoef: Float = 0.1f): Color {

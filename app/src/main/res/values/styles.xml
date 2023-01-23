@@ -38,7 +38,7 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/primary</item>
     </style>
-    
+
     <style name="TextStyle.Body" parent="TextAppearance.AppCompat.Medium">
         <item name="fontFamily">PT Sans</item>
     </style>
@@ -54,7 +54,7 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/white</item>
     </style>
-    
+
     <style name="TextStyle.Body.BoldTitle" parent="TextStyle.Body">
         <item name="android:textSize">24sp</item>
         <item name="android:textStyle">bold</item>
@@ -71,10 +71,20 @@
         <item name="android:text">12sp</item>
         <item name="android:color">@color/white</item>
     </style>
-    
+
     <style name="TextStyle.Body.SmallMain" parent="TextStyle.Body">
         <item name="android:text">18sp</item>
         <item name="android:color">@color/white</item>
     </style>
 
+    <style name="TopSheet">
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="enableEdgeToEdge">false</item>
+<!--        <item name="android:windowNoTitle">true</item>-->
+    </style>
+
+    <style name="TopSheet_DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/top_sheet_dialog_to_bottom</item>
+        <item name="android:windowExitAnimation">@anim/top_sheet_dialog_to_top</item>
+    </style>
 </resources>
