@@ -77,10 +77,9 @@
         <item name="android:color">@color/white</item>
     </style>
 
-    <style name="TopSheet">
+    <style name="TopSheet" parent="Theme.Design.BottomSheetDialog">
         <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="enableEdgeToEdge">false</item>
-<!--        <item name="android:windowNoTitle">true</item>-->
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
     <style name="TopSheet_DialogAnimation">

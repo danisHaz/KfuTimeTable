@@ -183,6 +183,8 @@ public class TopSheetBehavior<V extends View> extends CoordinatorLayout.Behavior
 
     private static final int CORNER_ANIMATION_DURATION = 500;
 
+    private static final int NO_MAX_SIZE = -1;
+
     private boolean fitToContents = true;
 
     private boolean updateImportantForAccessibilityOnSiblings = false;
@@ -205,6 +207,10 @@ public class TopSheetBehavior<V extends View> extends CoordinatorLayout.Behavior
     private boolean shapeThemingEnabled;
 
     private MaterialShapeDrawable materialShapeDrawable;
+
+    private int maxWidth = NO_MAX_SIZE;
+
+    private int maxHeight = NO_MAX_SIZE;
 
     private int gestureInsetBottom;
     private boolean gestureInsetBottomIgnored;
@@ -362,6 +368,59 @@ public class TopSheetBehavior<V extends View> extends CoordinatorLayout.Behavior
         viewRef = null;
         viewDragHelper = null;
     }
+
+    @Override
+  public boolean onMeasureChild(
+      @NonNull CoordinatorLayout parent,
+      @NonNull V child,
+      int parentWidthMeasureSpec,
+      int widthUsed,
+      int parentHeightMeasureSpec,
+      int heightUsed) {
+    ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) child.getLayoutParams();
+    int childWidthMeasureSpec =
+        getChildMeasureSpec(
+            parentWidthMeasureSpec,
+            parent.getPaddingLeft()
+                + parent.getPaddingRight()
+                + lp.leftMargin
+                + lp.rightMargin
+                + widthUsed,
+            maxWidth,
+            lp.width);
+    int childHeightMeasureSpec =
+        getChildMeasureSpec(
+            parentHeightMeasureSpec,
+            parent.getPaddingTop()
+                + parent.getPaddingBottom()
+                + lp.topMargin
+                + lp.bottomMargin
+                + heightUsed,
+            maxHeight,
+            lp.height);
+    child.measure(childWidthMeasureSpec, childHeightMeasureSpec);
+    return true; // Child was measured
+  }
+
+  private int getChildMeasureSpec(
+      int parentMeasureSpec, int padding, int maxSize, int childDimension) {
+    int result = ViewGroup.getChildMeasureSpec(parentMeasureSpec, padding, childDimension);
+    if (maxSize == NO_MAX_SIZE) {
+      return result;
+    } else {
+      int mode = View.MeasureSpec.getMode(result);
+      int size = View.MeasureSpec.getSize(result);
+      switch (mode) {
+        case View.MeasureSpec.EXACTLY:
+          return View.MeasureSpec.makeMeasureSpec(min(size, maxSize), View.MeasureSpec.EXACTLY);
+        case View.MeasureSpec.AT_MOST:
+        case View.MeasureSpec.UNSPECIFIED:
+        default:
+          return View.MeasureSpec.makeMeasureSpec(
+              size == 0 ? maxSize : min(size, maxSize), View.MeasureSpec.AT_MOST);
+      }
+    }
+  }
 
     @Override
     public boolean onLayoutChild(
@@ -1466,7 +1525,7 @@ public class TopSheetBehavior<V extends View> extends CoordinatorLayout.Behavior
             @Override
             public int clampViewPositionVertical(@NonNull View child, int top, int dy) {
                 return MathUtils.clamp(
-                    top, getExpandedOffset(), hideable ? parentHeight : collapsedOffset);
+                    top, -(hideable ? parentHeight : collapsedOffset), 0);
             }
 
             @Override
