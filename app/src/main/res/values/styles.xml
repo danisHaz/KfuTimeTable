@@ -78,7 +78,6 @@
     </style>
 
     <style name="TopSheet" parent="Theme.Design.BottomSheetDialog">
-        <item name="android:statusBarColor">@android:color/white</item>
     </style>
     
     <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">

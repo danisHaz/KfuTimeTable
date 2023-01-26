@@ -39,6 +39,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+
 import androidx.annotation.FloatRange;
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
@@ -54,9 +55,11 @@ import androidx.core.view.accessibility.AccessibilityNodeInfoCompat.Accessibilit
 import androidx.core.view.accessibility.AccessibilityViewCommand;
 import androidx.customview.view.AbsSavedState;
 import androidx.customview.widget.ViewDragHelper;
+
 import com.google.android.material.R;
 import com.google.android.material.shape.MaterialShapeDrawable;
 import com.google.android.material.shape.ShapeAppearanceModel;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.ref.WeakReference;
@@ -1430,7 +1433,7 @@ public class TopSheetBehavior<V extends View> extends CoordinatorLayout.Behavior
 
             private boolean releasedLow(@NonNull View child) {
                 // Needs to be at least half way to the bottom.
-                return child.getBottom() < childHeight/2;
+                return child.getBottom() < childHeight;
             }
 
             @Override

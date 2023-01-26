@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kpfu.kfutimetable.R
 import com.kpfu.kfutimetable.commonwidgets.TopSheetDialog.TopSheetDialog
@@ -49,6 +50,7 @@ class CalendarFragment @Inject constructor(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         menuDialog = TopSheetDialog(requireContext(), R.style.TopSheet).apply {
             window?.attributes?.windowAnimations = R.style.TopSheet_DialogAnimation
+            window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
             setContentView(R.layout.layout_top_slidable_menu)
         }
 
