@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="end|center"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/top_slidable_menu_padding_vertical"
+    android:paddingEnd="@dimen/mainscreen_paddingEnd"
+    android:paddingBottom="@dimen/top_slidable_menu_padding_vertical">
+
+    <Button
+        style="@style/Button.MainScreenMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/mainscreen_menu_settings"/>
+
+    <Button
+        style="@style/Button.MainScreenMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/mainscreen_menu_leave_comment"/>
+
+    <Button
+        style="@style/Button.MainScreenMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/mainscreen_menu_faq"/>
+
+    <Button
+        style="@style/Button.MainScreenMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/mainscreen_menu_account"/>
+
+    <Button
+        style="@style/Button.MainScreenMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/mainscreen_menu_timetable"/>
+
+    <Button
+        style="@style/Button.MainScreenMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/mainscreen_menu_exit"/>
+
+</LinearLayout>

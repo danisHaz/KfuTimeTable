@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.kpfu.kfutimetable.R
+import com.kpfu.kfutimetable.commonwidgets.TopSheetDialog.TopSheetDialog
 import com.kpfu.kfutimetable.databinding.FragmentCalendarBinding
 import com.kpfu.kfutimetable.presentation.base.BaseFragment
 import com.kpfu.kfutimetable.presentation.mainscreen.entities.CalendarState
@@ -33,6 +35,7 @@ class CalendarFragment @Inject constructor(
     }
 
     private var monthCarousel: MonthCarousel? = null
+    private var menuDialog: TopSheetDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,6 +47,11 @@ class CalendarFragment @Inject constructor(
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        menuDialog = TopSheetDialog(requireContext(), R.style.TopSheet).apply {
+            window?.attributes?.windowAnimations = R.style.TopSheet_DialogAnimation
+            setContentView(R.layout.layout_top_slidable_menu)
+        }
+
         binding.dayItemCarousel.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         monthCarousel = MonthCarousel(monthList, binding.monthList)
@@ -62,6 +70,14 @@ class CalendarFragment @Inject constructor(
 
         prevButton.setOnClickListener {
             monthCarousel?.prevMonth()
+        }
+
+        this.toolbar.menu.setOnClickListener {
+            if (menuDialog?.isShowing == true) {
+                menuDialog?.hide()
+            } else {
+                menuDialog?.show()
+            }
         }
     }
 }

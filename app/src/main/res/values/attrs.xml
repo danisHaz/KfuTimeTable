@@ -18,4 +18,6 @@
         <attr name="timeLineViewAccentColor" format="color" />
         <attr name="timeLineViewBaseColor" format="color" />
     </declare-styleable>
+
+    <attr name="topSheetStyle" format="reference" />
 </resources>

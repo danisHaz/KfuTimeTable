@@ -17,6 +17,8 @@
         android:layout_height="wrap_content"
         android:minWidth="@dimen/avatar_logo_minHeight"
         android:minHeight="@dimen/avatar_logo_minHeight"
+        android:focusable="true"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

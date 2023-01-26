@@ -78,12 +78,22 @@
     </style>
 
     <style name="TopSheet" parent="Theme.Design.BottomSheetDialog">
-        <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/white</item>
+    </style>
+    
+    <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/top_slideable_menu_background</item>
     </style>
 
     <style name="TopSheet_DialogAnimation">
         <item name="android:windowEnterAnimation">@anim/top_sheet_dialog_to_bottom</item>
         <item name="android:windowExitAnimation">@anim/top_sheet_dialog_to_top</item>
+    </style>
+
+    <style name="Button.MainScreenMenu" parent="Widget.AppCompat.Button">
+        <item name="android:textAppearance">@style/TextStyle.Body.BoldTitle</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:gravity">end|center</item>
     </style>
 </resources>

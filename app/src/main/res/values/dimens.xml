@@ -23,4 +23,8 @@
     <dimen name="timeLineView_layoutHeight_default">10dp</dimen>
 
     <dimen name="elevation_m">38dp</dimen>
+
+    <dimen name="top_slidable_menu_padding_vertical">36dp</dimen>
+
+    <dimen name="mainscreen_paddingEnd">32dp</dimen>
 </resources>
