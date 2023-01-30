@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.kpfu.kfutimetable.commonwidgets.TopSheetDialog;
+package com.kpfu.kfutimetable.commonwidgets.topmenu;
 
 import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP;
 import static com.kpfu.kfutimetable.utils.CommonExtKt.getColorStateList;

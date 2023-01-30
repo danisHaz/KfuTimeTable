@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kpfu.kfutimetable.R
-import com.kpfu.kfutimetable.commonwidgets.TopSheetDialog.TopSheetDialog
+import com.kpfu.kfutimetable.commonwidgets.topmenu.TopSheetDialog
 import com.kpfu.kfutimetable.databinding.FragmentCalendarBinding
 import com.kpfu.kfutimetable.presentation.base.BaseFragment
 import com.kpfu.kfutimetable.presentation.mainscreen.entities.CalendarState
@@ -36,7 +36,7 @@ class CalendarFragment @Inject constructor(
     }
 
     private var monthCarousel: MonthCarousel? = null
-    private var menuDialog: TopSheetDialog? = null
+//    private var menuDialog: TopSheetDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,11 +48,12 @@ class CalendarFragment @Inject constructor(
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        menuDialog = TopSheetDialog(requireContext(), R.style.TopSheet).apply {
-            window?.attributes?.windowAnimations = R.style.TopSheet_DialogAnimation
-            window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
-            setContentView(R.layout.layout_top_slidable_menu)
-        }
+//        menuDialog = TopSheetDialog(requireContext(), R.style.TopSheet).apply {
+//            window?.attributes?.windowAnimations = R.style.TopSheet_DialogAnimation
+//            window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+////            setWrapLayout(binding.menuDialogLayout.container)
+//            setContentView(R.layout.layout_top_slidable_menu)
+//        }
 
         binding.dayItemCarousel.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -75,10 +76,12 @@ class CalendarFragment @Inject constructor(
         }
 
         this.toolbar.menu.setOnClickListener {
-            if (menuDialog?.isShowing == true) {
-                menuDialog?.hide()
-            } else {
-                menuDialog?.show()
+            binding.topMenu.let {
+                it.visibility = when (it.visibility) {
+                    View.VISIBLE -> View.GONE
+                    View.GONE -> View.VISIBLE
+                    else -> View.GONE
+                }
             }
         }
     }

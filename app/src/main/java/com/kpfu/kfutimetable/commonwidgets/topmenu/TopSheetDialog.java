@@ -1,4 +1,4 @@
-package com.kpfu.kfutimetable.commonwidgets.TopSheetDialog;
+package com.kpfu.kfutimetable.commonwidgets.topmenu;
 
 /*
  * Copyright (C) 2015 The Android Open Source Project
@@ -47,7 +47,7 @@ public class TopSheetDialog extends AppCompatDialog {
 
     private FrameLayout container;
 
-    boolean dismissWithAnimation;
+    boolean  dismissWithAnimation = false;
 
     boolean cancelable = true;
     private boolean canceledOnTouchOutside = true;
@@ -166,18 +166,31 @@ public class TopSheetDialog extends AppCompatDialog {
         return dismissWithAnimation;
     }
 
+    public void setWrapLayout(View container) {
+        if (container == null || !(container instanceof FrameLayout)) {
+            throw new IllegalArgumentException("Provided view for layout is null");
+        }
+
+        this.container = (FrameLayout) container;
+    }
+
     /** Creates the container layout which must exist to find the behavior */
-    private FrameLayout ensureContainerAndBehavior() {
+    private void ensureContainerAndBehavior() {
         if (container == null) {
             container =
                 (FrameLayout) View.inflate(getContext(), com.kpfu.kfutimetable.R.layout.layout_top_sheet_dialog, null);
+        }
 
-            FrameLayout bottomSheet = (FrameLayout) container.findViewById(R.id.design_bottom_sheet);
+        if (behavior == null) {
+            FrameLayout bottomSheet = container.findViewById(R.id.design_bottom_sheet);
             behavior = TopSheetBehavior.from(bottomSheet);
             behavior.addTopSheetCallback(topSheetCallback);
             behavior.setHideable(cancelable);
         }
-        return container;
+    }
+
+    public void setPaddingTopToContainer(int paddingTop) {
+        behavior.setExpandedOffset(paddingTop);
     }
 
     private View wrapInBottomSheet(
