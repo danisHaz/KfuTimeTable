@@ -30,6 +30,13 @@
         <item name="subjectViewTextColor">@color/timetableColor_accent_primary</item>
         <item name="timeLineViewAccentColor">@color/timeLineColor_accent</item>
         <item name="timeLineViewBaseColor">@color/timeLineColor_base</item>
+
+        <item name="colorDarkBlue">#004F8C</item>
+        <item name="colorWhite">#FFF</item>
+        <item name="colorBlack">#000</item>
+        <item name="colorGray">#B0B0B0</item>
+        <item name="colorGreen">#18D008</item>
+        <item name="colorBlue">#2F88FF</item>
     </style>
 
 </resources>

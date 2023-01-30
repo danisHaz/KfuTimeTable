@@ -19,5 +19,14 @@
         <attr name="timeLineViewBaseColor" format="color" />
     </declare-styleable>
 
+    <declare-styleable name="ColorsOfProject">
+        <attr name="colorDarkBlue" format="color"/>
+        <attr name="colorWhite" format="color"/>
+        <attr name="colorBlack" format="color"/>
+        <attr name="colorGray" format="color"/>
+        <attr name="colorGreen" format="color"/>
+        <attr name="colorBlue" format="color"/>
+    </declare-styleable>
+    
     <attr name="topSheetStyle" format="reference" />
 </resources>

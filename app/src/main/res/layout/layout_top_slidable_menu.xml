@@ -14,6 +14,12 @@
         android:layout_height="wrap_content"
         android:text="@string/mainscreen_menu_settings"/>
 
+    <View
+        android:id="@+id/view"
+        android:layout_width="240dp"
+        android:layout_height="3dp"
+        android:background="@color/white" />
+
     <Button
         style="@style/Button.MainScreenMenu"
         android:layout_width="match_parent"
@@ -21,12 +27,23 @@
         android:layout_marginTop="20dp"
         android:text="@string/mainscreen_menu_leave_comment"/>
 
+    <View
+        android:id="@+id/view1"
+        android:layout_width="240dp"
+        android:layout_height="3dp"
+        android:background="@color/white" />
+
     <Button
         style="@style/Button.MainScreenMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/mainscreen_menu_faq"/>
+    <View
+        android:id="@+id/view2"
+        android:layout_width="240dp"
+        android:layout_height="3dp"
+        android:background="@color/white" />
 
     <Button
         style="@style/Button.MainScreenMenu"
@@ -34,6 +51,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/mainscreen_menu_account"/>
+    <View
+        android:id="@+id/view3"
+        android:layout_width="240dp"
+        android:layout_height="3dp"
+        android:background="@color/white" />
 
     <Button
         style="@style/Button.MainScreenMenu"
@@ -41,6 +63,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/mainscreen_menu_timetable"/>
+    <View
+        android:id="@+id/view4"
+        android:layout_width="240dp"
+        android:layout_height="3dp"
+        android:background="@color/white" />
 
     <Button
         style="@style/Button.MainScreenMenu"
@@ -48,5 +75,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="@string/mainscreen_menu_exit"/>
+    <View
+        android:id="@+id/view5"
+        android:layout_width="100dp"
+        android:layout_height="3dp"
+        android:background="@color/white" />
 
 </LinearLayout>
