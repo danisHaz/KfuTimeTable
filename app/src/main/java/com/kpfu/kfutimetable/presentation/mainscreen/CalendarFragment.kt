@@ -49,7 +49,7 @@ class CalendarFragment @Inject constructor(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         menuDialog = TopSheetDialog(requireContext(), R.style.TopSheet).apply {
-            window?.attributes?.windowAnimations = R.style.TopSheet_DialogAnimation
+            window?.attributes?.windowAnimations = -1
             window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
             setContentView(R.layout.layout_top_slidable_menu)
         }

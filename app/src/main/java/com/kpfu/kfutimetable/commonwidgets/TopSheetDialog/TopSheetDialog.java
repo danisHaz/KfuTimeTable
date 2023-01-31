@@ -33,6 +33,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StyleRes;
 import androidx.appcompat.app.AppCompatDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.AccessibilityDelegateCompat;
 import androidx.core.view.ViewCompat;
@@ -40,14 +41,16 @@ import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
 
 import com.google.android.material.R;
 
-/** Base class for {@link android.app.Dialog}s styled as a bottom sheet. */
+/**
+ * Base class for {@link android.app.Dialog}s styled as a bottom sheet.
+ */
 public class TopSheetDialog extends AppCompatDialog {
 
     private TopSheetBehavior<FrameLayout> behavior;
 
-    private FrameLayout container;
+    private ConstraintLayout container;
 
-    boolean dismissWithAnimation;
+    boolean dismissWithAnimation = true;
 
     boolean cancelable = true;
     private boolean canceledOnTouchOutside = true;
@@ -65,7 +68,7 @@ public class TopSheetDialog extends AppCompatDialog {
     }
 
     protected TopSheetDialog(
-        @NonNull Context context, boolean cancelable, OnCancelListener cancelListener) {
+            @NonNull Context context, boolean cancelable, OnCancelListener cancelListener) {
         super(context, cancelable, cancelListener);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         this.cancelable = cancelable;
@@ -166,11 +169,13 @@ public class TopSheetDialog extends AppCompatDialog {
         return dismissWithAnimation;
     }
 
-    /** Creates the container layout which must exist to find the behavior */
-    private FrameLayout ensureContainerAndBehavior() {
+    /**
+     * Creates the container layout which must exist to find the behavior
+     */
+    private ConstraintLayout ensureContainerAndBehavior() {
         if (container == null) {
             container =
-                (FrameLayout) View.inflate(getContext(), com.kpfu.kfutimetable.R.layout.layout_top_sheet_dialog, null);
+                    (ConstraintLayout) View.inflate(getContext(), com.kpfu.kfutimetable.R.layout.layout_top_sheet_dialog, null);
 
             FrameLayout bottomSheet = (FrameLayout) container.findViewById(R.id.design_bottom_sheet);
             behavior = TopSheetBehavior.from(bottomSheet);
@@ -181,7 +186,7 @@ public class TopSheetDialog extends AppCompatDialog {
     }
 
     private View wrapInBottomSheet(
-        int layoutResId, @Nullable View view, @Nullable ViewGroup.LayoutParams params) {
+            int layoutResId, @Nullable View view, @Nullable ViewGroup.LayoutParams params) {
         ensureContainerAndBehavior();
         CoordinatorLayout coordinator = (CoordinatorLayout) container.findViewById(R.id.coordinator);
         if (layoutResId != 0 && view == null) {
@@ -197,57 +202,57 @@ public class TopSheetDialog extends AppCompatDialog {
         }
         // We treat the CoordinatorLayout as outside the dialog though it is technically inside
         coordinator
-            .findViewById(R.id.touch_outside)
-            .setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (cancelable && isShowing() && shouldWindowCloseOnTouchOutside()) {
-                            cancel();
-                        }
-                    }
-                });
+                .findViewById(R.id.touch_outside)
+                .setOnClickListener(
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                if (cancelable && isShowing() && shouldWindowCloseOnTouchOutside()) {
+                                    cancel();
+                                }
+                            }
+                        });
         // Handle accessibility events
         ViewCompat.setAccessibilityDelegate(
-            bottomSheet,
-            new AccessibilityDelegateCompat() {
-                @Override
-                public void onInitializeAccessibilityNodeInfo(
-                    View host, @NonNull AccessibilityNodeInfoCompat info) {
-                    super.onInitializeAccessibilityNodeInfo(host, info);
-                    if (cancelable) {
-                        info.addAction(AccessibilityNodeInfoCompat.ACTION_DISMISS);
-                        info.setDismissable(true);
-                    } else {
-                        info.setDismissable(false);
+                bottomSheet,
+                new AccessibilityDelegateCompat() {
+                    @Override
+                    public void onInitializeAccessibilityNodeInfo(
+                            View host, @NonNull AccessibilityNodeInfoCompat info) {
+                        super.onInitializeAccessibilityNodeInfo(host, info);
+                        if (cancelable) {
+                            info.addAction(AccessibilityNodeInfoCompat.ACTION_DISMISS);
+                            info.setDismissable(true);
+                        } else {
+                            info.setDismissable(false);
+                        }
                     }
-                }
 
-                @Override
-                public boolean performAccessibilityAction(View host, int action, Bundle args) {
-                    if (action == AccessibilityNodeInfoCompat.ACTION_DISMISS && cancelable) {
-                        cancel();
+                    @Override
+                    public boolean performAccessibilityAction(View host, int action, Bundle args) {
+                        if (action == AccessibilityNodeInfoCompat.ACTION_DISMISS && cancelable) {
+                            cancel();
+                            return true;
+                        }
+                        return super.performAccessibilityAction(host, action, args);
+                    }
+                });
+        bottomSheet.setOnTouchListener(
+                new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View view, MotionEvent event) {
+                        // Consume the event and prevent it from falling through
                         return true;
                     }
-                    return super.performAccessibilityAction(host, action, args);
-                }
-            });
-        bottomSheet.setOnTouchListener(
-            new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View view, MotionEvent event) {
-                    // Consume the event and prevent it from falling through
-                    return true;
-                }
-            });
+                });
         return container;
     }
 
     boolean shouldWindowCloseOnTouchOutside() {
         if (!canceledOnTouchOutsideSet) {
             TypedArray a =
-                getContext()
-                    .obtainStyledAttributes(new int[] {android.R.attr.windowCloseOnTouchOutside});
+                    getContext()
+                            .obtainStyledAttributes(new int[]{android.R.attr.windowCloseOnTouchOutside});
             canceledOnTouchOutside = a.getBoolean(0, true);
             a.recycle();
             canceledOnTouchOutsideSet = true;
@@ -275,16 +280,17 @@ public class TopSheetDialog extends AppCompatDialog {
 
     @NonNull
     private final TopSheetBehavior.SheetCallback topSheetCallback =
-        new TopSheetBehavior.SheetCallback() {
-            @Override
-            public void onStateChanged(
-                @NonNull View topSheet, @TopSheetBehavior.State int newState) {
-                if (newState == TopSheetBehavior.STATE_HIDDEN) {
-                    cancel();
+            new TopSheetBehavior.SheetCallback() {
+                @Override
+                public void onStateChanged(
+                        @NonNull View topSheet, @TopSheetBehavior.State int newState) {
+                    if (newState == TopSheetBehavior.STATE_HIDDEN) {
+                        cancel();
+                    }
                 }
-            }
 
-            @Override
-            public void onSlide(@NonNull View topSheet, float slideOffset) {}
-        };
+                @Override
+                public void onSlide(@NonNull View topSheet, float slideOffset) {
+                }
+            };
 }
