@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
@@ -116,8 +117,8 @@ public class TopSheetDialog extends AppCompatDialog {
     @Override
     protected void onStart() {
         super.onStart();
-        if (behavior != null && behavior.getState() == TopSheetBehavior.STATE_HIDDEN) {
-            behavior.setState(TopSheetBehavior.STATE_COLLAPSED);
+        if (behavior != null) {
+            behavior.setState(TopSheetBehavior.STATE_EXPANDED);
         }
     }
 

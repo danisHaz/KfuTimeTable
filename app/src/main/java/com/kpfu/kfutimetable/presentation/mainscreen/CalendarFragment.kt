@@ -52,6 +52,7 @@ class CalendarFragment @Inject constructor(
             window?.attributes?.windowAnimations = -1
             window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
             setContentView(R.layout.layout_top_slidable_menu)
+            create()
         }
 
         binding.dayItemCarousel.layoutManager =
