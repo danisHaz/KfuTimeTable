@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2015 The Android Open Source Project
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,8 +13,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
 -->
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
@@ -23,11 +21,20 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
+    <include
+        android:id="@+id/toolbar_skeleton"
+        layout="@layout/toolbar_main"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinator"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:layout_height="0dp"
+        android:fitsSystemWindows="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_skeleton">
 
         <View
             android:id="@+id/touch_outside"
@@ -36,7 +43,7 @@
             android:focusable="false"
             android:importantForAccessibility="no"
             android:soundEffectsEnabled="false"
-            tools:ignore="UnusedAttribute"/>
+            tools:ignore="UnusedAttribute" />
 
         <FrameLayout
             android:id="@+id/design_bottom_sheet"
@@ -44,8 +51,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|top"
-            app:layout_behavior="com.kpfu.kfutimetable.commonwidgets.TopSheetDialog.TopSheetBehavior"/>
+            app:layout_behavior="com.kpfu.kfutimetable.commonwidgets.TopSheetDialog.TopSheetBehavior" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

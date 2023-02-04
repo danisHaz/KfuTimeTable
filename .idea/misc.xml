@@ -27,6 +27,7 @@
         <entry key="app/src/main/res/layout/layout_top_sheet_dialog.xml" value="0.20729166666666668" />
         <entry key="app/src/main/res/layout/layout_top_slidable_menu.xml" value="0.33" />
         <entry key="app/src/main/res/layout/toolbar_main.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/toolbar_main_skeleton.xml" value="0.20729166666666668" />
         <entry key="app/src/main/res/layout/view_day_item.xml" value="0.18072916666666666" />
         <entry key="app/src/main/res/layout/view_subject.xml" value="0.2520833333333333" />
         <entry key="app/src/main/res/layout/view_time_line.xml" value="0.2520833333333333" />
