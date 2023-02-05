@@ -13,6 +13,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private var isActivityRestarted: Boolean = false
 
     @Inject
     lateinit var screenProvider: ScreenProvider
@@ -31,13 +32,20 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
 
         // initial navigation to calendar fragment (now by default)
-        RouteManager.router?.navigate(
-            screenProvider.get(ScreenProvider.ScreenType.SignInFragment)
-        )
+        if (!isActivityRestarted) {
+            RouteManager.router?.navigate(
+                screenProvider.get(ScreenProvider.ScreenType.SignInFragment)
+            )
+        }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        isActivityRestarted = true
     }
 
     override fun onDestroy() {
-        RouteManager.removeRouter()
         super.onDestroy()
+        RouteManager.removeRouter()
     }
 }
