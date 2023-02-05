@@ -15,7 +15,7 @@
         android:background="@drawable/but11"
         android:contentDescription="@string/TODO"
         android:elevation="6dp"
-        android:src="@drawable/buttonone"
+        android:src="@drawable/ic_chat"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,7 +30,7 @@
         android:background="@drawable/but11"
         android:contentDescription="@string/TODO"
         android:elevation="6dp"
-        android:src="@drawable/buttontwo"
+        android:src="@drawable/ic_question"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
