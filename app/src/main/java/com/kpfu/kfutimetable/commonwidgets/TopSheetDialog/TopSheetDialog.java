@@ -202,17 +202,20 @@ public class TopSheetDialog extends AppCompatDialog {
             bottomSheet.addView(view, params);
         }
         // We treat the CoordinatorLayout as outside the dialog though it is technically inside
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (cancelable && isShowing() && shouldWindowCloseOnTouchOutside()) {
+                    cancel();
+                }
+            }
+        };
+        container
+                .findViewById(com.kpfu.kfutimetable.R.id.menu)
+                .setOnClickListener(listener);
         coordinator
                 .findViewById(R.id.touch_outside)
-                .setOnClickListener(
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                if (cancelable && isShowing() && shouldWindowCloseOnTouchOutside()) {
-                                    cancel();
-                                }
-                            }
-                        });
+                .setOnClickListener(listener);
         // Handle accessibility events
         ViewCompat.setAccessibilityDelegate(
                 bottomSheet,

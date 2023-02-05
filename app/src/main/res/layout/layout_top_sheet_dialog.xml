@@ -24,7 +24,9 @@
     <include
         android:id="@+id/toolbar_skeleton"
         layout="@layout/toolbar_main"
-        android:visibility="invisible"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
