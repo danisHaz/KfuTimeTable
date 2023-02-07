@@ -9,13 +9,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.kpfu.kfutimetable.R
 import com.kpfu.kfutimetable.commonwidgets.TopSheetDialog.TopSheetDialog
 import com.kpfu.kfutimetable.databinding.FragmentCalendarBinding
+import com.kpfu.kfutimetable.presentation.accountscreen.AccountFragment
 import com.kpfu.kfutimetable.presentation.base.BaseFragment
 import com.kpfu.kfutimetable.presentation.mainscreen.entities.CalendarState
 import com.kpfu.kfutimetable.presentation.mainscreen.entities.CalendarViewState
 import com.kpfu.kfutimetable.presentation.mainscreen.providers.CalendarViewModelProvider
 import com.kpfu.kfutimetable.presentation.mainscreen.utils.MonthCarousel
 import com.kpfu.kfutimetable.utils.routing.Router
+import com.kpfu.kfutimetable.utils.routing.ScreenProvider
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.layout_top_slidable_menu.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -23,6 +26,7 @@ class CalendarFragment @Inject constructor(
     calendarViewStateMapper: CalendarViewStateMapper,
     calendarViewModelProvider: CalendarViewModelProvider,
     private val router: Router,
+    private val screenProvider: ScreenProvider
 ) : BaseFragment<CalendarState, CalendarViewState, CalendarViewModel>(
     viewStateMapper = calendarViewStateMapper,
     viewModelProvider = calendarViewModelProvider
@@ -78,9 +82,16 @@ class CalendarFragment @Inject constructor(
         this.toolbar.menu.setOnClickListener {
             if (menuDialog?.isShowing == true) {
                 menuDialog?.hide()
+
             } else {
                 menuDialog?.show()
             }
+        }
+
+        buttonAccount.setOnClickListener{
+            router.navigate(
+                screenProvider.get(ScreenProvider.ScreenType.AccountFragment)
+            )
         }
     }
 }

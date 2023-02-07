@@ -5,12 +5,14 @@ import com.kpfu.kfutimetable.presentation.mainscreen.CalendarFragment
 import com.kpfu.kfutimetable.presentation.mainscreen.CalendarViewStateMapper
 import com.kpfu.kfutimetable.utils.routing.Router
 import com.kpfu.kfutimetable.utils.routing.Screen
+import com.kpfu.kfutimetable.utils.routing.ScreenProvider
 import javax.inject.Inject
 
 class CalendarScreen @Inject constructor(
     private val calendarViewStateMapper: CalendarViewStateMapper,
     private val calendarViewModelProvider: CalendarViewModelProvider,
     private val router: Router,
+    private val screenProvider: ScreenProvider
 ) : Screen {
     override val className: Class<out Fragment>
         get() = CalendarFragment::class.java
@@ -19,5 +21,6 @@ class CalendarScreen @Inject constructor(
         calendarViewStateMapper,
         calendarViewModelProvider,
         router,
+        screenProvider
     )
 }
