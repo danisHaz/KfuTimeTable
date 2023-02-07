@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kpfu.kfutimetable.R
 import com.kpfu.kfutimetable.commonwidgets.TopSheetDialog.TopSheetDialog
@@ -56,7 +57,6 @@ class CalendarFragment @Inject constructor(
             window?.attributes?.windowAnimations = -1
             window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
             setContentView(R.layout.layout_top_slidable_menu)
-            create()
         }
 
         binding.dayItemCarousel.layoutManager =
@@ -88,7 +88,10 @@ class CalendarFragment @Inject constructor(
             }
         }
 
-        buttonAccount.setOnClickListener{
+        val buttonAccount = menuDialog?.layout?.findViewById<Button>(R.id.buttonAccount)
+
+        buttonAccount?.setOnClickListener{
+            menuDialog?.cancel()
             router.navigate(
                 screenProvider.get(ScreenProvider.ScreenType.AccountFragment)
             )

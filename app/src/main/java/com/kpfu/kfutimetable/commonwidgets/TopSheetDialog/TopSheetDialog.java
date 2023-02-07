@@ -186,6 +186,11 @@ public class TopSheetDialog extends AppCompatDialog {
         return container;
     }
 
+    public FrameLayout getLayout() {
+        FrameLayout bottomSheet = (FrameLayout) container.findViewById(R.id.design_bottom_sheet);
+        return bottomSheet;
+    }
+
     private View wrapInBottomSheet(
             int layoutResId, @Nullable View view, @Nullable ViewGroup.LayoutParams params) {
         ensureContainerAndBehavior();
