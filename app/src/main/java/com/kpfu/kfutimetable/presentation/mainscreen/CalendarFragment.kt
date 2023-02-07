@@ -19,6 +19,8 @@ import com.kpfu.kfutimetable.presentation.mainscreen.utils.MonthCarousel
 import com.kpfu.kfutimetable.utils.routing.Router
 import com.kpfu.kfutimetable.utils.routing.ScreenProvider
 import dagger.hilt.android.AndroidEntryPoint
+import io.getstream.avatarview.AvatarView
+import io.getstream.avatarview.coil.loadImage
 import kotlinx.android.synthetic.main.layout_top_slidable_menu.*
 import javax.inject.Inject
 
@@ -43,6 +45,7 @@ class CalendarFragment @Inject constructor(
     private var monthCarousel: MonthCarousel? = null
     private var menuDialog: TopSheetDialog? = null
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -63,6 +66,8 @@ class CalendarFragment @Inject constructor(
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         monthCarousel = MonthCarousel(monthList, binding.monthList)
         setListeners()
+
+
     }
 
     override fun render(currentViewState: CalendarViewState) = with(binding) {
@@ -96,5 +101,7 @@ class CalendarFragment @Inject constructor(
                 screenProvider.get(ScreenProvider.ScreenType.AccountFragment)
             )
         }
+
+
     }
 }
