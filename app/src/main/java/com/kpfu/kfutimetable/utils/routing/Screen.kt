@@ -30,6 +30,6 @@ class ScreenProvider @Inject constructor(
     enum class ScreenType {
         CalendarFragment,
         SignInFragment,
-        AccountFragment
+        AccountFragment,
     }
 }

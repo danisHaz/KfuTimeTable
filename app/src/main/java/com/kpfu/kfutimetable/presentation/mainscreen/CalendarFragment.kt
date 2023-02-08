@@ -43,8 +43,6 @@ class CalendarFragment @Inject constructor(
     }
 
     private var monthCarousel: MonthCarousel? = null
-    private var menuDialog: TopSheetDialog? = null
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,18 +54,10 @@ class CalendarFragment @Inject constructor(
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        menuDialog = TopSheetDialog(requireContext(), R.style.TopSheet).apply {
-            window?.attributes?.windowAnimations = -1
-            window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
-            setContentView(R.layout.layout_top_slidable_menu)
-        }
-
         binding.dayItemCarousel.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         monthCarousel = MonthCarousel(monthList, binding.monthList)
         setListeners()
-
-
     }
 
     override fun render(currentViewState: CalendarViewState) = with(binding) {
@@ -83,25 +73,5 @@ class CalendarFragment @Inject constructor(
         prevButton.setOnClickListener {
             monthCarousel?.prevMonth()
         }
-
-        this.toolbar.menu.setOnClickListener {
-            if (menuDialog?.isShowing == true) {
-                menuDialog?.hide()
-
-            } else {
-                menuDialog?.show()
-            }
-        }
-
-        val buttonAccount = menuDialog?.layout?.findViewById<Button>(R.id.buttonAccount)
-
-        buttonAccount?.setOnClickListener{
-            menuDialog?.cancel()
-            router.navigate(
-                screenProvider.get(ScreenProvider.ScreenType.AccountFragment)
-            )
-        }
-
-
     }
 }

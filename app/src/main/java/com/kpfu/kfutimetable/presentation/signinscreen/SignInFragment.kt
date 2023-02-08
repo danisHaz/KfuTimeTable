@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.kpfu.kfutimetable.databinding.FragmentSiginInBinding
 import com.kpfu.kfutimetable.presentation.base.BaseFragment
+import com.kpfu.kfutimetable.presentation.base.MainActivity
 import com.kpfu.kfutimetable.presentation.signinscreen.entities.SignInState
 import com.kpfu.kfutimetable.presentation.signinscreen.entities.SignInViewState
 import com.kpfu.kfutimetable.presentation.signinscreen.providers.SignInViewModelProvider
@@ -34,6 +35,7 @@ class SignInFragment @Inject constructor(
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        (requireActivity() as MainActivity).disableToolbar()
         setListeners()
     }
 
@@ -46,6 +48,7 @@ class SignInFragment @Inject constructor(
             router.navigate(
                 screenProvider.get(ScreenProvider.ScreenType.CalendarFragment)
             )
+            (requireActivity() as MainActivity).enableToolbar()
         }
     }
 }

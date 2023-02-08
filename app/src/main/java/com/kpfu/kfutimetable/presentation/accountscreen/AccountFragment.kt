@@ -30,7 +30,6 @@ class AccountFragment @Inject constructor(
     viewStateMapper = AccountViewStateMapper()
 ) {
     private lateinit var binding: FragmentAccountBinding
-    private var menuDialog: TopSheetDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,33 +41,17 @@ class AccountFragment @Inject constructor(
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        menuDialog = TopSheetDialog(requireContext(), R.style.TopSheet).apply {
-            window?.attributes?.windowAnimations = -1
-            window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
-            setContentView(R.layout.layout_top_slidable_menu)
-        }
-
-        val avatarView: AvatarView = binding.avatarView.findViewById(R.id.avatarView)
+        val avatarView: AvatarView = binding.avatarView
         val drawableRes = R.drawable.acc
 
         avatarView.loadImage(drawableRes)
+        setListeners()
     }
 
     override fun render(currentViewState: AccountViewState) {
     }
 
     private fun setListeners() = with(binding){
-        this.toolbar.menu.setOnClickListener{
-            if (menuDialog?.isShowing == true) {
-                menuDialog?.hide()
-
-            } else {
-                menuDialog?.show()
-            }
-        }
-
-
-
     }
 
 }

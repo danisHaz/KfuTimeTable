@@ -9,23 +9,11 @@
     android:paddingBottom="@dimen/top_slidable_menu_padding_vertical">
 
     <Button
+        android:id="@+id/sendReport"
         style="@style/Button.MainScreenMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/mainscreen_menu_settings"/>
-
-    <View
-        android:id="@+id/view"
-        android:layout_width="240dp"
-        android:layout_height="3dp"
-        android:background="@color/white" />
-
-    <Button
-        style="@style/Button.MainScreenMenu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/mainscreen_menu_leave_comment"/>
+        android:text="@string/mainscreen_menu_leave_comment" />
 
     <View
         android:id="@+id/view1"
@@ -34,11 +22,13 @@
         android:background="@color/white" />
 
     <Button
+        android:id="@+id/faq"
         style="@style/Button.MainScreenMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="@string/mainscreen_menu_faq"/>
+        android:text="@string/mainscreen_menu_faq" />
+
     <View
         android:id="@+id/view2"
         android:layout_width="240dp"
@@ -46,12 +36,13 @@
         android:background="@color/white" />
 
     <Button
-        style="@style/Button.MainScreenMenu"
         android:id="@+id/buttonAccount"
+        style="@style/Button.MainScreenMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="@string/mainscreen_menu_account"/>
+        android:text="@string/mainscreen_menu_account" />
+
     <View
         android:id="@+id/view3"
         android:layout_width="240dp"
@@ -59,11 +50,13 @@
         android:background="@color/white" />
 
     <Button
+        android:id="@+id/timetable"
         style="@style/Button.MainScreenMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="@string/mainscreen_menu_timetable"/>
+        android:text="@string/mainscreen_menu_timetable" />
+
     <View
         android:id="@+id/view4"
         android:layout_width="240dp"
@@ -71,11 +64,13 @@
         android:background="@color/white" />
 
     <Button
+        android:id="@+id/exit"
         style="@style/Button.MainScreenMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="@string/mainscreen_menu_exit"/>
+        android:text="@string/mainscreen_menu_exit" />
+
     <View
         android:id="@+id/view5"
         android:layout_width="100dp"

@@ -1,8 +1,13 @@
 package com.kpfu.kfutimetable.presentation.base
 
 import android.os.Bundle
+import android.view.View
+import android.view.WindowManager
+import android.widget.Button
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.kpfu.kfutimetable.R
+import com.kpfu.kfutimetable.commonwidgets.TopSheetDialog.TopSheetDialog
 import com.kpfu.kfutimetable.databinding.ActivityMainBinding
 import com.kpfu.kfutimetable.utils.routing.RouteManager
 import com.kpfu.kfutimetable.utils.routing.ScreenProvider
@@ -13,6 +18,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private var menuDialog: TopSheetDialog? = null
     private var isActivityRestarted: Boolean = false
 
     @Inject
@@ -24,6 +30,13 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        menuDialog = TopSheetDialog(this, R.style.TopSheet).apply {
+            window?.attributes?.windowAnimations = -1
+            window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+            setContentView(R.layout.layout_top_slidable_menu)
+        }
+        setListeners()
 
         RouteManager.initializeRouter(supportFragmentManager, R.id.mainFragmentContainer)
     }
@@ -47,5 +60,46 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         RouteManager.removeRouter()
+    }
+
+    fun disableToolbar() {
+        binding.toolbar.root.visibility = View.GONE
+    }
+
+    fun enableToolbar() {
+        binding.toolbar.root.visibility = View.VISIBLE
+    }
+
+    private fun setListeners() = with(binding) {
+        toolbar.menu.setOnClickListener() {
+            if (menuDialog?.isShowing == true) {
+                menuDialog?.hide()
+
+            } else {
+                menuDialog?.show()
+            }
+        }
+
+        menuDialog?.layout?.let<FrameLayout, Unit> {
+            val buttonAccount = it.findViewById<Button>(R.id.buttonAccount)
+            val sendReport = it.findViewById<Button>(R.id.sendReport)
+            val faq = it.findViewById<Button>(R.id.faq)
+            val exit = it.findViewById<Button>(R.id.exit)
+            val timetable = it.findViewById<Button>(R.id.timetable)
+
+            buttonAccount?.setOnClickListener {
+                menuDialog?.cancel()
+                RouteManager.router?.navigate(
+                    screenProvider.get(ScreenProvider.ScreenType.AccountFragment)
+                )
+            }
+
+            timetable?.setOnClickListener {
+                menuDialog?.cancel()
+                RouteManager.router?.navigate(
+                    screenProvider.get(ScreenProvider.ScreenType.CalendarFragment)
+                )
+            }
+        }
     }
 }
