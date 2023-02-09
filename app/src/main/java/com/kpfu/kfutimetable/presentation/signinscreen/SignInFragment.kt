@@ -46,7 +46,8 @@ class SignInFragment @Inject constructor(
     private fun setListeners() {
         binding.loginOrRegister.setOnClickListener {
             router.navigate(
-                screenProvider.get(ScreenProvider.ScreenType.CalendarFragment)
+                screenProvider.get(ScreenProvider.ScreenType.CalendarFragment),
+                executePendingTransactions = true
             )
             (requireActivity() as MainActivity).enableToolbar()
         }

@@ -133,6 +133,14 @@ public class TopSheetDialog extends AppCompatDialog {
         }
     }
 
+    public void cancelWithAction(IAction action) {
+        setOnCancelListener((dialogInterface) -> {
+            action.performAction();
+            setOnCancelListener((dialogInterface1) -> {});
+        });
+        cancel();
+    }
+
     @Override
     public void setCanceledOnTouchOutside(boolean cancel) {
         super.setCanceledOnTouchOutside(cancel);
@@ -302,4 +310,9 @@ public class TopSheetDialog extends AppCompatDialog {
                 public void onSlide(@NonNull View topSheet, float slideOffset) {
                 }
             };
+
+    // this is made for cancelWithAction
+    public interface IAction {
+        void performAction();
+    }
 }

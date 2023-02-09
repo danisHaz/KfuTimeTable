@@ -34,11 +34,15 @@ class Router(
     exitAppIfBackStackEmpty: Boolean = true
 ) {
 
+    private var wasBackstackCleared = false
+
     init {
         if (exitAppIfBackStackEmpty) {
             fragmentManager.addOnBackStackChangedListener {
-                if (fragmentManager.backStackEntryCount == 0) {
-                    BaseApplication.exitApp = true
+                when {
+                    // needed when back stack cleared by our desire, not by backPressed() calls
+                    wasBackstackCleared -> wasBackstackCleared = false
+                    fragmentManager.backStackEntryCount == 0 -> BaseApplication.exitApp = true
                 }
             }
         }
@@ -46,13 +50,21 @@ class Router(
 
     fun clearBackStack() {
         fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        wasBackstackCleared = true
     }
 
-    fun navigate(screen: Screen, addToBackStack: Boolean = true) {
+    fun navigate(
+        screen: Screen,
+        addToBackStack: Boolean = true,
+        executePendingTransactions: Boolean = false
+    ) {
         fragmentManager.commit {
             replace(fragmentContainerId, screen.createNewInstance())
             if (addToBackStack)
                 addToBackStack(null)
+        }
+        if (executePendingTransactions) {
+            fragmentManager.executePendingTransactions()
         }
     }
 }

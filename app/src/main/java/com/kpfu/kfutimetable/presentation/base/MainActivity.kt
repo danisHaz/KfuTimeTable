@@ -96,40 +96,45 @@ class MainActivity : AppCompatActivity() {
             val timetable = it.findViewById<Button>(R.id.timetable)
 
             buttonAccount?.setOnClickListener {
-                menuDialog?.cancel()
-                RouteManager.router?.navigate(
-                    screenProvider.get(ScreenProvider.ScreenType.AccountFragment)
-                )
+                menuDialog?.cancelWithAction {
+                    RouteManager.router?.navigate(
+                        screenProvider.get(ScreenProvider.ScreenType.AccountFragment)
+                    )
+                }
             }
 
             timetable?.setOnClickListener {
-                menuDialog?.cancel()
-                RouteManager.router?.navigate(
-                    screenProvider.get(ScreenProvider.ScreenType.CalendarFragment)
-                )
+                menuDialog?.cancelWithAction {
+                    RouteManager.router?.navigate(
+                        screenProvider.get(ScreenProvider.ScreenType.CalendarFragment)
+                    )
+                }
             }
 
-            faq?.setOnClickListener{
-                menuDialog?.cancel()
-                RouteManager.router?.navigate(
-                    screenProvider.get(ScreenProvider.ScreenType.FqqFragment)
-                )
+            faq?.setOnClickListener {
+                menuDialog?.cancelWithAction {
+                    RouteManager.router?.navigate(
+                        screenProvider.get(ScreenProvider.ScreenType.FqqFragment)
+                    )
+                }
             }
 
-            sendReport?.setOnClickListener{
-                menuDialog?.cancel()
-                RouteManager.router?.navigate(
-                    screenProvider.get(ScreenProvider.ScreenType.FeedbackFragment)
-                )
+            sendReport?.setOnClickListener {
+                menuDialog?.cancelWithAction {
+                    RouteManager.router?.navigate(
+                        screenProvider.get(ScreenProvider.ScreenType.FeedbackFragment)
+                    )
+                }
             }
 
-            exit?.setOnClickListener{
-                menuDialog?.cancel()
-                RouteManager.router?.clearBackStack()
-                RouteManager.router?.navigate(
-                    screenProvider.get(ScreenProvider.ScreenType.SignInFragment),
-                    addToBackStack = false
-                )
+            exit?.setOnClickListener {
+                menuDialog?.cancelWithAction {
+                    RouteManager.router?.clearBackStack()
+                    RouteManager.router?.navigate(
+                        screenProvider.get(ScreenProvider.ScreenType.SignInFragment),
+                        addToBackStack = false
+                    )
+                }
             }
         }
     }
