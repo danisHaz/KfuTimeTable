@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.kpfu.kfutimetable.R
 import com.kpfu.kfutimetable.commonwidgets.TopSheetDialog.TopSheetDialog
 import com.kpfu.kfutimetable.databinding.ActivityMainBinding
+import com.kpfu.kfutimetable.presentation.base.utils.BaseApplication
 import com.kpfu.kfutimetable.utils.routing.RouteManager
 import com.kpfu.kfutimetable.utils.routing.ScreenProvider
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,7 +48,8 @@ class MainActivity : AppCompatActivity() {
         // initial navigation to calendar fragment (now by default)
         if (!isActivityRestarted) {
             RouteManager.router?.navigate(
-                screenProvider.get(ScreenProvider.ScreenType.SignInFragment)
+                screenProvider.get(ScreenProvider.ScreenType.SignInFragment),
+                addToBackStack = false
             )
         }
     }
@@ -71,6 +73,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setListeners() = with(binding) {
+
+        // set behaviour what to do when backstack of fragment manager gets empty
+        BaseApplication.exitCallback = {
+            finish()
+        }
+
         toolbar.menu.setOnClickListener() {
             if (menuDialog?.isShowing == true) {
                 menuDialog?.hide()
@@ -117,8 +125,10 @@ class MainActivity : AppCompatActivity() {
 
             exit?.setOnClickListener{
                 menuDialog?.cancel()
+                RouteManager.router?.clearBackStack()
                 RouteManager.router?.navigate(
-                    screenProvider.get(ScreenProvider.ScreenType.SignInFragment)
+                    screenProvider.get(ScreenProvider.ScreenType.SignInFragment),
+                    addToBackStack = false
                 )
             }
         }

@@ -11,10 +11,18 @@ class BaseApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        BaseApplication.appDisplayMetrics = resources.displayMetrics
+        appDisplayMetrics = resources.displayMetrics
     }
 
     companion object {
+        var exitCallback: () -> Unit = {}
+        var exitApp: Boolean = false
+        set(value) {
+            if (value) {
+                exitCallback()
+            }
+            field = value
+        }
         var appDisplayMetrics: DisplayMetrics? = null
     }
 }
