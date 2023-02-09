@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="343dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/questionstyle"
+        android:gravity="center"
+        android:text="@string/mainque"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:elevation="4dp"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="157dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/queExit"
+        android:background="@drawable/questionstyle"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:elevation="4dp"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="336dp"
+        android:layout_height="99dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="25dp"
+        android:text="@string/ansexit"
+        android:background="@drawable/answerstyle"
+        android:elevation="8dp"
+        android:gravity="left"
+        android:padding="10dp"
+        android:textColor="#898A8D"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6"
+        tools:ignore="RtlHardcoded" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="335dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/questionstyle"
+        android:elevation="8dp"
+        android:gravity="center"
+        android:text="@string/quetIME"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7"
+        tools:ignore="RtlHardcoded" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="335dp"
+        android:layout_height="133dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/answerstyle"
+        android:elevation="8dp"
+        android:gravity="left"
+        android:padding="10dp"
+        android:text="@string/anstwo"
+        android:textColor="#898A8D"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        tools:ignore="RtlHardcoded" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

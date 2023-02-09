@@ -14,4 +14,16 @@
     <string name="mainscreen_menu_account">Аккаунт</string>
     <string name="mainscreen_menu_timetable">Расписание</string>
     <string name="mainscreen_menu_exit">Выход</string>
+    <string name="basicquestion">Часто задаваемые вопросы:</string>
+    <string name="oftenquestion">Часто задаваемые вопросы:</string>
+    <string name="questionaboutExit">Как выйти?</string>
+    <string name="answerExit">Нажмите на кнопку “меню”, затем внизу найдите кнопку “выход” и нажмите на нее.</string>
+    <string name="mainque">Часто задаваемые вопросы:</string>
+    <string name="queExit">Как выйти?</string>
+    <string name="ansexit">Нажмите на кнопку “меню”, затем внизу найдите кнопку “выход” и нажмите на нее.</string>
+    <string name="quetIME">Почему не показывается расписание?</string>
+    <string name="anstwo">Возможно пока не появилось официальное расписание или еще не разместили в приложении.</string>
+    <string name="queFeedBack">Хотите оставить отзыв?</string>
+    <string name="feddback">Оставить отзыв можно здесь....</string>
+    <string name="send">Отправить</string>
 </resources>

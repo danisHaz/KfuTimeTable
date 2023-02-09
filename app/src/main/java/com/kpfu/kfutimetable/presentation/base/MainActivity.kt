@@ -100,6 +100,27 @@ class MainActivity : AppCompatActivity() {
                     screenProvider.get(ScreenProvider.ScreenType.CalendarFragment)
                 )
             }
+
+            faq?.setOnClickListener{
+                menuDialog?.cancel()
+                RouteManager.router?.navigate(
+                    screenProvider.get(ScreenProvider.ScreenType.FqqFragment)
+                )
+            }
+
+            sendReport?.setOnClickListener{
+                menuDialog?.cancel()
+                RouteManager.router?.navigate(
+                    screenProvider.get(ScreenProvider.ScreenType.FeedbackFragment)
+                )
+            }
+
+            exit?.setOnClickListener{
+                menuDialog?.cancel()
+                RouteManager.router?.navigate(
+                    screenProvider.get(ScreenProvider.ScreenType.SignInFragment)
+                )
+            }
         }
     }
 }
