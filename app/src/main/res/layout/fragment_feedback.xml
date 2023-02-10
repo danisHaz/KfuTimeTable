@@ -7,9 +7,10 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="341dp"
+        android:layout_width="match_parent"
         android:layout_height="43dp"
         android:layout_marginStart="20dp"
+        android:layout_marginEnd="30dp"
         android:layout_marginTop="40dp"
         android:background="@drawable/questionstyle"
         android:elevation="4dp"
@@ -21,15 +22,17 @@
         android:textSize="20sp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="RtlHardcoded,RtlSymmetry" />
 
     <EditText
         android:id="@+id/editText1"
-        android:layout_width="338dp"
+        android:layout_width="match_parent"
         android:layout_height="388dp"
         android:layout_marginTop="30dp"
         android:layout_marginStart="20dp"
+        android:layout_marginEnd="30dp"
         android:background="@drawable/answerstyle"
         android:elevation="8dp"
         android:gravity="left"
@@ -40,6 +43,7 @@
         android:textColor="#898A8D"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3"
         tools:ignore="Autofill,RtlHardcoded,RtlSymmetry" />
 
