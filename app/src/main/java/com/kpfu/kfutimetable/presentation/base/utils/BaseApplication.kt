@@ -15,14 +15,6 @@ class BaseApplication : Application() {
     }
 
     companion object {
-        var exitCallback: () -> Unit = {}
-        var exitApp: Boolean = false
-        set(value) {
-            if (value) {
-                exitCallback()
-            }
-            field = value
-        }
         var appDisplayMetrics: DisplayMetrics? = null
     }
 }

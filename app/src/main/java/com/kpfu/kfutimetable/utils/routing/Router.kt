@@ -31,22 +31,9 @@ object RouteManager {
 class Router(
     private val fragmentManager: FragmentManager,
     private val fragmentContainerId: Int,
-    exitAppIfBackStackEmpty: Boolean = true
 ) {
 
     private var wasBackstackCleared = false
-
-    init {
-        if (exitAppIfBackStackEmpty) {
-            fragmentManager.addOnBackStackChangedListener {
-                when {
-                    // needed when back stack cleared by our desire, not by backPressed() calls
-                    wasBackstackCleared -> wasBackstackCleared = false
-                    fragmentManager.backStackEntryCount == 0 -> BaseApplication.exitApp = true
-                }
-            }
-        }
-    }
 
     fun clearBackStack() {
         fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)

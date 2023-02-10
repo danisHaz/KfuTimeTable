@@ -73,16 +73,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setListeners() = with(binding) {
-
-        // set behaviour what to do when backstack of fragment manager gets empty
-        BaseApplication.exitCallback = {
-            finish()
-        }
-
         toolbar.menu.setOnClickListener() {
             if (menuDialog?.isShowing == true) {
                 menuDialog?.hide()
-
             } else {
                 menuDialog?.show()
             }
