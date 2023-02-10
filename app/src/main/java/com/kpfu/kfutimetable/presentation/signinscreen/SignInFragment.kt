@@ -45,11 +45,12 @@ class SignInFragment @Inject constructor(
 
     private fun setListeners() {
         binding.loginOrRegister.setOnClickListener {
+            (requireActivity() as MainActivity).enableToolbar()
             router.navigate(
                 screenProvider.get(ScreenProvider.ScreenType.CalendarFragment),
+                addToBackStack = false,
                 executePendingTransactions = true
             )
-            (requireActivity() as MainActivity).enableToolbar()
         }
     }
 }

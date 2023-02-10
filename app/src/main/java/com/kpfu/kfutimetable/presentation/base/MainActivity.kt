@@ -82,7 +82,6 @@ class MainActivity : AppCompatActivity() {
         toolbar.menu.setOnClickListener() {
             if (menuDialog?.isShowing == true) {
                 menuDialog?.hide()
-
             } else {
                 menuDialog?.show()
             }
