@@ -12,7 +12,6 @@
         android:layout_marginTop="150dp"
         app:avatarViewBorderColor="#004F8C"
         app:avatarViewBorderWidth="8dp"
-        app:avatarViewShape="circle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
