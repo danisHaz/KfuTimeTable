@@ -16,6 +16,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.text.SimpleDateFormat
 import javax.inject.Provider
 import javax.inject.Singleton
 
@@ -30,7 +31,11 @@ object ActivityModule {
     fun provideGson(): Gson = GsonBuilder().create()
 
     @Provides
-    fun provideGsonConverterFactory(gson: Gson): GsonConverterFactory = GsonConverterFactory.create(gson)
+    fun provideGsonConverterFactory(gson: Gson): GsonConverterFactory =
+        GsonConverterFactory.create(gson)
+
+    @Provides
+    fun provideStandardDateFormatter(): SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 
     @Provides
     fun provideRetrofit(gsonConverterFactory: GsonConverterFactory): Retrofit = Retrofit.Builder()

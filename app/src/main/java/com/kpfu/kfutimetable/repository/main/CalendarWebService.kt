@@ -1,7 +1,6 @@
 package com.kpfu.kfutimetable.repository.main
 
 import com.kpfu.kfutimetable.presentation.mainscreen.entities.CalendarState
-import com.kpfu.kfutimetable.presentation.mainscreen.entities.WeekDay
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -11,7 +10,7 @@ interface CalendarWebService {
 
     @POST("/getLessonsByDay")
     fun getLessonsByDay(
-        @Body dayOfWeek: WeekDay
+        @Body date: String
     ): Call<CalendarState>
 
     @GET("/getLessonsForWeek")

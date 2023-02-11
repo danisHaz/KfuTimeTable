@@ -6,8 +6,8 @@ import com.kpfu.kfutimetable.R
 import com.kpfu.kfutimetable.presentation.base.utils.BaseState
 
 data class CalendarState(
-    @SerializedName("day")
-    val dayOfWeek: WeekDay,
+    @SerializedName("date")
+    val date: String,
     @SerializedName("lessons")
     val lessons: List<Lesson>,
 ) : BaseState
@@ -15,6 +15,8 @@ data class CalendarState(
 data class Lesson(
     @SerializedName("lesson")
     val lessonName: String,
+    @SerializedName("lesson_type")
+    val lessonType: LessonType,
     @SerializedName("teacher")
     val teacherName: String,
     @SerializedName("address")
@@ -23,8 +25,6 @@ data class Lesson(
     val classroom: String,
     @SerializedName("time_start")
     val startTime: String,
-    @SerializedName("time_end")
-    val endTime: String,
 )
 
 enum class WeekDay {
@@ -42,4 +42,26 @@ enum class WeekDay {
             Sun -> days[6]
         }
     }
+}
+
+enum class Months {
+    Sep, Oct, Nov, Dec, Feb, Mar, Apr, May;
+
+    fun toString(context: Context): String {
+        val months = context.resources.getStringArray(R.array.months)
+        return when (this) {
+            Sep -> months[0]
+            Oct -> months[1]
+            Nov -> months[2]
+            Dec -> months[3]
+            Feb -> months[4]
+            Mar -> months[5]
+            Apr -> months[6]
+            May -> months[7]
+        }
+    }
+}
+
+enum class LessonType {
+    Lecture, Seminar;
 }

@@ -2,6 +2,7 @@ package com.kpfu.kfutimetable.repository.main
 
 import com.kpfu.kfutimetable.presentation.mainscreen.entities.CalendarState
 import com.kpfu.kfutimetable.presentation.mainscreen.entities.Lesson
+import com.kpfu.kfutimetable.presentation.mainscreen.entities.LessonType
 import com.kpfu.kfutimetable.presentation.mainscreen.entities.WeekDay
 import com.kpfu.kfutimetable.repository.main.CalendarRepository
 import com.kpfu.kfutimetable.utils.ResultState
@@ -10,20 +11,20 @@ import kotlinx.coroutines.flow.flow
 import java.util.Date
 
 class CalendarRepositoryMock : CalendarRepository {
-    override suspend fun getLessonsByDay(dayOfWeek: WeekDay): Flow<ResultState<CalendarState>> =
+    override fun getLessonsByDay(date: String): Flow<ResultState<CalendarState>> =
         flow {
             emit(
                 ResultState(
                     data = CalendarState(
-                        WeekDay.Mon,
+                        date,
                         listOf(
                             Lesson(
                                 "(Л) Математический анализ",
+                                LessonType.Lecture,
                                 "Асхатов Р.М.",
                                 "ул. Кремлевская, 35",
                                 "ауд. 216",
                                 "12:10",
-                                "13:50"
                             )
                         )
                     )
@@ -31,78 +32,82 @@ class CalendarRepositoryMock : CalendarRepository {
             )
         }
 
-    override suspend fun getLessonsForWeek(): Flow<ResultState<List<CalendarState>>> = flow {
+    override fun getLessonsForWeek(): Flow<ResultState<List<CalendarState>>> = flow {
         emit(
             ResultState(
                 data = listOf(
                     CalendarState(
-                        WeekDay.Mon,
+                        "2023-02-11 13:24:45",
                         listOf(
                             Lesson(
                                 "(Л) Математический анализ",
+                                LessonType.Lecture,
                                 "Асхатов Р.М.",
                                 "ул. Кремлевская, 35",
                                 "ауд. 216",
                                 "12:10",
-                                "13:50"
                             )
                         )
                     ),
                     CalendarState(
-                        WeekDay.Mon,
+                        "2023-02-11 13:24:45",
                         listOf(
                             Lesson(
                                 "(Л) Математический анализ",
+                                LessonType.Lecture,
                                 "Асхатов Р.М.",
                                 "ул. Кремлевская, 35",
                                 "ауд. 216",
                                 "12:10",
-                                "13:50"
                             )
                         )
                     ),
                     CalendarState(
-                        WeekDay.Mon,
+                        "2023-02-11 13:24:45",
                         listOf(
                             Lesson(
                                 "(Л) Математический анализ",
+                                LessonType.Lecture,
                                 "Асхатов Р.М.",
                                 "ул. Кремлевская, 35",
                                 "ауд. 216",
                                 "12:10",
-                                "13:50"
                             )
                         )
                     ),
                     CalendarState(
-                        WeekDay.Mon,
+                        "2023-02-11 13:24:45",
                         listOf(
                             Lesson(
                                 "(Л) Математический анализ",
+                                LessonType.Lecture,
                                 "Асхатов Р.М.",
                                 "ул. Кремлевская, 35",
                                 "ауд. 216",
                                 "12:10",
-                                "13:50"
                             )
                         )
                     ),
                     CalendarState(
-                        WeekDay.Mon,
+                        "2023-02-11 13:24:45",
                         listOf(
                             Lesson(
                                 "(Л) Математический анализ",
+                                LessonType.Lecture,
                                 "Асхатов Р.М.",
                                 "ул. Кремлевская, 35",
                                 "ауд. 216",
                                 "12:10",
-                                "13:50"
                             )
                         )
                     ),
                 )
             )
         )
+    }
+
+    override fun getCurrentMonths(): Flow<ResultState<List<Date>>> = flow {
+
     }
 
 }
