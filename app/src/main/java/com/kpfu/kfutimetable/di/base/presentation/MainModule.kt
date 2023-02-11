@@ -17,5 +17,6 @@ object MainModule {
     fun provideCalendarRepository(): CalendarRepository = CalendarRepositoryMock()
 
     @Provides
-    fun provideCalendarService(retrofit: Retrofit) = retrofit.create(CalendarWebService::class.java)
+    fun provideCalendarService(retrofit: Retrofit): CalendarWebService =
+        retrofit.create(CalendarWebService::class.java)
 }

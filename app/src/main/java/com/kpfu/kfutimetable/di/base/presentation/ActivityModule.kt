@@ -27,13 +27,13 @@ object ActivityModule {
     fun provideRouter() = RouteManager.router!!
 
     @Provides
-    fun provideGson() = GsonBuilder().create()
+    fun provideGson(): Gson = GsonBuilder().create()
 
     @Provides
-    fun provideGsonConverterFactory(gson: Gson) = GsonConverterFactory.create(gson)
+    fun provideGsonConverterFactory(gson: Gson): GsonConverterFactory = GsonConverterFactory.create(gson)
 
     @Provides
-    fun provideRetrofit(gsonConverterFactory: GsonConverterFactory) = Retrofit.Builder()
+    fun provideRetrofit(gsonConverterFactory: GsonConverterFactory): Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(gsonConverterFactory)
         .build()
