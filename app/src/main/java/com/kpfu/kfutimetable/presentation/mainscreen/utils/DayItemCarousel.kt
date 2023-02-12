@@ -2,7 +2,6 @@ package com.kpfu.kfutimetable.presentation.mainscreen.utils
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.hannesdorfmann.adapterdelegates4.AbsDelegationAdapter
@@ -12,7 +11,8 @@ import com.kpfu.kfutimetable.R
 import com.kpfu.kfutimetable.commonwidgets.BaseView
 import com.kpfu.kfutimetable.commonwidgets.DayItemView
 import com.kpfu.kfutimetable.databinding.ViewDayItemBinding
-import com.kpfu.kfutimetable.utils.dpToPx
+import java.time.LocalDate
+import java.time.Month
 import kotlin.math.roundToInt
 
 class DayItemCarousel @JvmOverloads constructor(
@@ -21,10 +21,12 @@ class DayItemCarousel @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : RecyclerView(context, attrs, defStyleAttr), BaseView<List<DayItemView.State>> {
 
-    var selectedItemPosition = 0
+    private var _selectedItemPosition = 0
+    var selectedItemPosition
+        get() = _selectedItemPosition
         private set(value) {
-            updateSelectedItem(field)
-            field = value
+            updateSelectedItem(_selectedItemPosition)
+            _selectedItemPosition = value
         }
 
     init {
@@ -47,7 +49,11 @@ class DayItemCarousel @JvmOverloads constructor(
 
     override fun render(state: List<DayItemView.State>) {
         _adapter.items = state.toMutableList().apply {
-            set(selectedItemPosition, get(selectedItemPosition).copy(isChecked = true))
+            forEachIndexed { ind, s ->
+                if (s.isChecked == true) {
+                    _selectedItemPosition = ind
+                }
+            }
         }
     }
 

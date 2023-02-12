@@ -15,6 +15,7 @@ import androidx.lifecycle.LifecycleCoroutineScope
 import com.kpfu.kfutimetable.presentation.base.utils.BaseApplication
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
+import java.time.Month
 import kotlin.math.roundToInt
 
 private val displayMetrics: DisplayMetrics? by lazy {

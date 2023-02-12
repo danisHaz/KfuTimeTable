@@ -7,9 +7,10 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.animation.doOnEnd
 import androidx.core.view.children
+import java.time.Month
 
 class MonthCarousel(
-    private val monthNames: List<String>,
+    private val monthNames: List<Month>,
     container: LinearLayout,
     private val animationInterpolator: TimeInterpolator = AccelerateDecelerateInterpolator()
 ) {
@@ -30,7 +31,9 @@ class MonthCarousel(
         container.children.map { it as TextView }.let {
             monthHolder = it.first()
         }
-        monthHolder.text = monthNames.first()
+        if (monthNames.isNotEmpty()) {
+            monthHolder.text = monthNames.first().toString()
+        }
     }
 
     fun nextMonth() {
@@ -40,7 +43,7 @@ class MonthCarousel(
 
         currentMonthPos++
         animateText(0f, animTransitionToLeft) {
-            monthHolder.text = monthNames[currentMonthPos]
+            monthHolder.text = monthNames[currentMonthPos].toString()
             animateText(animTransitionToRight, 0f)
         }
     }
@@ -52,7 +55,7 @@ class MonthCarousel(
 
         currentMonthPos--
         animateText(0f, animTransitionToRight) {
-            monthHolder.text = monthNames[currentMonthPos]
+            monthHolder.text = monthNames[currentMonthPos].toString()
             animateText(animTransitionToLeft, 0f)
         }
     }

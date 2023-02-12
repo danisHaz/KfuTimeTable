@@ -6,13 +6,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import retrofit2.await
+import java.time.Month
 import javax.inject.Inject
 
 class CalendarRepositoryImpl @Inject constructor(
     private val calendarWebService: CalendarWebService,
 ) : CalendarRepository {
 
-    override suspend fun getLessonsByDay(date: String): Flow<ResultState<CalendarState>> =
+    override fun getLessonsByDay(date: String): Flow<ResultState<CalendarState>> =
         flow {
             emit(ResultState(isLoading = true))
 
@@ -26,7 +27,7 @@ class CalendarRepositoryImpl @Inject constructor(
             emit(ResultState(data = data))
         }
 
-    override suspend fun getLessonsForWeek(): Flow<ResultState<List<CalendarState>>> = flow {
+    override fun getLessonsForWeek(): Flow<ResultState<List<CalendarState>>> = flow {
         emit(ResultState(isLoading = true))
 
         var data: List<CalendarState>? = null
@@ -37,5 +38,8 @@ class CalendarRepositoryImpl @Inject constructor(
         }
 
         emit(ResultState(data = data))
+    }
+
+    override fun getCurrentMonths(): Flow<ResultState<List<Month>>> = flow {
     }
 }

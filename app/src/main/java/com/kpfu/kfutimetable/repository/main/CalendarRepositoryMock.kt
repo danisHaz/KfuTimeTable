@@ -3,12 +3,10 @@ package com.kpfu.kfutimetable.repository.main
 import com.kpfu.kfutimetable.presentation.mainscreen.entities.CalendarState
 import com.kpfu.kfutimetable.presentation.mainscreen.entities.Lesson
 import com.kpfu.kfutimetable.presentation.mainscreen.entities.LessonType
-import com.kpfu.kfutimetable.presentation.mainscreen.entities.WeekDay
-import com.kpfu.kfutimetable.repository.main.CalendarRepository
 import com.kpfu.kfutimetable.utils.ResultState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import java.util.Date
+import java.time.Month
 
 class CalendarRepositoryMock : CalendarRepository {
     override fun getLessonsByDay(date: String): Flow<ResultState<CalendarState>> =
@@ -106,8 +104,8 @@ class CalendarRepositoryMock : CalendarRepository {
         )
     }
 
-    override fun getCurrentMonths(): Flow<ResultState<List<Date>>> = flow {
-
+    override fun getCurrentMonths(): Flow<ResultState<List<Month>>> = flow {
+        emit(ResultState(data = listOf(Month.FEBRUARY, Month.MARCH, Month.APRIL, Month.MAY)))
     }
 
 }

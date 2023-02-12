@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.kpfu.kfutimetable.commonwidgets.DayItemView
 import com.kpfu.kfutimetable.databinding.FragmentCalendarBinding
 import com.kpfu.kfutimetable.presentation.base.BaseFragment
 import com.kpfu.kfutimetable.presentation.mainscreen.entities.CalendarState
@@ -14,6 +15,7 @@ import com.kpfu.kfutimetable.presentation.mainscreen.utils.MonthCarousel
 import com.kpfu.kfutimetable.utils.routing.Router
 import com.kpfu.kfutimetable.utils.routing.ScreenProvider
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_calendar.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -48,13 +50,18 @@ class CalendarFragment @Inject constructor(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.dayItemCarousel.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        monthCarousel = MonthCarousel(monthList, binding.monthList)
         setListeners()
+        setObservers()
+        viewModel.getCurrentMonthsList()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.stopJob()
     }
 
     override fun render(currentViewState: CalendarViewState) = with(binding) {
-        dayItemCarousel.render(currentViewState.dayItemCarouselState)
-        timetableView.render(currentViewState.subjectViewState)
+        timetableView.render(currentViewState.subjectViewState[0])
     }
 
     private fun setListeners() = with(binding) {
@@ -66,4 +73,26 @@ class CalendarFragment @Inject constructor(
             monthCarousel?.prevMonth()
         }
     }
+
+    private fun setObservers() {
+        viewModel.monthListData.observe(this.viewLifecycleOwner) {
+            monthCarousel = MonthCarousel(it, binding.monthList)
+            viewModel.initDayItemCarousel(it)
+        }
+        viewModel.dayItemCarouselData.observe(this.viewLifecycleOwner) {
+            val dayItemStateList = mutableListOf<DayItemView.State>().apply {
+                for (dayWrapper in it) {
+                    add(
+                        DayItemView.State(
+                            date = dayWrapper.date.dayOfMonth.toString(),
+                            dayOfWeek = dayWrapper.date.dayOfWeek.toString(),
+                            isChecked = dayWrapper.param
+                        )
+                    )
+                }
+            }
+            binding.dayItemCarousel.render(dayItemStateList)
+        }
+    }
+
 }

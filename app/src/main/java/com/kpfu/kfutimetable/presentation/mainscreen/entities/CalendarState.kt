@@ -1,8 +1,6 @@
 package com.kpfu.kfutimetable.presentation.mainscreen.entities
 
-import android.content.Context
 import com.google.gson.annotations.SerializedName
-import com.kpfu.kfutimetable.R
 import com.kpfu.kfutimetable.presentation.base.utils.BaseState
 
 data class CalendarState(
@@ -26,41 +24,6 @@ data class Lesson(
     @SerializedName("time_start")
     val startTime: String,
 )
-
-enum class WeekDay {
-    Mon, Tue, Wen, Thu, Fri, Sat, Sun;
-
-    fun toString(context: Context): String {
-        val days = context.resources.getStringArray(R.array.daysOfWeek)
-        return when (this) {
-            Mon -> days[0]
-            Tue -> days[1]
-            Wen -> days[2]
-            Thu -> days[3]
-            Fri -> days[4]
-            Sat -> days[5]
-            Sun -> days[6]
-        }
-    }
-}
-
-enum class Months {
-    Sep, Oct, Nov, Dec, Feb, Mar, Apr, May;
-
-    fun toString(context: Context): String {
-        val months = context.resources.getStringArray(R.array.months)
-        return when (this) {
-            Sep -> months[0]
-            Oct -> months[1]
-            Nov -> months[2]
-            Dec -> months[3]
-            Feb -> months[4]
-            Mar -> months[5]
-            Apr -> months[6]
-            May -> months[7]
-        }
-    }
-}
 
 enum class LessonType {
     Lecture, Seminar;
