@@ -1,8 +1,6 @@
 package com.kpfu.kfutimetable.presentation.accountscreen.providers
 
 import androidx.fragment.app.Fragment
-import com.kpfu.kfutimetable.presentation.mainscreen.CalendarFragment
-import com.kpfu.kfutimetable.presentation.signinscreen.SignInFragment
 import com.kpfu.kfutimetable.presentation.accountscreen.AccountFragment
 import com.kpfu.kfutimetable.utils.routing.Router
 import com.kpfu.kfutimetable.utils.routing.Screen

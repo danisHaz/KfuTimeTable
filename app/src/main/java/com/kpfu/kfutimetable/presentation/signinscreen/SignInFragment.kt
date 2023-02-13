@@ -39,9 +39,7 @@ class SignInFragment @Inject constructor(
         setListeners()
     }
 
-    override fun render(currentViewState: SignInViewState) {
-
-    }
+    override fun render(currentViewState: SignInViewState) {}
 
     private fun setListeners() {
         binding.loginOrRegister.setOnClickListener {

@@ -8,14 +8,12 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.util.TypedValue
 import androidx.annotation.AttrRes
-import androidx.annotation.IdRes
 import androidx.annotation.StyleableRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.kpfu.kfutimetable.presentation.base.utils.BaseApplication
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
-import java.time.Month
 import kotlin.math.roundToInt
 
 private val displayMetrics: DisplayMetrics? by lazy {

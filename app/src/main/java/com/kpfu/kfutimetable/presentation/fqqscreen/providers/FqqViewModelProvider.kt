@@ -1,7 +1,7 @@
 package com.kpfu.kfutimetable.presentation.fqqscreen.providers
 
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import com.kpfu.kfutimetable.presentation.base.BaseViewModelProvider
 import com.kpfu.kfutimetable.presentation.fqqscreen.FqqViewModel
 

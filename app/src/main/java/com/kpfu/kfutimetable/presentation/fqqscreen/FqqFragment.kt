@@ -4,23 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.kpfu.kfutimetable.databinding.FragmentAccountBinding
 import com.kpfu.kfutimetable.databinding.FragmentFqqBinding
 import com.kpfu.kfutimetable.presentation.base.BaseFragment
 import com.kpfu.kfutimetable.presentation.fqqscreen.entities.FqqState
 import com.kpfu.kfutimetable.presentation.fqqscreen.entities.FqqViewState
 import com.kpfu.kfutimetable.presentation.fqqscreen.providers.FqqViewModelProvider
-import com.kpfu.kfutimetable.utils.routing.Router
-import com.kpfu.kfutimetable.utils.routing.ScreenProvider
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
-
 
 @AndroidEntryPoint
-class FqqFragment @Inject constructor(
-    private val router: Router,
-    private val screenProvider: ScreenProvider
-) : BaseFragment<FqqState, FqqViewState, FqqViewModel>(
+class FqqFragment : BaseFragment<FqqState, FqqViewState, FqqViewModel>(
     viewModelProvider = FqqViewModelProvider(),
     viewStateMapper = FqqViewStateMapper()
 ){
@@ -35,15 +27,5 @@ class FqqFragment @Inject constructor(
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        setListeners()
-    }
-
-    private fun setListeners() = with(binding){
-
-    }
-
-    override fun render(currentViewState: FqqViewState) {
-
-    }
+    override fun render(currentViewState: FqqViewState) {}
 }

@@ -2,13 +2,11 @@ package com.kpfu.kfutimetable.presentation.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.viewModelScope
 import com.kpfu.kfutimetable.presentation.base.utils.BaseState
 import com.kpfu.kfutimetable.presentation.base.utils.BaseViewState
 import com.kpfu.kfutimetable.presentation.base.utils.BaseViewStateMapper
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 
 abstract class BaseViewModel<S : BaseState, VS : BaseViewState>(
     initialState: () -> S,

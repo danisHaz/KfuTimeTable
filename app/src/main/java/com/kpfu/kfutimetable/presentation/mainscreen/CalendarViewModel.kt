@@ -9,7 +9,6 @@ import com.kpfu.kfutimetable.presentation.mainscreen.entities.CalendarViewState
 import com.kpfu.kfutimetable.repository.main.CalendarRepository
 import com.kpfu.kfutimetable.utils.LocalDateWrapper
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
@@ -63,7 +62,6 @@ class CalendarViewModel @Inject constructor(
     }
 
     fun updateDayItemCarousel(month: Month) {
-        Log.e("memeem", "emmerwrw")
         setNearestDay(month)
         dayItemCarouselData.value = inflateDateForMonth(currentDayData)
     }

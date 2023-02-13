@@ -3,7 +3,6 @@ package com.kpfu.kfutimetable.utils.routing
 import android.util.Log
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
-import com.kpfu.kfutimetable.presentation.base.utils.BaseApplication
 
 object RouteManager {
 

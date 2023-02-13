@@ -22,7 +22,6 @@ class ScreenProvider @Inject constructor(
     private val accountScreen: Provider<AccountScreen>,
     private val fqqScreen: Provider<FqqScreen>,
     private val feedbackScreen: Provider<FeedbackScreen>
-
 ) {
 
     fun get(type: ScreenType): Screen = when(type) {

@@ -1,7 +1,6 @@
 package com.kpfu.kfutimetable.presentation.mainscreen
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,15 +15,12 @@ import com.kpfu.kfutimetable.presentation.mainscreen.utils.MonthCarousel
 import com.kpfu.kfutimetable.utils.routing.Router
 import com.kpfu.kfutimetable.utils.routing.ScreenProvider
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_calendar.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class CalendarFragment @Inject constructor(
     calendarViewStateMapper: CalendarViewStateMapper,
     calendarViewModelProvider: CalendarViewModelProvider,
-    private val router: Router,
-    private val screenProvider: ScreenProvider
 ) : BaseFragment<CalendarState, CalendarViewState, CalendarViewModel>(
     viewStateMapper = calendarViewStateMapper,
     viewModelProvider = calendarViewModelProvider

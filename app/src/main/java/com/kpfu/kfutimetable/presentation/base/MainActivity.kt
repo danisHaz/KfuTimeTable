@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.kpfu.kfutimetable.R
 import com.kpfu.kfutimetable.commonwidgets.TopSheetDialog.TopSheetDialog
 import com.kpfu.kfutimetable.databinding.ActivityMainBinding
-import com.kpfu.kfutimetable.presentation.base.utils.BaseApplication
 import com.kpfu.kfutimetable.utils.routing.RouteManager
 import com.kpfu.kfutimetable.utils.routing.ScreenProvider
 import dagger.hilt.android.AndroidEntryPoint

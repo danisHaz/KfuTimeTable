@@ -4,11 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import com.kpfu.kfutimetable.R
-import com.kpfu.kfutimetable.commonwidgets.TopSheetDialog.TopSheetDialog
 import com.kpfu.kfutimetable.databinding.FragmentAccountBinding
-import com.kpfu.kfutimetable.databinding.FragmentCalendarBinding
 import com.kpfu.kfutimetable.presentation.accountscreen.entites.AccountState
 import com.kpfu.kfutimetable.presentation.accountscreen.entites.AccountViewState
 import com.kpfu.kfutimetable.presentation.accountscreen.providers.AccountViewModelProvider
