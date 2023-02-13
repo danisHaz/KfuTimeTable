@@ -19,6 +19,8 @@ class MonthCarousel(
     val hasPrevMonth
         get() = currentMonthPos != 0
 
+    var onMonthChangeListener: (Month) -> Unit = {}
+
     private var monthHolder: TextView
     private var currentMonthPos = 0
 
@@ -42,6 +44,8 @@ class MonthCarousel(
         }
 
         currentMonthPos++
+        onMonthChangeListener(monthNames[currentMonthPos])
+
         animateText(0f, animTransitionToLeft) {
             monthHolder.text = monthNames[currentMonthPos].toString()
             animateText(animTransitionToRight, 0f)
@@ -54,6 +58,8 @@ class MonthCarousel(
         }
 
         currentMonthPos--
+        onMonthChangeListener(monthNames[currentMonthPos])
+
         animateText(0f, animTransitionToRight) {
             monthHolder.text = monthNames[currentMonthPos].toString()
             animateText(animTransitionToLeft, 0f)

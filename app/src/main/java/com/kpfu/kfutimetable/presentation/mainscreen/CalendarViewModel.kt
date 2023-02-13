@@ -63,6 +63,7 @@ class CalendarViewModel @Inject constructor(
     }
 
     fun updateDayItemCarousel(month: Month) {
+        Log.e("memeem", "emmerwrw")
         setNearestDay(month)
         dayItemCarouselData.value = inflateDateForMonth(currentDayData)
     }
@@ -107,7 +108,9 @@ class CalendarViewModel @Inject constructor(
 
         val dayList: MutableList<LocalDateWrapper<Boolean>> = mutableListOf()
         (1..YearMonth.of(date.year, date.month).lengthOfMonth()).forEach {
-            dayList.add(LocalDateWrapper(LocalDate.of(date.year, date.month, it), it == date.dayOfMonth))
+            dayList.add(
+                LocalDateWrapper(LocalDate.of(date.year, date.month, it), it == date.dayOfMonth)
+            )
         }
 
         return dayList
@@ -152,5 +155,6 @@ class CalendarViewModel @Inject constructor(
             }
         }
         currentDayData = LocalDate.of(currentDate.year, date.second, date.first)
+        Log.e(this::class.java.name, currentDayData.toString())
     }
 }

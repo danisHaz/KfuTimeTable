@@ -31,12 +31,6 @@ class CalendarFragment @Inject constructor(
 ) {
 
     private lateinit var binding: FragmentCalendarBinding
-    private val monthList = ArrayList<String>().apply {
-        add("September")
-        add("October")
-        add("November")
-    }
-
     private var monthCarousel: MonthCarousel? = null
 
     override fun onCreateView(
@@ -51,18 +45,16 @@ class CalendarFragment @Inject constructor(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.dayItemCarousel.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding.dayItemCarousel.onItemClick = {
-            viewModel.getLessonsByDay(Integer.parseInt(it.date))
-        }
-        binding.dayItemCarousel.initialize()
         setListeners()
         setObservers()
+        binding.dayItemCarousel.initialize()
         viewModel.getCurrentMonthsList()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         viewModel.stopJob()
+        monthCarousel = null
     }
 
     override fun render(currentViewState: CalendarViewState) = with(binding) {
@@ -73,15 +65,20 @@ class CalendarFragment @Inject constructor(
         nextButton.setOnClickListener {
             monthCarousel?.nextMonth()
         }
-
         prevButton.setOnClickListener {
             monthCarousel?.prevMonth()
+        }
+        binding.dayItemCarousel.onItemClick = {
+            viewModel.getLessonsByDay(Integer.parseInt(it.date))
         }
     }
 
     private fun setObservers() {
         viewModel.monthListData.observe(this.viewLifecycleOwner) {
             monthCarousel = MonthCarousel(it, binding.monthList)
+            monthCarousel?.onMonthChangeListener = { month ->
+                viewModel.updateDayItemCarousel(month)
+            }
             viewModel.initDayItemCarousel(it)
         }
         viewModel.dayItemCarouselData.observe(this.viewLifecycleOwner) {
@@ -99,5 +96,4 @@ class CalendarFragment @Inject constructor(
             binding.dayItemCarousel.render(dayItemStateList)
         }
     }
-
 }

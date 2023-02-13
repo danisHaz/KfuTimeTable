@@ -56,6 +56,7 @@ class DayItemCarousel @JvmOverloads constructor(
                 }
             }
         }
+        _adapter.notifyDataSetChanged()
     }
 
     private fun dayItemAdapterDelegate() =
