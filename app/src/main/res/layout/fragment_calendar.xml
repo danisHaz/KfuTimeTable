@@ -17,10 +17,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="160dp"
+            android:paddingStart="32dp"
             android:paddingTop="32dp"
             android:paddingEnd="32dp"
-            android:paddingStart="32dp">
+            android:paddingBottom="160dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/monthsContainer"
@@ -78,7 +78,8 @@
             <com.kpfu.kfutimetable.presentation.mainscreen.utils.DayItemCarousel
                 android:id="@+id/dayItemCarousel"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                app:useLazyInitialization="true" />
 
             <com.kpfu.kfutimetable.presentation.mainscreen.utils.TimetableView
                 android:id="@+id/timetableView"
@@ -90,7 +91,7 @@
 
     <include
         layout="@layout/two_icons"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

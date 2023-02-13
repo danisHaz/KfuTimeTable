@@ -34,7 +34,7 @@ object MainModule {
 
     @Provides
     fun provideStandardDateFormatter(): DateTimeFormatter =
-        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
     @Provides
     fun provideRetrofit(gsonConverterFactory: GsonConverterFactory): Retrofit = Retrofit.Builder()

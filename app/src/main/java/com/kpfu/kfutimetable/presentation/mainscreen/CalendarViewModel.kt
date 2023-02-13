@@ -49,10 +49,10 @@ class CalendarViewModel @Inject constructor(
     fun getCurrentMonthsList() {
         monthListJob?.cancel()
         monthListJob = calendarRepository.getCurrentMonths().onEach { result ->
-            isLoading.postValue(result.isLoading)
-            isError.postValue(result.error != null)
+            isLoading.value = result.isLoading
+            isError.value = result.error != null
             result.data?.let { data ->
-                monthListData.postValue(data)
+                monthListData.value = data
             }
         }.launchIn(viewModelScope)
     }
@@ -78,8 +78,8 @@ class CalendarViewModel @Inject constructor(
                     LocalDate.of(currentDayData!!.year, currentDayData!!.month, desiredDay)
                 )
             ).onEach { result ->
-                isLoading.postValue(result.isLoading)
-                isError.postValue(result.error != null)
+                isLoading.value = result.isLoading
+                isError.value = result.error != null
                 result.data?.let { data ->
                     withContext(Dispatchers.Main) {
                         state = data

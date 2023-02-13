@@ -9,25 +9,48 @@ import kotlinx.coroutines.flow.flow
 import java.time.Month
 
 class CalendarRepositoryMock : CalendarRepository {
+
+    private var changeEmulatorField = false
     override fun getLessonsByDay(date: String): Flow<ResultState<CalendarState>> =
         flow {
-            emit(
-                ResultState(
-                    data = CalendarState(
-                        date,
-                        listOf(
-                            Lesson(
-                                "(Л) Математический анализ",
-                                LessonType.Lecture,
-                                "Асхатов Р.М.",
-                                "ул. Кремлевская, 35",
-                                "ауд. 216",
-                                "12:10",
+            if (changeEmulatorField) {
+                emit(
+                    ResultState(
+                        data = CalendarState(
+                            date,
+                            listOf(
+                                Lesson(
+                                    "(Л) Математический анализ",
+                                    LessonType.Lecture,
+                                    "Асхатов Р.М.",
+                                    "ул. Кремлевская, 35",
+                                    "ауд. 216",
+                                    "12:10",
+                                )
                             )
                         )
                     )
                 )
-            )
+            } else {
+                emit(
+                    ResultState(
+                        data = CalendarState(
+                            date,
+                            listOf(
+                                Lesson(
+                                    "(П) ЫЫЫЫЫЫЫЫ",
+                                    LessonType.Seminar,
+                                    "Мемный чел",
+                                    "ул. Кремлевская, 3132",
+                                    "ауд. 1010101",
+                                    "15:20",
+                                )
+                            )
+                        )
+                    )
+                )
+            }
+            changeEmulatorField = !changeEmulatorField
         }
 
     override fun getLessonsForWeek(): Flow<ResultState<List<CalendarState>>> = flow {

@@ -1,6 +1,7 @@
 package com.kpfu.kfutimetable.presentation.mainscreen
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,6 +51,10 @@ class CalendarFragment @Inject constructor(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.dayItemCarousel.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.dayItemCarousel.onItemClick = {
+            viewModel.getLessonsByDay(Integer.parseInt(it.date))
+        }
+        binding.dayItemCarousel.initialize()
         setListeners()
         setObservers()
         viewModel.getCurrentMonthsList()
