@@ -12,10 +12,9 @@ import com.kpfu.kfutimetable.presentation.mainscreen.entities.CalendarState
 import com.kpfu.kfutimetable.presentation.mainscreen.entities.CalendarViewState
 import com.kpfu.kfutimetable.presentation.mainscreen.providers.CalendarViewModelProvider
 import com.kpfu.kfutimetable.presentation.mainscreen.utils.MonthCarousel
-import com.kpfu.kfutimetable.utils.routing.Router
-import com.kpfu.kfutimetable.utils.routing.ScreenProvider
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import com.kpfu.kfutimetable.utils.toString
 
 @AndroidEntryPoint
 class CalendarFragment @Inject constructor(
@@ -83,7 +82,7 @@ class CalendarFragment @Inject constructor(
                     add(
                         DayItemView.State(
                             date = dayWrapper.date.dayOfMonth.toString(),
-                            dayOfWeek = dayWrapper.date.dayOfWeek.toString(),
+                            dayOfWeek = dayWrapper.date.dayOfWeek.toString(requireContext()),
                             isChecked = dayWrapper.param
                         )
                     )

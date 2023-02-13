@@ -20,11 +20,9 @@ object ActivityModule {
     fun provideRouter() = RouteManager.router!!
 
     @Provides
-    fun provideCalendarScreen(router: Router, screenProvider: ScreenProvider) = CalendarScreen(
+    fun provideCalendarScreen() = CalendarScreen(
         CalendarViewStateMapper(),
         CalendarViewModelProvider(),
-        router,
-        screenProvider
     )
 
     @Provides

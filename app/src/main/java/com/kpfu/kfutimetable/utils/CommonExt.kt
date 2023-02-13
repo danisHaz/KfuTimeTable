@@ -11,9 +11,12 @@ import androidx.annotation.AttrRes
 import androidx.annotation.StyleableRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.LifecycleCoroutineScope
+import com.kpfu.kfutimetable.R
 import com.kpfu.kfutimetable.presentation.base.utils.BaseApplication
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
+import java.time.DayOfWeek
+import java.time.Month
 import kotlin.math.roundToInt
 
 private val displayMetrics: DisplayMetrics? by lazy {
@@ -87,4 +90,10 @@ fun Context.getColorStateList(
 fun Color.changeAlpha(alphaCoef: Float = 0.1f): Color {
     val alpha = alpha() * alphaCoef
     return Color.valueOf(Color.argb(alpha, red(), green(), blue()))
+}
+
+fun DayOfWeek.toString(context: Context?): String {
+    val monthNamesList = context?.resources?.getStringArray(R.array.days_short)
+        ?: throw IllegalArgumentException("context is null")
+    return monthNamesList[this.value-1]
 }
