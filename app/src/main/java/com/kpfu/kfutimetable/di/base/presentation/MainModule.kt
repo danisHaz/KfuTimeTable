@@ -3,6 +3,9 @@ package com.kpfu.kfutimetable.di.base.presentation
 import com.kpfu.kfutimetable.repository.main.CalendarRepository
 import com.kpfu.kfutimetable.repository.main.CalendarRepositoryMock
 import com.kpfu.kfutimetable.repository.main.CalendarWebService
+import com.kpfu.kfutimetable.repository.signin.SignInRepository
+import com.kpfu.kfutimetable.repository.signin.SignInRepositoryImpl
+import com.kpfu.kfutimetable.repository.signin.dto.SignInWebService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,4 +22,12 @@ object MainModule {
     @Provides
     fun provideCalendarService(retrofit: Retrofit): CalendarWebService =
         retrofit.create(CalendarWebService::class.java)
+
+    @Provides
+    fun provideSignInRepository(signInWebService: SignInWebService): SignInRepository =
+        SignInRepositoryImpl(signInWebService)
+
+    @Provides
+    fun provideSignInWebService(retrofit: Retrofit): SignInWebService =
+        retrofit.create(SignInWebService::class.java)
 }

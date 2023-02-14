@@ -37,18 +37,32 @@ class SignInFragment @Inject constructor(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         (requireActivity() as MainActivity).disableToolbar()
         setListeners()
+        setObservers()
     }
 
     override fun render(currentViewState: SignInViewState) {}
 
     private fun setListeners() = with(binding) {
         loginOrRegister.setOnClickListener {
-            (requireActivity() as MainActivity).enableToolbar()
-            router.navigate(
-                screenProvider.get(ScreenProvider.ScreenType.CalendarFragment),
-                addToBackStack = false,
-                executePendingTransactions = true
+            viewModel.signIn(
+                binding.username.text.toString(),
+                binding.password.text.toString(),
             )
         }
+    }
+
+    private fun setObservers() {
+        viewModel.groupData.observe(viewLifecycleOwner) {
+            onSuccessfulLogin()
+        }
+    }
+
+    private fun onSuccessfulLogin() {
+        (requireActivity() as MainActivity).enableToolbar()
+        router.navigate(
+            screenProvider.get(ScreenProvider.ScreenType.CalendarFragment),
+            addToBackStack = false,
+            executePendingTransactions = true
+        )
     }
 }

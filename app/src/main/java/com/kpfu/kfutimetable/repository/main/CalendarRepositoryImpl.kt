@@ -17,11 +17,12 @@ class CalendarRepositoryImpl @Inject constructor(
         flow {
             emit(ResultState(isLoading = true))
 
-            var data: CalendarState? = null
+            val data: CalendarState
             try {
                 data = calendarWebService.getLessonsByDay(date).await()
             } catch (e: HttpException) {
                 emit(ResultState(error = e))
+                return@flow
             }
 
             emit(ResultState(data = data))
@@ -30,11 +31,12 @@ class CalendarRepositoryImpl @Inject constructor(
     override fun getLessonsForWeek(): Flow<ResultState<List<CalendarState>>> = flow {
         emit(ResultState(isLoading = true))
 
-        var data: List<CalendarState>? = null
+        val data: List<CalendarState>
         try {
             data = calendarWebService.getLessonsForWeek().await()
         } catch (e: HttpException) {
             emit(ResultState(error = e))
+            return@flow
         }
 
         emit(ResultState(data = data))
