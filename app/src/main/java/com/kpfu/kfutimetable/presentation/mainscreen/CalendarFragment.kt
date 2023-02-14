@@ -12,14 +12,19 @@ import com.kpfu.kfutimetable.presentation.mainscreen.entities.CalendarState
 import com.kpfu.kfutimetable.presentation.mainscreen.entities.CalendarViewState
 import com.kpfu.kfutimetable.presentation.mainscreen.providers.CalendarViewModelProvider
 import com.kpfu.kfutimetable.presentation.mainscreen.utils.MonthCarousel
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
+import com.kpfu.kfutimetable.utils.routing.Router
+import com.kpfu.kfutimetable.utils.routing.ScreenProvider
 import com.kpfu.kfutimetable.utils.toString
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.two_icons.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CalendarFragment @Inject constructor(
     calendarViewStateMapper: CalendarViewStateMapper,
     calendarViewModelProvider: CalendarViewModelProvider,
+    private val router: Router,
+    private val screenProvider: ScreenProvider
 ) : BaseFragment<CalendarState, CalendarViewState, CalendarViewModel>(
     viewStateMapper = calendarViewStateMapper,
     viewModelProvider = calendarViewModelProvider
@@ -63,8 +68,18 @@ class CalendarFragment @Inject constructor(
         prevButton.setOnClickListener {
             monthCarousel?.prevMonth()
         }
-        binding.dayItemCarousel.onItemClick = {
+        dayItemCarousel.onItemClick = {
             viewModel.getLessonsByDay(Integer.parseInt(it.date))
+        }
+        feedbackPageButton.setOnClickListener {
+            router.navigate(
+                screenProvider.get(ScreenProvider.ScreenType.FeedbackFragment)
+            )
+        }
+        faqPageButton.setOnClickListener {
+            router.navigate(
+                screenProvider.get(ScreenProvider.ScreenType.FqqFragment)
+            )
         }
     }
 

@@ -49,6 +49,16 @@ class AccountFragment @Inject constructor(
     }
 
     private fun setListeners() = with(binding){
+        twoicons.faqPageButton.setOnClickListener {
+            router.navigate(
+                screenProvider.get(ScreenProvider.ScreenType.FqqFragment)
+            )
+        }
+        twoicons.feedbackPageButton.setOnClickListener {
+            router.navigate(
+                screenProvider.get(ScreenProvider.ScreenType.FeedbackFragment)
+            )
+        }
     }
 
 }

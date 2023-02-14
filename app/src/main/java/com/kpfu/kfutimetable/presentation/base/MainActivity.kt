@@ -72,12 +72,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setListeners() = with(binding) {
-        toolbar.menu.setOnClickListener() {
+        toolbar.menu.setOnClickListener {
             if (menuDialog?.isShowing == true) {
                 menuDialog?.hide()
             } else {
                 menuDialog?.show()
             }
+        }
+        toolbar.avatar.setOnClickListener {
+            RouteManager.router?.navigate(
+                screenProvider.get(ScreenProvider.ScreenType.AccountFragment)
+            )
         }
 
         menuDialog?.layout?.let<FrameLayout, Unit> {

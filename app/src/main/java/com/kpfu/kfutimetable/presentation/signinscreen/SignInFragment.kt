@@ -41,8 +41,8 @@ class SignInFragment @Inject constructor(
 
     override fun render(currentViewState: SignInViewState) {}
 
-    private fun setListeners() {
-        binding.loginOrRegister.setOnClickListener {
+    private fun setListeners() = with(binding) {
+        loginOrRegister.setOnClickListener {
             (requireActivity() as MainActivity).enableToolbar()
             router.navigate(
                 screenProvider.get(ScreenProvider.ScreenType.CalendarFragment),
