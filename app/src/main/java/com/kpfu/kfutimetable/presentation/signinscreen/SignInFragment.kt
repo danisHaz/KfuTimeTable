@@ -53,6 +53,8 @@ class SignInFragment @Inject constructor(
 
     private fun setObservers() {
         viewModel.groupData.observe(viewLifecycleOwner) {
+            if (it == "")
+                return@observe
             onSuccessfulLogin()
         }
     }
