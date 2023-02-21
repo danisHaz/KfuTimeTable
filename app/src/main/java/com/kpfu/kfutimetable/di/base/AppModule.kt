@@ -11,13 +11,27 @@ import kotlinx.coroutines.Dispatchers
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.time.format.DateTimeFormatter
+import javax.inject.Qualifier
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class CoroutineDispatcherIO
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class CoroutineDispatcherDefault
 
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
     @Provides
-    fun provideCoroutineDispatcher() = Dispatchers.IO
+    @CoroutineDispatcherIO
+    fun provideCoroutineDispatcherIO() = Dispatchers.IO
+
+    @Provides
+    @CoroutineDispatcherDefault
+    fun provideCoroutineDispatcherDefault() = Dispatchers.Default
 
     @Provides
     fun provideGson(): Gson = GsonBuilder().create()

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.kpfu.kfutimetable.R
 import com.kpfu.kfutimetable.commonwidgets.TopSheetDialog.TopSheetDialog
 import com.kpfu.kfutimetable.databinding.ActivityMainBinding
+import com.kpfu.kfutimetable.utils.UserSession
 import com.kpfu.kfutimetable.utils.routing.RouteManager
 import com.kpfu.kfutimetable.utils.routing.ScreenProvider
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,10 +45,14 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        // initial navigation to calendar fragment (now by default)
         if (!isActivityRestarted) {
+            val initialFragment = if (UserSession.user != null) {
+                ScreenProvider.ScreenType.CalendarFragment
+            } else {
+                ScreenProvider.ScreenType.SignInFragment
+            }
             RouteManager.router?.navigate(
-                screenProvider.get(ScreenProvider.ScreenType.SignInFragment),
+                screenProvider.get(initialFragment),
                 addToBackStack = false
             )
         }
@@ -131,6 +136,7 @@ class MainActivity : AppCompatActivity() {
                         screenProvider.get(ScreenProvider.ScreenType.SignInFragment),
                         addToBackStack = false
                     )
+                    UserSession.update(newUser = null, context = applicationContext)
                 }
             }
         }

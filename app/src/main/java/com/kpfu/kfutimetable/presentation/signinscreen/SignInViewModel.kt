@@ -1,6 +1,5 @@
 package com.kpfu.kfutimetable.presentation.signinscreen
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.kpfu.kfutimetable.presentation.base.BaseViewModel
@@ -8,6 +7,8 @@ import com.kpfu.kfutimetable.presentation.signinscreen.entities.SignInState
 import com.kpfu.kfutimetable.presentation.signinscreen.entities.SignInViewState
 import com.kpfu.kfutimetable.repository.signin.SignInRepository
 import com.kpfu.kfutimetable.repository.signin.dto.UserAuthData
+import com.kpfu.kfutimetable.utils.User
+import com.kpfu.kfutimetable.utils.UserSession
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -35,8 +36,8 @@ class SignInViewModel @Inject constructor(
             isError.value = it.error == null
 
             it.data?.let { authData ->
-                Log.e(this::class.java.name, authData.toString())
                 groupData.value = authData.groupNumber
+                UserSession.user = User(groupNumber = authData.groupNumber)
             }
         }.launchIn(viewModelScope)
     }
