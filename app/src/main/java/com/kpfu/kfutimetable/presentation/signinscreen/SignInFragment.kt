@@ -10,6 +10,8 @@ import com.kpfu.kfutimetable.presentation.base.MainActivity
 import com.kpfu.kfutimetable.presentation.signinscreen.entities.SignInState
 import com.kpfu.kfutimetable.presentation.signinscreen.entities.SignInViewState
 import com.kpfu.kfutimetable.presentation.signinscreen.providers.SignInViewModelProvider
+import com.kpfu.kfutimetable.utils.User
+import com.kpfu.kfutimetable.utils.UserSession
 import com.kpfu.kfutimetable.utils.routing.Router
 import com.kpfu.kfutimetable.utils.routing.ScreenProvider
 import dagger.hilt.android.AndroidEntryPoint
@@ -56,6 +58,7 @@ class SignInFragment @Inject constructor(
             if (it == "")
                 return@observe
             onSuccessfulLogin()
+            UserSession.update(User(groupNumber = it), requireContext())
         }
     }
 

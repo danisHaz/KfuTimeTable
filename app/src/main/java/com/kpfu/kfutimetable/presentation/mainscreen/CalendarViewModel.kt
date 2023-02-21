@@ -27,8 +27,8 @@ class CalendarViewModel @Inject constructor(
 ) : BaseViewModel<CalendarState, CalendarViewState>(
     initialState = {
         CalendarState(
-            date = "2023-02-11 13:24:45",
-            lessons = listOf()
+            subjectsOnEvenWeek = listOf(),
+            subjectsOnOddWeek = listOf()
         )
     },
     viewStateMapper = CalendarViewStateMapper()
@@ -45,15 +45,15 @@ class CalendarViewModel @Inject constructor(
     private var monthListJob: Job? = null
     private var lessonListJob: Job? = null
 
+    private val semestr1 = listOf(Month.SEPTEMBER, Month.OCTOBER, Month.NOVEMBER, Month.DECEMBER)
+    private val semestr2 = listOf(Month.FEBRUARY, Month.MARCH, Month.APRIL, Month.MAY)
+
     fun getCurrentMonthsList() {
-        monthListJob?.cancel()
-        monthListJob = calendarRepository.getCurrentMonths().onEach { result ->
-            isLoading.value = result.isLoading
-            isError.value = result.error != null
-            result.data?.let { data ->
-                monthListData.value = data
-            }
-        }.launchIn(viewModelScope)
+        val day = LocalDate.now()
+        monthListData.value = when (day.month) {
+            in semestr1.plusElement(Month.JANUARY) -> semestr1
+            else -> semestr2
+        }
     }
 
     fun initDayItemCarousel(months: List<Month>) {
