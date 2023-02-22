@@ -69,7 +69,7 @@ class CalendarFragment @Inject constructor(
             monthCarousel?.prevMonth()
         }
         dayItemCarousel.onItemClick = {
-            viewModel.getLessonsByDay(Integer.parseInt(it.date))
+            viewModel.getLessonsOnDay(Integer.parseInt(it.date))
         }
         feedbackPageButton.setOnClickListener {
             router.navigate(

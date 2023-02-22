@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.kpfu.kfutimetable.presentation.base.BaseViewModel
 import com.kpfu.kfutimetable.presentation.mainscreen.entities.CalendarState
 import com.kpfu.kfutimetable.presentation.mainscreen.entities.CalendarViewState
+import com.kpfu.kfutimetable.presentation.mainscreen.entities.Lesson
 import com.kpfu.kfutimetable.repository.main.CalendarRepository
 import com.kpfu.kfutimetable.utils.LocalDateWrapper
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,14 +28,15 @@ class CalendarViewModel @Inject constructor(
 ) : BaseViewModel<CalendarState, CalendarViewState>(
     initialState = {
         CalendarState(
-            subjectsOnEvenWeek = listOf(),
-            subjectsOnOddWeek = listOf()
+            lessons = listOf()
         )
     },
     viewStateMapper = CalendarViewStateMapper()
 ) {
 
     val monthListData: MutableLiveData<List<Month>> = MutableLiveData(listOf())
+
+    var lessonsForWeek: List<CalendarState>? = null
 
     var currentDayData: LocalDate? = null
     val dayItemCarouselData: MutableLiveData<List<LocalDateWrapper<Boolean>>> =
@@ -66,7 +68,32 @@ class CalendarViewModel @Inject constructor(
         dayItemCarouselData.value = inflateDateForMonth(currentDayData)
     }
 
-    fun getLessonsByDay(desiredDay: Int) {
+    fun getLessonsOnDay(desiredDay: Int) {
+        currentDayData = LocalDate.now().withDayOfMonth(desiredDay)
+        if (lessonsForWeek == null) {
+            getLessonsForWeek()
+        } else {
+            currentDayData?.let {
+                state = lessonsForWeek!![currentDayData!!.dayOfWeek.value-1]
+            }
+        }
+    }
+
+    private fun getLessonsForWeek() {
+        lessonListJob?.cancel()
+
+        lessonListJob = calendarRepository.getLessonsForWeek().onEach { result ->
+            isLoading.value = result.isLoading
+            isError.value = result.error != null
+            result.data?.let { data ->
+                withContext(Dispatchers.Main) {
+                    lessonsForWeek = data
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    private fun getLessonsByDay(desiredDay: Int) {
         lessonListJob?.cancel()
         if (currentDayData == null) {
             Log.e(this::class.java.name, "Illegal State: current day is null when get lessons")

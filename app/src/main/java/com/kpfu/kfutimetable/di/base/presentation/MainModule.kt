@@ -1,7 +1,6 @@
 package com.kpfu.kfutimetable.di.base.presentation
 
 import com.kpfu.kfutimetable.repository.main.CalendarRepository
-import com.kpfu.kfutimetable.repository.main.CalendarRepositoryImpl
 import com.kpfu.kfutimetable.repository.main.CalendarRepositoryMock
 import com.kpfu.kfutimetable.repository.main.CalendarWebService
 import com.kpfu.kfutimetable.repository.signin.SignInRepository
@@ -19,7 +18,7 @@ object MainModule {
 
     @Provides
     fun provideCalendarRepository(calendarWebService: CalendarWebService): CalendarRepository =
-        CalendarRepositoryImpl(calendarWebService)
+        CalendarRepositoryMock()
 
     @Provides
     fun provideCalendarService(retrofit: Retrofit): CalendarWebService =

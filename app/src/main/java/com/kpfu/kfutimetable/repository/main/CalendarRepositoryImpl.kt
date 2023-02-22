@@ -1,15 +1,22 @@
 package com.kpfu.kfutimetable.repository.main
 
+import android.content.Context
 import com.kpfu.kfutimetable.presentation.mainscreen.entities.CalendarState
+import com.kpfu.kfutimetable.presentation.mainscreen.entities.Lesson
+import com.kpfu.kfutimetable.repository.main.dto.LessonsDto
+import com.kpfu.kfutimetable.repository.main.dto.SubjectDto
 import com.kpfu.kfutimetable.utils.ResultState
+import com.kpfu.kfutimetable.utils.filterByDay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import retrofit2.await
+import java.time.DayOfWeek
 import java.time.Month
 import javax.inject.Inject
 
 class CalendarRepositoryImpl @Inject constructor(
+    private val context: Context,
     private val calendarWebService: CalendarWebService,
 ) : CalendarRepository {
 
@@ -17,7 +24,7 @@ class CalendarRepositoryImpl @Inject constructor(
         flow {
             emit(ResultState(isLoading = true))
 
-            val data: CalendarState
+            val data: SubjectDto
             try {
                 data = calendarWebService.getLessonsByDay(date).await()
             } catch (e: HttpException) {
@@ -25,13 +32,14 @@ class CalendarRepositoryImpl @Inject constructor(
                 return@flow
             }
 
-            emit(ResultState(data = data))
+            error("Not yet implemented")
+            emit(ResultState(data = CalendarState(listOf())))
         }
 
     override fun getLessonsForWeek(): Flow<ResultState<List<CalendarState>>> = flow {
         emit(ResultState(isLoading = true))
 
-        val data: List<CalendarState>
+        val data: LessonsDto
         try {
             data = calendarWebService.getLessonsForWeek().await()
         } catch (e: HttpException) {
@@ -39,7 +47,13 @@ class CalendarRepositoryImpl @Inject constructor(
             return@flow
         }
 
-        emit(ResultState(data = data))
+        val lessonsForWeek: List<CalendarState> = mutableListOf<CalendarState>().apply {
+            DayOfWeek.values().forEach {
+                add(CalendarState(data.filterByDay(it, context)))
+            }
+        }
+
+        emit(ResultState(data = lessonsForWeek))
     }
 
     override fun getCurrentMonths(): Flow<ResultState<List<Month>>> = flow {

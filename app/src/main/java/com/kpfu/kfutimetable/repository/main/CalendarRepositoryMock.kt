@@ -6,7 +6,9 @@ import com.kpfu.kfutimetable.presentation.mainscreen.entities.LessonType
 import com.kpfu.kfutimetable.utils.ResultState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import java.time.DayOfWeek
 import java.time.Month
+import java.time.MonthDay
 
 class CalendarRepositoryMock : CalendarRepository {
 
@@ -17,7 +19,6 @@ class CalendarRepositoryMock : CalendarRepository {
                 emit(
                     ResultState(
                         data = CalendarState(
-                            date,
                             listOf(
                                 Lesson(
                                     "(Л) Математический анализ",
@@ -25,6 +26,7 @@ class CalendarRepositoryMock : CalendarRepository {
                                     "Асхатов Р.М.",
                                     "ул. Кремлевская, 35",
                                     "ауд. 216",
+                                    DayOfWeek.MONDAY.toString(),
                                     "12:10",
                                 )
                             )
@@ -35,7 +37,6 @@ class CalendarRepositoryMock : CalendarRepository {
                 emit(
                     ResultState(
                         data = CalendarState(
-                            date,
                             listOf(
                                 Lesson(
                                     "(П) ЫЫЫЫЫЫЫЫ",
@@ -43,6 +44,7 @@ class CalendarRepositoryMock : CalendarRepository {
                                     "Мемный чел",
                                     "ул. Кремлевская, 3132",
                                     "ауд. 1010101",
+                                    DayOfWeek.SATURDAY.toString(),
                                     "15:20",
                                 )
                             )
@@ -58,66 +60,79 @@ class CalendarRepositoryMock : CalendarRepository {
             ResultState(
                 data = listOf(
                     CalendarState(
-                        "2023-02-11 13:24:45",
                         listOf(
                             Lesson(
-                                "(Л) Математический анализ",
+                                "(Л) Оптимизация АААААА",
                                 LessonType.Lecture,
                                 "Асхатов Р.М.",
                                 "ул. Кремлевская, 35",
                                 "ауд. 216",
+                                DayOfWeek.MONDAY.toString(),
                                 "12:10",
                             )
                         )
                     ),
                     CalendarState(
-                        "2023-02-11 13:24:45",
                         listOf(
                             Lesson(
-                                "(Л) Математический анализ",
+                                "(Л) Оптимизация АААААА",
                                 LessonType.Lecture,
                                 "Асхатов Р.М.",
                                 "ул. Кремлевская, 35",
                                 "ауд. 216",
+                                DayOfWeek.TUESDAY.toString(),
                                 "12:10",
                             )
                         )
                     ),
                     CalendarState(
-                        "2023-02-11 13:24:45",
                         listOf(
                             Lesson(
-                                "(Л) Математический анализ",
+                                "(Л) Оптимизация АААААА",
                                 LessonType.Lecture,
                                 "Асхатов Р.М.",
                                 "ул. Кремлевская, 35",
                                 "ауд. 216",
+                                DayOfWeek.WEDNESDAY.toString(),
                                 "12:10",
                             )
                         )
                     ),
                     CalendarState(
-                        "2023-02-11 13:24:45",
                         listOf(
                             Lesson(
-                                "(Л) Математический анализ",
+                                "(Л) Оптимизация АААААА",
                                 LessonType.Lecture,
                                 "Асхатов Р.М.",
                                 "ул. Кремлевская, 35",
                                 "ауд. 216",
+                                DayOfWeek.THURSDAY.toString(),
                                 "12:10",
                             )
                         )
                     ),
                     CalendarState(
-                        "2023-02-11 13:24:45",
                         listOf(
                             Lesson(
-                                "(Л) Математический анализ",
+                                "(Л) Оптимизация АААААА",
                                 LessonType.Lecture,
                                 "Асхатов Р.М.",
                                 "ул. Кремлевская, 35",
                                 "ауд. 216",
+                                DayOfWeek.FRIDAY.toString(),
+                                "12:10",
+                            )
+                        )
+                    ),
+                    CalendarState(
+                        listOf(
+                            Lesson(
+                                "(Л) Оптимизация АААААА",
+                                LessonType.Lecture,
+                                "Асхатов Р.М.",
+                                "ул. Кремлевская, 35",
+                                "ауд. 216",
+                                DayOfWeek.SATURDAY.toString(),
                                 "12:10",
                             )
                         )

@@ -4,12 +4,10 @@ import android.content.Context
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.kpfu.kfutimetable.di.base.CoroutineDispatcherDefault
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 data class User(
     val userId: Int = 0,
@@ -22,10 +20,6 @@ object UserSession {
 
     private val GROUP_KEY = stringPreferencesKey("GroupNumber")
     private val USER_ID_KEY = intPreferencesKey("UserId")
-
-    @Inject
-    @CoroutineDispatcherDefault
-    lateinit var coroutineDispatcher: CoroutineDispatcher
 
     // method needed only to restore data from datastore
     fun initialize(context: Context) {
@@ -43,7 +37,7 @@ object UserSession {
             error("UserSession override is not appropriate")
         }
 
-        CoroutineScope(coroutineDispatcher).launch {
+        CoroutineScope(Dispatchers.Default).launch {
             context.dataStore.edit {
                 it[GROUP_KEY] = newUser?.groupNumber ?: ""
                 it[USER_ID_KEY] = newUser?.userId ?: -1

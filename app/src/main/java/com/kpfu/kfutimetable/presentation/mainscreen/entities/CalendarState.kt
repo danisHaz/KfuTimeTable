@@ -4,10 +4,7 @@ import com.google.gson.annotations.SerializedName
 import com.kpfu.kfutimetable.presentation.base.utils.BaseState
 
 data class CalendarState(
-    @SerializedName("even")
-    val subjectsOnEvenWeek: List<Lesson>,
-    @SerializedName("odd")
-    val subjectsOnOddWeek: List<Lesson>,
+    val lessons: List<Lesson>
 ) : BaseState
 
 data class Lesson(
