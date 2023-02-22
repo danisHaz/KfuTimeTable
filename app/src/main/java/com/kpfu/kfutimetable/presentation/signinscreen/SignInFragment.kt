@@ -57,8 +57,8 @@ class SignInFragment @Inject constructor(
         viewModel.groupData.observe(viewLifecycleOwner) {
             if (it == "")
                 return@observe
-            onSuccessfulLogin()
             UserSession.update(User(groupNumber = it), requireContext())
+            onSuccessfulLogin()
         }
     }
 

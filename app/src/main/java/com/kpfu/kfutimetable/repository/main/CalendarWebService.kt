@@ -15,8 +15,10 @@ interface CalendarWebService {
         @Body date: String
     ): Call<SubjectDto>
 
-    @GET("/getLessonsForWeek")
-    fun getLessonsForWeek(): Call<LessonsDto>
+    @POST("/get_timetable")
+    fun getLessonsForWeek(
+        @Body group: String
+    ): Call<LessonsDto>
 
     @GET("/getCurrentMonths")
     fun getCurrentMonths(): Call<List<Month>>

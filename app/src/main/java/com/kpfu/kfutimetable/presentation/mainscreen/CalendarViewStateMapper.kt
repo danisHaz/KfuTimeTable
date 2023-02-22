@@ -11,7 +11,9 @@ class CalendarViewStateMapper : BaseViewStateMapper<CalendarState, CalendarViewS
     override fun mapToViewState(state: CalendarState): CalendarViewState {
         val subjectList = mutableListOf<SubjectView.State>().apply {
             for (lesson in state.lessons) {
-                val (hours, minutes) = lesson.startTime.split(":").map { Integer.parseInt(it) }
+                val (hours, minutes) = lesson.startTime.split("-")[0].split(".")
+                    .map { Integer.parseInt(it.trim()) }
+
                 add(
                     SubjectView.State(
                         subject = lesson.lessonName,

@@ -1,7 +1,8 @@
 package com.kpfu.kfutimetable.di.base.presentation
 
+import android.content.Context
 import com.kpfu.kfutimetable.repository.main.CalendarRepository
-import com.kpfu.kfutimetable.repository.main.CalendarRepositoryMock
+import com.kpfu.kfutimetable.repository.main.CalendarRepositoryImpl
 import com.kpfu.kfutimetable.repository.main.CalendarWebService
 import com.kpfu.kfutimetable.repository.signin.SignInRepository
 import com.kpfu.kfutimetable.repository.signin.SignInRepositoryImpl
@@ -10,6 +11,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import retrofit2.Retrofit
 
 @Module
@@ -17,8 +19,11 @@ import retrofit2.Retrofit
 object MainModule {
 
     @Provides
-    fun provideCalendarRepository(calendarWebService: CalendarWebService): CalendarRepository =
-        CalendarRepositoryMock()
+    fun provideCalendarRepository(
+        @ApplicationContext context: Context,
+        calendarWebService: CalendarWebService
+    ): CalendarRepository =
+        CalendarRepositoryImpl(context, calendarWebService)
 
     @Provides
     fun provideCalendarService(retrofit: Retrofit): CalendarWebService =

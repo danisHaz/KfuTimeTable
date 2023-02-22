@@ -55,7 +55,7 @@ class CalendarRepositoryMock : CalendarRepository {
             changeEmulatorField = !changeEmulatorField
         }
 
-    override fun getLessonsForWeek(): Flow<ResultState<List<CalendarState>>> = flow {
+    override fun getLessonsForWeek(universityGroupNumber: String): Flow<ResultState<List<CalendarState>>> = flow {
         emit(
             ResultState(
                 data = listOf(

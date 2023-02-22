@@ -105,11 +105,11 @@ fun DayOfWeek.toString(context: Context?): String {
 }
 
 fun getDayOfWeekFrom(context: Context?, dayOfWeek: String): DayOfWeek {
-    val monthNamesList = context?.resources?.getStringArray(R.array.days_short)
+    val monthNamesList = context?.resources?.getStringArray(R.array.daysOfWeek)
         ?: throw IllegalArgumentException("context is null")
     monthNamesList.forEachIndexed { ind, day ->
         if (day.lowercase() == dayOfWeek.lowercase()) {
-            return DayOfWeek.of(ind)
+            return DayOfWeek.of(ind+1)
         }
     }
 

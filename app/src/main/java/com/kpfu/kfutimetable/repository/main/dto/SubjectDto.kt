@@ -5,9 +5,9 @@ import com.kpfu.kfutimetable.presentation.mainscreen.entities.Lesson
 import com.kpfu.kfutimetable.presentation.mainscreen.entities.LessonType
 
 data class LessonsDto(
-    @SerializedName("Even")
+    @SerializedName("even")
     val lessonsForEvenWeek: List<SubjectDto>,
-    @SerializedName("Odd")
+    @SerializedName("odd")
     val lessonsForOddWeek: List<SubjectDto>,
 )
 
@@ -24,8 +24,6 @@ data class SubjectDto(
     val classroom: String,
     @SerializedName("address")
     val address: String,
-    @SerializedName("start")
-    val startTime: String
 ) {
     fun toLesson(): Lesson = Lesson(
         lessonName = name,
@@ -34,7 +32,7 @@ data class SubjectDto(
         address = address,
         classroom = classroom,
         day = day,
-        startTime = startTime
+        startTime = time
     )
 }
 

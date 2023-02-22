@@ -9,7 +9,7 @@ data class UserAuthData(
     val password: String,
 )
 
-data class AuthResponse(
+data class UniversityGroupData (
     @SerializedName("data")
     val groupNumber: String,
 )

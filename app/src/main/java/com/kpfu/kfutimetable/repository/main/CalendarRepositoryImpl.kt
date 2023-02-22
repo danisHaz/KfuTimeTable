@@ -1,6 +1,7 @@
 package com.kpfu.kfutimetable.repository.main
 
 import android.content.Context
+import android.util.Log
 import com.kpfu.kfutimetable.presentation.mainscreen.entities.CalendarState
 import com.kpfu.kfutimetable.presentation.mainscreen.entities.Lesson
 import com.kpfu.kfutimetable.repository.main.dto.LessonsDto
@@ -37,16 +38,18 @@ class CalendarRepositoryImpl @Inject constructor(
             emit(ResultState(data = CalendarState(listOf())))
         }
 
-    override fun getLessonsForWeek(): Flow<ResultState<List<CalendarState>>> = flow {
+    override fun getLessonsForWeek(universityGroupNumber: String): Flow<ResultState<List<CalendarState>>> = flow {
         emit(ResultState(isLoading = true))
 
         val data: LessonsDto
         try {
-            data = calendarWebService.getLessonsForWeek().await()
+            data = calendarWebService.getLessonsForWeek(universityGroupNumber).await()
         } catch (e: HttpException) {
             emit(ResultState(error = e))
             return@flow
         }
+
+        Log.e("kek", data.toString())
 
         val lessonsForWeek: List<CalendarState> = mutableListOf<CalendarState>().apply {
             DayOfWeek.values().forEach {

@@ -9,5 +9,5 @@ interface SignInWebService {
     @POST("/signin")
     fun signInUser(
         @Body userAuthData: UserAuthData
-    ): Call<AuthResponse>
+    ): Call<UniversityGroupData>
 }

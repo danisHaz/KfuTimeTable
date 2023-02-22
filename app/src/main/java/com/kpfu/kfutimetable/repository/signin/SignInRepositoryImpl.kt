@@ -1,6 +1,6 @@
 package com.kpfu.kfutimetable.repository.signin
 
-import com.kpfu.kfutimetable.repository.signin.dto.AuthResponse
+import com.kpfu.kfutimetable.repository.signin.dto.UniversityGroupData
 import com.kpfu.kfutimetable.repository.signin.dto.SignInWebService
 import com.kpfu.kfutimetable.repository.signin.dto.UserAuthData
 import com.kpfu.kfutimetable.utils.ResultState
@@ -14,10 +14,10 @@ class SignInRepositoryImpl @Inject constructor(
     private val signInWebService: SignInWebService
 ) : SignInRepository {
 
-    override fun signIn(userAuthData: UserAuthData): Flow<ResultState<AuthResponse>> = flow {
+    override fun signIn(userAuthData: UserAuthData): Flow<ResultState<UniversityGroupData>> = flow {
         emit(ResultState(isLoading = true))
 
-        val result: AuthResponse
+        val result: UniversityGroupData
         try {
             result = signInWebService.signInUser(userAuthData).await()
         } catch (e: HttpException) {

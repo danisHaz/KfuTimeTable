@@ -8,6 +8,6 @@ import java.time.Month
 interface CalendarRepository {
 
     fun getLessonsByDay(date: String): Flow<ResultState<CalendarState>>
-    fun getLessonsForWeek(): Flow<ResultState<List<CalendarState>>>
+    fun getLessonsForWeek(universityGroupNumber: String): Flow<ResultState<List<CalendarState>>>
     fun getCurrentMonths(): Flow<ResultState<List<Month>>>
 }

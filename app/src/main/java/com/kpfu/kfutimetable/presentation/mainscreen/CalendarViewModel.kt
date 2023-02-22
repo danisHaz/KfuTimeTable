@@ -8,6 +8,7 @@ import com.kpfu.kfutimetable.presentation.mainscreen.entities.CalendarState
 import com.kpfu.kfutimetable.presentation.mainscreen.entities.CalendarViewState
 import com.kpfu.kfutimetable.repository.main.CalendarRepository
 import com.kpfu.kfutimetable.utils.LocalDateWrapper
+import com.kpfu.kfutimetable.utils.UserSession
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -91,16 +92,18 @@ class CalendarViewModel @Inject constructor(
     ) {
         lessonListJob?.cancel()
 
-        lessonListJob = calendarRepository.getLessonsForWeek().onEach { result ->
-            isLoading.value = result.isLoading
-            isError.value = result.error != null
-            result.data?.let { data ->
-                withContext(Dispatchers.Main) {
-                    onLessonsRetrievedCallback?.invoke(data)
-                    lessonsForWeek = data
+        val universityGroupNumber = UserSession.user?.groupNumber ?: error("group number is null")
+        lessonListJob =
+            calendarRepository.getLessonsForWeek(universityGroupNumber).onEach { result ->
+                isLoading.value = result.isLoading
+                isError.value = result.error != null
+                result.data?.let { data ->
+                    withContext(Dispatchers.Main) {
+                        onLessonsRetrievedCallback?.invoke(data)
+                        lessonsForWeek = data
+                    }
                 }
-            }
-        }.launchIn(viewModelScope)
+            }.launchIn(viewModelScope)
     }
 
     private fun getLessonsByDay(desiredDay: Int) {
