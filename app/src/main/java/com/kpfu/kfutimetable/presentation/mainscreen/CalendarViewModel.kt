@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.kpfu.kfutimetable.presentation.base.BaseViewModel
 import com.kpfu.kfutimetable.presentation.mainscreen.entities.CalendarState
 import com.kpfu.kfutimetable.presentation.mainscreen.entities.CalendarViewState
-import com.kpfu.kfutimetable.presentation.mainscreen.entities.Lesson
 import com.kpfu.kfutimetable.repository.main.CalendarRepository
 import com.kpfu.kfutimetable.utils.LocalDateWrapper
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -68,18 +67,28 @@ class CalendarViewModel @Inject constructor(
         dayItemCarouselData.value = inflateDateForMonth(currentDayData)
     }
 
-    fun getLessonsOnDay(desiredDay: Int) {
-        currentDayData = LocalDate.now().withDayOfMonth(desiredDay)
-        if (lessonsForWeek == null) {
-            getLessonsForWeek()
-        } else {
-            currentDayData?.let {
-                state = lessonsForWeek!![currentDayData!!.dayOfWeek.value-1]
+    fun getLessonsOnDay(desiredDay: Int, desiredMonth: Month) {
+        currentDayData = LocalDate.now().withDayOfMonth(desiredDay).withMonth(desiredMonth.value)
+        val updateState: ((List<CalendarState>) -> Unit) = { lessons ->
+            currentDayData?.let { currentDay ->
+                state = if (lessons.size >= currentDay.dayOfWeek.value) {
+                    lessons[currentDay.dayOfWeek.value - 1]
+                } else {
+                    CalendarState(listOf())
+                }
             }
+        }
+
+        if (lessonsForWeek == null) {
+            getLessonsForWeek(updateState)
+        } else {
+            updateState(lessonsForWeek!!)
         }
     }
 
-    private fun getLessonsForWeek() {
+    private fun getLessonsForWeek(
+        onLessonsRetrievedCallback: ((List<CalendarState>) -> Unit)? = null
+    ) {
         lessonListJob?.cancel()
 
         lessonListJob = calendarRepository.getLessonsForWeek().onEach { result ->
@@ -87,6 +96,7 @@ class CalendarViewModel @Inject constructor(
             isError.value = result.error != null
             result.data?.let { data ->
                 withContext(Dispatchers.Main) {
+                    onLessonsRetrievedCallback?.invoke(data)
                     lessonsForWeek = data
                 }
             }

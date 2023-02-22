@@ -11,7 +11,7 @@ data class Lesson(
     @SerializedName("subject")
     val lessonName: String,
     @SerializedName("lesson_type")
-    val lessonType: LessonType?,
+    val lessonType: LessonType,
     @SerializedName("teacher")
     val teacherName: String,
     @SerializedName("address")

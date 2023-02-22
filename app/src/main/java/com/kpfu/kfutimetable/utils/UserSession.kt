@@ -33,7 +33,7 @@ object UserSession {
     }
 
     fun update(newUser: User?, context: Context) {
-        if (user == null && newUser != null) {
+        if (user != null && newUser != null) {
             error("UserSession override is not appropriate")
         }
 

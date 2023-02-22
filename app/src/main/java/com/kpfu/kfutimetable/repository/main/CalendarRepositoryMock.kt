@@ -75,7 +75,7 @@ class CalendarRepositoryMock : CalendarRepository {
                     CalendarState(
                         listOf(
                             Lesson(
-                                "(Л) Оптимизация АААААА",
+                                "(Л) Оптимизация ББББББ",
                                 LessonType.Lecture,
                                 "Асхатов Р.М.",
                                 "ул. Кремлевская, 35",
@@ -88,7 +88,7 @@ class CalendarRepositoryMock : CalendarRepository {
                     CalendarState(
                         listOf(
                             Lesson(
-                                "(Л) Оптимизация АААААА",
+                                "(Л) Оптимизация ВВВВВВВВ",
                                 LessonType.Lecture,
                                 "Асхатов Р.М.",
                                 "ул. Кремлевская, 35",
@@ -101,7 +101,7 @@ class CalendarRepositoryMock : CalendarRepository {
                     CalendarState(
                         listOf(
                             Lesson(
-                                "(Л) Оптимизация АААААА",
+                                "(Л) Оптимизация ГГГГГГГ",
                                 LessonType.Lecture,
                                 "Асхатов Р.М.",
                                 "ул. Кремлевская, 35",
@@ -114,7 +114,7 @@ class CalendarRepositoryMock : CalendarRepository {
                     CalendarState(
                         listOf(
                             Lesson(
-                                "(Л) Оптимизация АААААА",
+                                "(Л) Оптимизация ДДДДДДД",
                                 LessonType.Lecture,
                                 "Асхатов Р.М.",
                                 "ул. Кремлевская, 35",
@@ -127,7 +127,7 @@ class CalendarRepositoryMock : CalendarRepository {
                     CalendarState(
                         listOf(
                             Lesson(
-                                "(Л) Оптимизация АААААА",
+                                "(Л) Оптимизация УУУУУУУ",
                                 LessonType.Lecture,
                                 "Асхатов Р.М.",
                                 "ул. Кремлевская, 35",

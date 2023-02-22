@@ -1,6 +1,7 @@
 package com.kpfu.kfutimetable.presentation.mainscreen
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -69,7 +70,9 @@ class CalendarFragment @Inject constructor(
             monthCarousel?.prevMonth()
         }
         dayItemCarousel.onItemClick = {
-            viewModel.getLessonsOnDay(Integer.parseInt(it.date))
+            monthCarousel?.currentMonth?.let { currentMonth ->
+                viewModel.getLessonsOnDay(Integer.parseInt(it.date), currentMonth)
+            } ?: Log.e(this::class.java.name, "Month carousel is null")
         }
         feedbackPageButton.setOnClickListener {
             router.navigate(

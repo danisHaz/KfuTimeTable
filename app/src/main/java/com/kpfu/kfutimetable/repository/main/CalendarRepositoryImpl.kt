@@ -7,6 +7,7 @@ import com.kpfu.kfutimetable.repository.main.dto.LessonsDto
 import com.kpfu.kfutimetable.repository.main.dto.SubjectDto
 import com.kpfu.kfutimetable.utils.ResultState
 import com.kpfu.kfutimetable.utils.filterByDay
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
@@ -16,7 +17,7 @@ import java.time.Month
 import javax.inject.Inject
 
 class CalendarRepositoryImpl @Inject constructor(
-    private val context: Context,
+    @ApplicationContext private val context: Context,
     private val calendarWebService: CalendarWebService,
 ) : CalendarRepository {
 

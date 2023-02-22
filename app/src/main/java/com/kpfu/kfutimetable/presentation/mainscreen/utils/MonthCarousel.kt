@@ -20,6 +20,8 @@ class MonthCarousel(
         get() = currentMonthPos != 0
 
     var onMonthChangeListener: (Month) -> Unit = {}
+    val currentMonth: Month
+        get() = monthNames[currentMonthPos]
 
     private var monthHolder: TextView
     private var currentMonthPos = 0
@@ -66,7 +68,11 @@ class MonthCarousel(
         }
     }
 
-    private fun animateText(transitionFrom: Float, transitionTo: Float, doOnEndCallback: () -> Unit = {}) {
+    private fun animateText(
+        transitionFrom: Float,
+        transitionTo: Float,
+        doOnEndCallback: () -> Unit = {}
+    ) {
         ObjectAnimator.ofFloat(
             monthHolder,
             "translationX", transitionFrom, transitionTo
