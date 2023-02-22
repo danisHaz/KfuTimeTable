@@ -20,7 +20,7 @@ class SignInRepositoryImpl @Inject constructor(
         val result: UniversityGroupData
         try {
             result = signInWebService.signInUser(userAuthData).await()
-        } catch (e: HttpException) {
+        } catch (e: Exception) {
             emit(ResultState(error = e))
             return@flow
         }

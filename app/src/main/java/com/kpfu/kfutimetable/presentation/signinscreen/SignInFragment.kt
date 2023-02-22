@@ -60,6 +60,17 @@ class SignInFragment @Inject constructor(
             UserSession.update(User(groupNumber = it), requireContext())
             onSuccessfulLogin()
         }
+
+        viewModel.isError.observe(viewLifecycleOwner) {
+            if (it) {
+                setSnackbar(
+                    binding.root,
+                    "Неправильно введены данные",
+                    action = null,
+                    toPerform = null
+                )
+            }
+        }
     }
 
     private fun onSuccessfulLogin() {

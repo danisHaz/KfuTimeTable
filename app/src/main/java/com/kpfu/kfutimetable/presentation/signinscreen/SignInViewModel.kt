@@ -36,7 +36,7 @@ class SignInViewModel @Inject constructor(
         val authData = UserAuthData(login, password)
         signInJob = signInRepository.signIn(authData).onEach {
             isLoading.value = it.isLoading
-            isError.value = it.error == null
+            isError.value = it.error != null
 
             it.data?.let { authData ->
                 groupData.value = authData.groupNumber

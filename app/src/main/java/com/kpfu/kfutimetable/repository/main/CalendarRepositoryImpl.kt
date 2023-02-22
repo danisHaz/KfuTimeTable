@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import retrofit2.await
+import java.lang.Exception
 import java.time.DayOfWeek
 import java.time.Month
 import javax.inject.Inject
@@ -44,7 +45,7 @@ class CalendarRepositoryImpl @Inject constructor(
         val data: LessonsDto
         try {
             data = calendarWebService.getLessonsForWeek(universityGroupNumber).await()
-        } catch (e: HttpException) {
+        } catch (e: Exception) {
             emit(ResultState(error = e))
             return@flow
         }

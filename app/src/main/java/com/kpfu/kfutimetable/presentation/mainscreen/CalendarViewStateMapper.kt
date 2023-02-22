@@ -31,6 +31,6 @@ class CalendarViewStateMapper : BaseViewStateMapper<CalendarState, CalendarViewS
                 )
             }
         }
-        return CalendarViewState(listOf(), listOf(subjectList))
+        return CalendarViewState(listOf(subjectList))
     }
 }
