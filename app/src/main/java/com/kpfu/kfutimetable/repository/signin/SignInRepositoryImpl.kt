@@ -25,6 +25,11 @@ class SignInRepositoryImpl @Inject constructor(
             return@flow
         }
 
+        if (result.hasError) {
+            emit(ResultState(error = java.lang.Exception("unknown exception")))
+            return@flow
+        }
+
         emit(ResultState(data = result))
     }
 }

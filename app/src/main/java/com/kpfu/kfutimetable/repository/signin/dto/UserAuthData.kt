@@ -12,4 +12,6 @@ data class UserAuthData(
 data class UniversityGroupData (
     @SerializedName("data")
     val groupNumber: String,
+    @SerializedName("error")
+    val hasError: Boolean,
 )
