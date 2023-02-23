@@ -142,7 +142,6 @@ class TimetableView @JvmOverloads constructor(
         timeViewHoldersList.forEach {
             it.changeTimeLineVisibility(true)
         }
-        setConstraintSet(ConstraintSet())
     }
 
     companion object {

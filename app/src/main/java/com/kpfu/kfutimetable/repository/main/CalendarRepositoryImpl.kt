@@ -1,9 +1,7 @@
 package com.kpfu.kfutimetable.repository.main
 
 import android.content.Context
-import android.util.Log
 import com.kpfu.kfutimetable.presentation.mainscreen.entities.CalendarState
-import com.kpfu.kfutimetable.presentation.mainscreen.entities.Lesson
 import com.kpfu.kfutimetable.repository.main.dto.LessonsDto
 import com.kpfu.kfutimetable.repository.main.dto.SubjectDto
 import com.kpfu.kfutimetable.utils.ResultState
@@ -13,7 +11,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import retrofit2.await
-import java.lang.Exception
 import java.time.DayOfWeek
 import java.time.Month
 import javax.inject.Inject
@@ -49,8 +46,6 @@ class CalendarRepositoryImpl @Inject constructor(
             emit(ResultState(error = e))
             return@flow
         }
-
-        Log.e("kek", data.toString())
 
         val lessonsForWeek: List<CalendarState> = mutableListOf<CalendarState>().apply {
             DayOfWeek.values().forEach {

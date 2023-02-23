@@ -193,6 +193,5 @@ class CalendarViewModel @Inject constructor(
             }
         }
         currentDayData = LocalDate.of(currentDate.year, date.second, date.first)
-        Log.e(this::class.java.name, currentDayData.toString())
     }
 }
