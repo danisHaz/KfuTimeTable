@@ -88,7 +88,7 @@ class CalendarFragment @Inject constructor(
 
     private fun setObservers() {
         viewModel.monthListData.observe(this.viewLifecycleOwner) {
-            monthCarousel = MonthCarousel(it, binding.monthList)
+            monthCarousel = MonthCarousel(context, it, binding.monthList)
             monthCarousel?.onMonthChangeListener = { month ->
                 viewModel.updateDayItemCarousel(month)
             }

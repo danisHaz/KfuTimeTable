@@ -9,6 +9,8 @@ import com.kpfu.kfutimetable.presentation.mainscreen.entities.CalendarViewState
 import com.kpfu.kfutimetable.repository.main.CalendarRepository
 import com.kpfu.kfutimetable.utils.LocalDateWrapper
 import com.kpfu.kfutimetable.utils.UserSession
+import com.kpfu.kfutimetable.utils.term1
+import com.kpfu.kfutimetable.utils.term2
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -47,14 +49,11 @@ class CalendarViewModel @Inject constructor(
     private var monthListJob: Job? = null
     private var lessonListJob: Job? = null
 
-    private val semestr1 = listOf(Month.SEPTEMBER, Month.OCTOBER, Month.NOVEMBER, Month.DECEMBER)
-    private val semestr2 = listOf(Month.FEBRUARY, Month.MARCH, Month.APRIL, Month.MAY)
-
     fun getCurrentMonthsList() {
         val day = LocalDate.now()
         monthListData.value = when (day.month) {
-            in semestr1.plusElement(Month.JANUARY) -> semestr1
-            else -> semestr2
+            in term1.plusElement(Month.JANUARY) -> term1
+            else -> term2
         }
     }
 

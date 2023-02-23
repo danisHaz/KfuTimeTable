@@ -13,7 +13,6 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.kpfu.kfutimetable.R
 import com.kpfu.kfutimetable.presentation.base.utils.BaseApplication
-import com.kpfu.kfutimetable.presentation.mainscreen.entities.CalendarState
 import com.kpfu.kfutimetable.presentation.mainscreen.entities.Lesson
 import com.kpfu.kfutimetable.repository.main.dto.LessonsDto
 import kotlinx.coroutines.flow.Flow
@@ -99,14 +98,26 @@ fun Color.changeAlpha(alphaCoef: Float = 0.1f): Color {
 }
 
 fun DayOfWeek.toString(context: Context?): String {
-    val monthNamesList = context?.resources?.getStringArray(R.array.days_short)
-        ?: throw IllegalArgumentException("context is null")
-    return monthNamesList[this.value - 1]
+    val daysNamesList = context?.resources?.getStringArray(R.array.days_short)
+        ?: error("context is null")
+    return daysNamesList[this.value - 1]
+}
+
+fun Month.toString(context: Context?): String {
+    val monthsNamesList = context?.resources?.getStringArray(R.array.months)
+        ?: error("context is null")
+    term1.plus(term2).forEachIndexed { index, month ->
+        if (this.value == month.value) {
+            return monthsNamesList[index]
+        }
+    }
+
+    error("Month is not declared")
 }
 
 fun getDayOfWeekFrom(context: Context?, dayOfWeek: String): DayOfWeek {
     val monthNamesList = context?.resources?.getStringArray(R.array.daysOfWeek)
-        ?: throw IllegalArgumentException("context is null")
+        ?: error("context is null")
     monthNamesList.forEachIndexed { ind, day ->
         if (day.lowercase() == dayOfWeek.lowercase()) {
             return DayOfWeek.of(ind+1)

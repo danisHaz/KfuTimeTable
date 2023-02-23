@@ -2,14 +2,17 @@ package com.kpfu.kfutimetable.presentation.mainscreen.utils
 
 import android.animation.ObjectAnimator
 import android.animation.TimeInterpolator
+import android.content.Context
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.animation.doOnEnd
 import androidx.core.view.children
 import java.time.Month
+import com.kpfu.kfutimetable.utils.toString
 
 class MonthCarousel(
+    private val context: Context?,
     private val monthNames: List<Month>,
     container: LinearLayout,
     private val animationInterpolator: TimeInterpolator = AccelerateDecelerateInterpolator()
@@ -36,7 +39,7 @@ class MonthCarousel(
             monthHolder = it.first()
         }
         if (monthNames.isNotEmpty()) {
-            monthHolder.text = monthNames.first().toString()
+            monthHolder.text = monthNames.first().toString(context)
         }
     }
 
@@ -49,7 +52,7 @@ class MonthCarousel(
         onMonthChangeListener(monthNames[currentMonthPos])
 
         animateText(0f, animTransitionToLeft) {
-            monthHolder.text = monthNames[currentMonthPos].toString()
+            monthHolder.text = monthNames[currentMonthPos].toString(context)
             animateText(animTransitionToRight, 0f)
         }
     }
@@ -63,7 +66,7 @@ class MonthCarousel(
         onMonthChangeListener(monthNames[currentMonthPos])
 
         animateText(0f, animTransitionToRight) {
-            monthHolder.text = monthNames[currentMonthPos].toString()
+            monthHolder.text = monthNames[currentMonthPos].toString(context)
             animateText(animTransitionToLeft, 0f)
         }
     }
