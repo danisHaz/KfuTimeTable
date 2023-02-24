@@ -23,7 +23,7 @@ class DayItemCarousel @JvmOverloads constructor(
     var selectedItemPosition
         get() = _selectedItemPosition
         private set(value) {
-            updateSelectedItem(_selectedItemPosition)
+            updateSelectedItem(_selectedItemPosition, value)
             _selectedItemPosition = value
         }
     var onItemClick: (DayItemView.State) -> Unit = {}
@@ -81,7 +81,6 @@ class DayItemCarousel @JvmOverloads constructor(
                     dayItem.updateOnClick {
                         if (selectedItemPosition != bindingAdapterPosition) {
                             selectedItemPosition = bindingAdapterPosition
-                            dayItem.isChecked = !dayItem.isChecked
                             onItemClick(item)
                         }
                     }
@@ -90,27 +89,22 @@ class DayItemCarousel @JvmOverloads constructor(
             }
         }
 
-    private fun updateSelectedItem(oldPosition: Int) {
+    private fun updateSelectedItem(oldPosition: Int, newPosition: Int) {
         _adapter.items = _adapter.items?.toMutableList()?.apply {
             set(oldPosition, get(oldPosition).copy(isChecked = false))
+            set(newPosition, get(newPosition).copy(isChecked = true))
         }
         _adapter.notifyItemChanged(oldPosition)
+        _adapter.notifyItemChanged(newPosition)
     }
 
     // function required to set listeners and configurations when inflation of view is not
     // controlled
     fun initialize() {
-        _adapter =
-            object : AbsDelegationAdapter<List<DayItemView.State>>(
-                AdapterDelegatesManager(
-                    dayItemAdapterDelegate()
-                )
-            ) {
-                override fun getItemCount(): Int {
-                    return items?.count() ?: 0
-                }
-            }.also {
-                adapter = it
-            }
+        _adapter = object : AbsDelegationAdapter<List<DayItemView.State>>(
+            AdapterDelegatesManager(dayItemAdapterDelegate())
+        ) {
+            override fun getItemCount() = items?.count() ?: 0
+        }.also { adapter = it }
     }
 }

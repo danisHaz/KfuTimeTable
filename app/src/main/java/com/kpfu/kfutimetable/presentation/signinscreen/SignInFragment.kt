@@ -44,6 +44,11 @@ class SignInFragment @Inject constructor(
 
     override fun render(currentViewState: SignInViewState) {}
 
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.stopJob()
+    }
+
     private fun setListeners() = with(binding) {
         loginOrRegister.setOnClickListener {
             viewModel.signIn(
