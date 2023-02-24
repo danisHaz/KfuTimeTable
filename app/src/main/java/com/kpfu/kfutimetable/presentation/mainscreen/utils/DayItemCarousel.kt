@@ -68,9 +68,13 @@ class DayItemCarousel @JvmOverloads constructor(
 
             onViewAttachedToWindow {
                 (binding.root.layoutParams as? MarginLayoutParams)?.apply {
-                    if (this@adapterDelegateViewBinding.bindingAdapterPosition != 0) {
-                        marginStart = binding.root.context.resources.getDimension(
+                    marginStart = if (this@adapterDelegateViewBinding.bindingAdapterPosition != 0) {
+                        binding.root.context.resources.getDimension(
                             R.dimen.dayItemViewCarousel_marginStart
+                        ).roundToInt()
+                    } else {
+                        binding.root.context.resources.getDimension(
+                            R.dimen.dayItemViewCarousel_noMarginStart
                         ).roundToInt()
                     }
                 }
