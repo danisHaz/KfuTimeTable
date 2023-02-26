@@ -18,4 +18,8 @@ data class UniversityGroupData (
     val userName: String,
     @SerializedName("surname")
     val userSurname: String,
+    @SerializedName("login")
+    val login: String,
+    @SerializedName("password")
+    val passwordLength: Int
 )

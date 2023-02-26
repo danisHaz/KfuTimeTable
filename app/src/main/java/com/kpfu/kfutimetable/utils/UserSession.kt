@@ -7,16 +7,23 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
+import com.kpfu.kfutimetable.utils.UserSession.PreferenceKeys.GROUP_KEY
+import com.kpfu.kfutimetable.utils.UserSession.PreferenceKeys.USER_LOGIN_KEY
+import com.kpfu.kfutimetable.utils.UserSession.PreferenceKeys.USER_NAME_KEY
+import com.kpfu.kfutimetable.utils.UserSession.PreferenceKeys.USER_PASSWORD_LENGTH_KEY
+import com.kpfu.kfutimetable.utils.UserSession.PreferenceKeys.USER_SURNAME_KEY
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.first
 
 data class User(
     val name: String,
     val surname: String,
-    val groupNumber: String
+    val groupNumber: String,
+    val login: String,
+    val passwordLength: Int,
 ) {
     companion object {
-        val EMPTY = User(name="", surname="", groupNumber="")
+        val EMPTY = User(name = "", surname = "", groupNumber = "", login = "", passwordLength = 0)
     }
 }
 
@@ -26,9 +33,14 @@ object UserSession {
 
     private val userData = MutableLiveData<User?>(null)
 
-    private val GROUP_KEY = stringPreferencesKey("GroupNumber")
-    private val USER_NAME_KEY = stringPreferencesKey("UserName")
-    private val USER_SURNAME_KEY = stringPreferencesKey("UserSurname")
+    private object PreferenceKeys {
+        val GROUP_KEY = stringPreferencesKey("GroupNumber")
+        val USER_NAME_KEY = stringPreferencesKey("UserName")
+        val USER_SURNAME_KEY = stringPreferencesKey("UserSurname")
+        val USER_PASSWORD_LENGTH_KEY = intPreferencesKey("UserPasswordLength")
+        val USER_LOGIN_KEY = stringPreferencesKey("UserLoginKey")
+    }
+
     private var initializationJob: Job? = null
 
     /**
@@ -44,10 +56,16 @@ object UserSession {
             val name = prefs[USER_NAME_KEY]
             val groupNumber = prefs[GROUP_KEY]
             val surname = prefs[USER_SURNAME_KEY]
-            if (name != null && groupNumber != null && surname != null
-                && name != "" && groupNumber != "" && surname != "") {
-                withContext(Dispatchers.Main) {
-                    userData.value = User(name, surname, groupNumber)
+            val login = prefs[USER_LOGIN_KEY]
+            val passwordLength = prefs[USER_PASSWORD_LENGTH_KEY]
+            if (name != null && groupNumber != null && surname != null && login != null &&
+                passwordLength != null
+            ) {
+                val fetchedUser = User(name, surname, groupNumber, login, passwordLength)
+                if (fetchedUser != User.EMPTY) {
+                    withContext(Dispatchers.Main) {
+                        userData.value = fetchedUser
+                    }
                 }
             }
         }
@@ -73,10 +91,12 @@ object UserSession {
         }
 
         CoroutineScope(Dispatchers.IO).launch {
-            context.dataStore.edit {
-                it[GROUP_KEY] = newUser?.groupNumber ?: ""
-                it[USER_NAME_KEY] = newUser?.name ?: ""
-                it[USER_SURNAME_KEY] = newUser?.surname ?: ""
+            context.dataStore.edit { prefs ->
+                prefs[GROUP_KEY] = newUser?.groupNumber ?: User.EMPTY.groupNumber
+                prefs[USER_NAME_KEY] = newUser?.name ?: User.EMPTY.name
+                prefs[USER_SURNAME_KEY] = newUser?.surname ?: User.EMPTY.surname
+                prefs[USER_LOGIN_KEY] = newUser?.login ?: User.EMPTY.login
+                prefs[USER_PASSWORD_LENGTH_KEY] = newUser?.passwordLength ?: User.EMPTY.passwordLength
             }
         }
         userData.value = newUser

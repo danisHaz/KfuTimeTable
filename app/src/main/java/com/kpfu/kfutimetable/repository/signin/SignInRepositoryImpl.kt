@@ -1,13 +1,11 @@
 package com.kpfu.kfutimetable.repository.signin
 
-import android.util.Log
-import com.kpfu.kfutimetable.repository.signin.dto.UniversityGroupData
 import com.kpfu.kfutimetable.repository.signin.dto.SignInWebService
+import com.kpfu.kfutimetable.repository.signin.dto.UniversityGroupData
 import com.kpfu.kfutimetable.repository.signin.dto.UserAuthData
 import com.kpfu.kfutimetable.utils.ResultState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import retrofit2.HttpException
 import retrofit2.await
 import javax.inject.Inject
 
@@ -25,8 +23,6 @@ class SignInRepositoryImpl @Inject constructor(
             emit(ResultState(error = e))
             return@flow
         }
-
-        Log.e("kek", result.toString())
 
         if (result.hasError) {
             emit(ResultState(error = java.lang.Exception("unknown exception")))
