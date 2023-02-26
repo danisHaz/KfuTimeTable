@@ -1,7 +1,6 @@
 package com.kpfu.kfutimetable.presentation.base
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
@@ -53,7 +52,6 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     ScreenProvider.ScreenType.SignInFragment
                 }
-                Log.w("kek","$user")
                 RouteManager.router?.navigate(
                     screenProvider.get(initialFragment),
                     addToBackStack = false
@@ -89,8 +87,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
         toolbar.avatar.setOnClickListener {
-
-            Log.e("kek", "${UserSession.user}")
             RouteManager.router?.navigate(
                 screenProvider.get(ScreenProvider.ScreenType.AccountFragment)
             )

@@ -5,7 +5,11 @@ import android.util.Log
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 data class User(
     val userId: Int = 0,
@@ -29,14 +33,11 @@ object UserSession {
             initializationJob?.cancel()
         }
         initializationJob = CoroutineScope(Dispatchers.IO).launch {
-            this.cancel()
-            context.dataStore.data.collect {
-                val userId = it[USER_ID_KEY]
-                val groupNumber = it[GROUP_KEY]
-                user = User(
-                    userId ?: -2,
-                    groupNumber ?: "09-032"
-                )
+            val prefs = context.dataStore.data.first()
+            val userId = prefs[USER_ID_KEY]
+            val groupNumber = prefs[GROUP_KEY]
+            if (userId != null && groupNumber != null && userId != -1 && groupNumber != "") {
+                user = User(userId, groupNumber)
             }
         }
     }
@@ -46,7 +47,6 @@ object UserSession {
      */
     fun executeOnInitCompletion(onInitializationCompleted: (User?) -> Unit) {
         initializationJob?.invokeOnCompletion { throwable ->
-            Log.e("kek", "$user")
             if (throwable != null) {
                 Log.e(this::class.java.name, "failure invoke on complete initialization")
                 return@invokeOnCompletion
