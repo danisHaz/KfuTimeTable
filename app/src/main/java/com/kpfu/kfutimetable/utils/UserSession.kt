@@ -1,12 +1,14 @@
 package com.kpfu.kfutimetable.utils
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 data class User(
@@ -16,20 +18,42 @@ data class User(
 
 object UserSession {
     var user: User? = null
-    private set
+        private set
 
     private val GROUP_KEY = stringPreferencesKey("GroupNumber")
     private val USER_ID_KEY = intPreferencesKey("UserId")
+    private var initializationJob: Job? = null
 
-    // method needed only to restore data from datastore
+    /**
+     *  Method needed only to restore data from datastore
+     */
     fun initialize(context: Context) {
-        context.dataStore.data.map {
-            val userId = it[USER_ID_KEY]
-            val groupNumber = it[GROUP_KEY]
+        if (initializationJob != null) {
+            Log.e(this::class.java.name, "double initialization of user session")
+            initializationJob?.cancel()
+        }
+        initializationJob = CoroutineScope(Dispatchers.IO).launch {
+            val prefs = context.dataStore.data.first()
+            val userId = prefs[USER_ID_KEY]
+            val groupNumber = prefs[GROUP_KEY]
             if (userId != null && groupNumber != null && userId != -1 && groupNumber != "") {
                 user = User(userId, groupNumber)
             }
         }
+    }
+
+    /**
+     * This method is used when initialization of user may not be completed.
+     */
+    fun executeOnInitCompletion(onInitializationCompleted: (User?) -> Unit) {
+        initializationJob?.invokeOnCompletion { throwable ->
+            if (throwable != null) {
+                Log.e(this::class.java.name, "failure invoke on complete initialization")
+                return@invokeOnCompletion
+            }
+
+            onInitializationCompleted(user)
+        } ?: onInitializationCompleted(user)
     }
 
     fun update(newUser: User?, context: Context) {
@@ -37,7 +61,7 @@ object UserSession {
             error("UserSession override is not appropriate")
         }
 
-        CoroutineScope(Dispatchers.Default).launch {
+        CoroutineScope(Dispatchers.IO).launch {
             context.dataStore.edit {
                 it[GROUP_KEY] = newUser?.groupNumber ?: ""
                 it[USER_ID_KEY] = newUser?.userId ?: -1

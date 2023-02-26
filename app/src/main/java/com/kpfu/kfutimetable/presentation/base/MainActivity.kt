@@ -46,15 +46,17 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
 
         if (!isActivityRestarted) {
-            val initialFragment = if (UserSession.user != null) {
-                ScreenProvider.ScreenType.CalendarFragment
-            } else {
-                ScreenProvider.ScreenType.SignInFragment
+            UserSession.executeOnInitCompletion { user ->
+                val initialFragment = if (user != null) {
+                    ScreenProvider.ScreenType.CalendarFragment
+                } else {
+                    ScreenProvider.ScreenType.SignInFragment
+                }
+                RouteManager.router?.navigate(
+                    screenProvider.get(initialFragment),
+                    addToBackStack = false
+                )
             }
-            RouteManager.router?.navigate(
-                screenProvider.get(initialFragment),
-                addToBackStack = false
-            )
         }
     }
 
@@ -90,42 +92,23 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-        menuDialog?.layout?.let<FrameLayout, Unit> {
-            val buttonAccount = it.findViewById<Button>(R.id.buttonAccount)
-            val sendReport = it.findViewById<Button>(R.id.sendReport)
-            val faq = it.findViewById<Button>(R.id.faq)
-            val exit = it.findViewById<Button>(R.id.exit)
-            val timetable = it.findViewById<Button>(R.id.timetable)
+        menuDialog?.layout?.let<FrameLayout, Unit> { frameLayout ->
+            val buttonAccount = frameLayout.findViewById<Button>(R.id.buttonAccount)
+            val sendReport = frameLayout.findViewById<Button>(R.id.sendReport)
+            val faq = frameLayout.findViewById<Button>(R.id.faq)
+            val exit = frameLayout.findViewById<Button>(R.id.exit)
+            val timetable = frameLayout.findViewById<Button>(R.id.timetable)
 
-            buttonAccount?.setOnClickListener {
-                menuDialog?.cancelWithAction {
-                    RouteManager.router?.navigate(
-                        screenProvider.get(ScreenProvider.ScreenType.AccountFragment)
-                    )
-                }
-            }
-
-            timetable?.setOnClickListener {
-                menuDialog?.cancelWithAction {
-                    RouteManager.router?.navigate(
-                        screenProvider.get(ScreenProvider.ScreenType.CalendarFragment)
-                    )
-                }
-            }
-
-            faq?.setOnClickListener {
-                menuDialog?.cancelWithAction {
-                    RouteManager.router?.navigate(
-                        screenProvider.get(ScreenProvider.ScreenType.FqqFragment)
-                    )
-                }
-            }
-
-            sendReport?.setOnClickListener {
-                menuDialog?.cancelWithAction {
-                    RouteManager.router?.navigate(
-                        screenProvider.get(ScreenProvider.ScreenType.FeedbackFragment)
-                    )
+            listOf(
+                Pair(buttonAccount, ScreenProvider.ScreenType.AccountFragment),
+                Pair(timetable, ScreenProvider.ScreenType.CalendarFragment),
+                Pair(faq, ScreenProvider.ScreenType.FqqFragment),
+                Pair(sendReport, ScreenProvider.ScreenType.FeedbackFragment),
+            ).forEach { pair ->
+                pair.first?.setOnClickListener { view ->
+                    menuDialog?.cancelWithAction {
+                        RouteManager.router?.navigate(screenProvider.get(pair.second))
+                    }
                 }
             }
 
