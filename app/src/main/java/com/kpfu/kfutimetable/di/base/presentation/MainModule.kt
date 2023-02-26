@@ -1,6 +1,7 @@
 package com.kpfu.kfutimetable.di.base.presentation
 
 import android.content.Context
+import com.kpfu.kfutimetable.repository.feedback.FeedbackWebService
 import com.kpfu.kfutimetable.repository.main.CalendarRepository
 import com.kpfu.kfutimetable.repository.main.CalendarRepositoryImpl
 import com.kpfu.kfutimetable.repository.main.CalendarWebService
@@ -13,6 +14,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import retrofit2.Retrofit
+import retrofit2.create
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -36,4 +38,8 @@ object MainModule {
     @Provides
     fun provideSignInWebService(retrofit: Retrofit): SignInWebService =
         retrofit.create(SignInWebService::class.java)
+
+    @Provides
+    fun provideFeedbackWebService(retrofit: Retrofit): FeedbackWebService =
+        retrofit.create(FeedbackWebService::class.java)
 }
