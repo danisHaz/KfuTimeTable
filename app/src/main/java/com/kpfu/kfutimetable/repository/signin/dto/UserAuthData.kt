@@ -14,4 +14,8 @@ data class UniversityGroupData (
     val groupNumber: String,
     @SerializedName("error")
     val hasError: Boolean,
+    @SerializedName("name")
+    val userName: String,
+    @SerializedName("surname")
+    val userSurname: String,
 )

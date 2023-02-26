@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
             setContentView(R.layout.layout_top_slidable_menu)
         }
         setListeners()
+        setObservers()
 
         RouteManager.initializeRouter(supportFragmentManager, R.id.mainFragmentContainer)
     }
@@ -47,6 +48,12 @@ class MainActivity : AppCompatActivity() {
 
         if (!isActivityRestarted) {
             UserSession.executeOnInitCompletion { user ->
+
+                user?.let {
+                    binding.toolbar.name.text = it.name
+                    binding.toolbar.surname.text = it.surname
+                }
+
                 val initialFragment = if (user != null) {
                     ScreenProvider.ScreenType.CalendarFragment
                 } else {
@@ -76,6 +83,15 @@ class MainActivity : AppCompatActivity() {
 
     fun enableToolbar() {
         binding.toolbar.root.visibility = View.VISIBLE
+    }
+
+    private fun setObservers() {
+        UserSession.subscribeToUserUpdates(this) { user ->
+            binding.toolbar.let {
+                it.name.text = user?.name ?: ""
+                it.surname.text = user?.surname ?: ""
+            }
+        }
     }
 
     private fun setListeners() = with(binding) {

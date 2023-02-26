@@ -28,8 +28,8 @@ class SignInViewModel @Inject constructor(
     val isLoading: MutableLiveData<Boolean> = MutableLiveData(false)
     val isError: MutableLiveData<Boolean> = MutableLiveData(false)
 
-    val groupData: MutableLiveData<String> by lazy {
-        MutableLiveData("")
+    val groupData: MutableLiveData<User> by lazy {
+        MutableLiveData(User(name="", surname="", groupNumber=""))
     }
 
     fun signIn(login: String, password: String) {
@@ -39,7 +39,12 @@ class SignInViewModel @Inject constructor(
             isError.value = it.error != null
 
             it.data?.let { authData ->
-                groupData.value = authData.groupNumber
+                groupData.value = User(
+                    groupNumber = authData.groupNumber,
+                    name = authData.userName,
+                    surname = authData.userSurname
+                )
+
             }
         }.launchIn(viewModelScope)
     }

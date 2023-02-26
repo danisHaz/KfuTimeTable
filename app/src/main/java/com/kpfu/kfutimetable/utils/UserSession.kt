@@ -5,23 +5,30 @@ import android.util.Log
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 
 data class User(
-    val userId: Int = 0,
+    val name: String,
+    val surname: String,
     val groupNumber: String
-)
+) {
+    companion object {
+        val EMPTY = User(name="", surname="", groupNumber="")
+    }
+}
 
 object UserSession {
-    var user: User? = null
-        private set
+    val user: User?
+        get() = userData.value
+
+    private val userData = MutableLiveData<User?>(null)
 
     private val GROUP_KEY = stringPreferencesKey("GroupNumber")
-    private val USER_ID_KEY = intPreferencesKey("UserId")
+    private val USER_NAME_KEY = stringPreferencesKey("UserName")
+    private val USER_SURNAME_KEY = stringPreferencesKey("UserSurname")
     private var initializationJob: Job? = null
 
     /**
@@ -34,10 +41,14 @@ object UserSession {
         }
         initializationJob = CoroutineScope(Dispatchers.IO).launch {
             val prefs = context.dataStore.data.first()
-            val userId = prefs[USER_ID_KEY]
+            val name = prefs[USER_NAME_KEY]
             val groupNumber = prefs[GROUP_KEY]
-            if (userId != null && groupNumber != null && userId != -1 && groupNumber != "") {
-                user = User(userId, groupNumber)
+            val surname = prefs[USER_SURNAME_KEY]
+            if (name != null && groupNumber != null && surname != null
+                && name != "" && groupNumber != "" && surname != "") {
+                withContext(Dispatchers.Main) {
+                    userData.value = User(name, surname, groupNumber)
+                }
             }
         }
     }
@@ -64,9 +75,14 @@ object UserSession {
         CoroutineScope(Dispatchers.IO).launch {
             context.dataStore.edit {
                 it[GROUP_KEY] = newUser?.groupNumber ?: ""
-                it[USER_ID_KEY] = newUser?.userId ?: -1
+                it[USER_NAME_KEY] = newUser?.name ?: ""
+                it[USER_SURNAME_KEY] = newUser?.surname ?: ""
             }
         }
-        user = newUser
+        userData.value = newUser
+    }
+
+    fun subscribeToUserUpdates(lifecycleOwner: LifecycleOwner, doOnUpdate: (User?) -> Unit) {
+        userData.observe(lifecycleOwner, doOnUpdate)
     }
 }

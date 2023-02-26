@@ -1,5 +1,6 @@
 package com.kpfu.kfutimetable.repository.signin
 
+import android.util.Log
 import com.kpfu.kfutimetable.repository.signin.dto.UniversityGroupData
 import com.kpfu.kfutimetable.repository.signin.dto.SignInWebService
 import com.kpfu.kfutimetable.repository.signin.dto.UserAuthData
@@ -24,6 +25,8 @@ class SignInRepositoryImpl @Inject constructor(
             emit(ResultState(error = e))
             return@flow
         }
+
+        Log.e("kek", result.toString())
 
         if (result.hasError) {
             emit(ResultState(error = java.lang.Exception("unknown exception")))
