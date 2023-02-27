@@ -17,7 +17,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.getstream.avatarview.coil.loadImage
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
 class AccountFragment @Inject constructor(
     private val router: Router,
@@ -54,7 +53,7 @@ class AccountFragment @Inject constructor(
 
     override fun render(currentViewState: AccountViewState) {}
 
-    private fun setListeners() = with(binding){
+    private fun setListeners() = with(binding) {
         twoicons.faqPageButton.setOnClickListener {
             router.navigate(
                 screenProvider.get(ScreenProvider.ScreenType.FqqFragment)
@@ -66,5 +65,4 @@ class AccountFragment @Inject constructor(
             )
         }
     }
-
 }

@@ -13,15 +13,10 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.kpfu.kfutimetable.R
 import com.kpfu.kfutimetable.presentation.base.utils.BaseApplication
-import com.kpfu.kfutimetable.presentation.mainscreen.entities.Lesson
-import com.kpfu.kfutimetable.repository.main.dto.LessonsDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import java.time.DayOfWeek
-import java.time.LocalDate
 import java.time.Month
-import java.time.temporal.WeekFields
-import java.util.*
 import kotlin.math.roundToInt
 
 private val displayMetrics: DisplayMetrics? by lazy {
@@ -113,35 +108,4 @@ fun Month.toString(context: Context?): String {
     }
 
     error("Month is not declared")
-}
-
-fun getDayOfWeekFrom(context: Context?, dayOfWeek: String): DayOfWeek {
-    val monthNamesList = context?.resources?.getStringArray(R.array.daysOfWeek)
-        ?: error("context is null")
-    monthNamesList.forEachIndexed { ind, day ->
-        if (day.lowercase() == dayOfWeek.lowercase()) {
-            return DayOfWeek.of(ind+1)
-        }
-    }
-
-    error("dayOfWeek is inappropriate")
-}
-
-fun LessonsDto.filterByDay(dayOfWeek: DayOfWeek, context: Context?): List<Lesson> {
-    val evenWeek = lessonsForEvenWeek.filter { getDayOfWeekFrom(context, it.day) == dayOfWeek }
-        .map {
-            it.toLesson()
-        }
-    val oddWeek = lessonsForOddWeek.filter { getDayOfWeekFrom(context, it.day) == dayOfWeek }.map {
-        it.toLesson()
-    }
-
-    return evenWeek.plus(oddWeek)
-}
-
-private fun getTypeOfWeek(day: LocalDate, firstDayOfSemestr: LocalDate): Int {
-    val weekFields = WeekFields.of(Locale.getDefault())
-    val weekNumberForCurDay = day.get(weekFields.weekOfWeekBasedYear())
-    val weekNumberForFirstDay = firstDayOfSemestr.get(weekFields.weekOfWeekBasedYear())
-    return (weekNumberForCurDay - weekNumberForFirstDay + 1) % 2
 }

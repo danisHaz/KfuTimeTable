@@ -13,24 +13,37 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.time.format.DateTimeFormatter
 import javax.inject.Qualifier
 
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class CoroutineDispatcherIO
+object CoroutineDispatcherAnnotations {
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class CoroutineDispatcherIO
 
-@Qualifier
-@Retention(AnnotationRetention.BINARY)
-annotation class CoroutineDispatcherDefault
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class CoroutineDispatcherDefault
+}
+
+object DateFormatterAnnotations {
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class DateFormatterReversed
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class DateFormatterStraight
+}
+
 
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
     @Provides
-    @CoroutineDispatcherIO
+    @CoroutineDispatcherAnnotations.CoroutineDispatcherIO
     fun provideCoroutineDispatcherIO() = Dispatchers.IO
 
     @Provides
-    @CoroutineDispatcherDefault
+    @CoroutineDispatcherAnnotations.CoroutineDispatcherDefault
     fun provideCoroutineDispatcherDefault() = Dispatchers.Default
 
     @Provides
@@ -41,8 +54,14 @@ object AppModule {
         GsonConverterFactory.create(gson)
 
     @Provides
-    fun provideStandardDateFormatter(): DateTimeFormatter =
+    @DateFormatterAnnotations.DateFormatterReversed
+    fun provideReversedDateFormatter(): DateTimeFormatter =
         DateTimeFormatter.ofPattern("yyyy-MM-dd")
+
+    @Provides
+    @DateFormatterAnnotations.DateFormatterStraight
+    fun provideStraightDateFormatter(): DateTimeFormatter =
+        DateTimeFormatter.ofPattern("dd.MM.yyyy")
 
     @Provides
     fun provideRetrofit(gsonConverterFactory: GsonConverterFactory): Retrofit = Retrofit.Builder()
