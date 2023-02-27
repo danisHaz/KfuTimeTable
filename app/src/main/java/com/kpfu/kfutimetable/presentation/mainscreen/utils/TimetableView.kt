@@ -28,13 +28,15 @@ class TimetableView @JvmOverloads constructor(
     private val HORIZONTAL_MARGIN =
         resources.getDimension(R.dimen.calendar_time_marginEnd).roundToInt()
 
-    private var timeViewHoldersList: List<TimeViewHolder> = listOf()
+    private val timeViewHoldersList: MutableList<TimeViewHolder> = mutableListOf()
+    private val subjectList: MutableList<SubjectView> = mutableListOf()
 
     init {
         initialize()
     }
 
     override fun render(state: List<SubjectView.State>) {
+        clearAllSubjects()
         state.forEach { subject ->
             val startTime = subject.startTime.clone() as Calendar
             val endTime: Calendar
@@ -49,12 +51,16 @@ class TimetableView @JvmOverloads constructor(
     }
 
     private fun initialize() {
-        timeViewHoldersList = createTimeViewHolders(HOURS_PER_DAY_COUNT).also {
-            it.forEachIndexed { index, timeVH ->
-                timeVH.bindToTimeTable()
-                timeVH.render(index)
+        timeViewHoldersList.clear()
+        timeViewHoldersList.addAll(
+            createTimeViewHolders(HOURS_PER_DAY_COUNT).also {
+                it.forEachIndexed { index, timeVH ->
+                    timeVH.bindToTimeTable()
+                    timeVH.render(index)
+                }
             }
-        }
+        )
+
     }
 
     private fun createTimeViewHolders(count: Int) = mutableListOf<TimeViewHolder>().apply {
@@ -87,6 +93,7 @@ class TimetableView @JvmOverloads constructor(
             id = View.generateViewId()
             render(subjectState)
         }
+        subjectList.add(subjectView)
         addView(subjectView)
 
         ConstraintSet().apply {
@@ -125,6 +132,15 @@ class TimetableView @JvmOverloads constructor(
 
                 setMargins(0, additionalMargin.dpToPx, 0, 0)
             }
+        }
+    }
+
+    private fun clearAllSubjects() {
+        subjectList.forEach {
+            removeView(it)
+        }
+        timeViewHoldersList.forEach {
+            it.changeTimeLineVisibility(true)
         }
     }
 

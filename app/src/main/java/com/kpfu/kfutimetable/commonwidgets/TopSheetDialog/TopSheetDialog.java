@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,19 +27,28 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StyleRes;
 import androidx.appcompat.app.AppCompatDialog;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.AccessibilityDelegateCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LifecycleRegistry;
 
 import com.google.android.material.R;
+import com.kpfu.kfutimetable.utils.User;
+import com.kpfu.kfutimetable.utils.UserSession;
+
+import kotlin.Unit;
 
 /**
  * Base class for {@link android.app.Dialog}s styled as a bottom sheet.
@@ -50,6 +58,8 @@ public class TopSheetDialog extends AppCompatDialog {
     private TopSheetBehavior<FrameLayout> behavior;
 
     private ConstraintLayout container;
+
+    private DialogLifecycleOwner lifecycleOwner;
 
     boolean dismissWithAnimation = true;
 
@@ -66,6 +76,7 @@ public class TopSheetDialog extends AppCompatDialog {
         // We hide the title bar for any style configuration. Otherwise, there will be a gap
         // above the bottom sheet when it is expanded.
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+        lifecycleOwner = new DialogLifecycleOwner();
     }
 
     protected TopSheetDialog(
@@ -73,6 +84,7 @@ public class TopSheetDialog extends AppCompatDialog {
         super(context, cancelable, cancelListener);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         this.cancelable = cancelable;
+        lifecycleOwner = new DialogLifecycleOwner();
     }
 
     @Override
@@ -115,8 +127,21 @@ public class TopSheetDialog extends AppCompatDialog {
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        lifecycleOwner.onStop();
+    }
+
+    @Override
+    public void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        lifecycleOwner.onDestroy();
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
+        lifecycleOwner.onStart();
         if (behavior != null) {
             behavior.setState(TopSheetBehavior.STATE_EXPANDED);
         }
@@ -229,13 +254,33 @@ public class TopSheetDialog extends AppCompatDialog {
         coordinator
                 .findViewById(R.id.touch_outside)
                 .setOnClickListener(listener);
+
+        ConstraintLayout toolbarSkeleton = (ConstraintLayout) container.findViewById(
+                com.kpfu.kfutimetable.R.id.toolbar_skeleton
+        );
+        AppCompatImageView avatarSkeleton = (AppCompatImageView) toolbarSkeleton.findViewById(
+                com.kpfu.kfutimetable.R.id.avatar
+        );
+        TextView userNameField = (TextView) toolbarSkeleton.findViewById(
+                com.kpfu.kfutimetable.R.id.name
+        );
+        TextView userSurnameField = (TextView) toolbarSkeleton.findViewById(
+                com.kpfu.kfutimetable.R.id.surname
+        );
+        UserSession.INSTANCE.subscribeToUserUpdates(lifecycleOwner, (User user) -> {
+            if (user != null) {
+                userNameField.setText(user.getName());
+                userSurnameField.setText(user.getSurname());
+            }
+            return Unit.INSTANCE;
+        });
         // Handle accessibility events
         ViewCompat.setAccessibilityDelegate(
                 bottomSheet,
                 new AccessibilityDelegateCompat() {
                     @Override
                     public void onInitializeAccessibilityNodeInfo(
-                            View host, @NonNull AccessibilityNodeInfoCompat info) {
+                            @NonNull View host, @NonNull AccessibilityNodeInfoCompat info) {
                         super.onInitializeAccessibilityNodeInfo(host, info);
                         if (cancelable) {
                             info.addAction(AccessibilityNodeInfoCompat.ACTION_DISMISS);
@@ -314,5 +359,23 @@ public class TopSheetDialog extends AppCompatDialog {
     // this is made for cancelWithAction
     public interface IAction {
         void performAction();
+    }
+
+    private static final class DialogLifecycleOwner implements LifecycleOwner {
+
+        private LifecycleRegistry registry = new LifecycleRegistry(this);
+
+        public DialogLifecycleOwner() {
+            registry.handleLifecycleEvent(Lifecycle.Event.ON_CREATE);
+        }
+
+        @NonNull
+        @Override
+        public Lifecycle getLifecycle() { return registry; }
+
+        public void onStart() { registry.handleLifecycleEvent(Lifecycle.Event.ON_START); }
+        public void onStop() { registry.handleLifecycleEvent(Lifecycle.Event.ON_STOP); }
+        public void onDestroy() { registry.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY); }
+
     }
 }

@@ -2,7 +2,6 @@ package com.kpfu.kfutimetable.presentation.mainscreen.utils
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.hannesdorfmann.adapterdelegates4.AbsDelegationAdapter
@@ -12,7 +11,6 @@ import com.kpfu.kfutimetable.R
 import com.kpfu.kfutimetable.commonwidgets.BaseView
 import com.kpfu.kfutimetable.commonwidgets.DayItemView
 import com.kpfu.kfutimetable.databinding.ViewDayItemBinding
-import com.kpfu.kfutimetable.utils.dpToPx
 import kotlin.math.roundToInt
 
 class DayItemCarousel @JvmOverloads constructor(
@@ -21,37 +19,47 @@ class DayItemCarousel @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : RecyclerView(context, attrs, defStyleAttr), BaseView<List<DayItemView.State>> {
 
-    var selectedItemPosition = 0
+    private var _selectedItemPosition = 0
+    var selectedItemPosition
+        get() = _selectedItemPosition
         private set(value) {
-            updateSelectedItem(field)
-            field = value
+            updateSelectedItem(_selectedItemPosition, value)
+            _selectedItemPosition = value
         }
+    var onItemClick: (DayItemView.State) -> Unit = {}
+    private var needsLazyInit = false
 
     init {
         (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         overScrollMode = OVER_SCROLL_NEVER
+
+        val typedArray =
+            context.obtainStyledAttributes(attrs, R.styleable.DayItemCarousel, defStyleAttr, 0)
+
+        needsLazyInit =
+            typedArray.getBoolean(R.styleable.DayItemCarousel_useLazyInitialization, false)
+
+        if (!needsLazyInit) {
+            initialize()
+        }
+        typedArray.recycle()
     }
 
-    private val _adapter: AbsDelegationAdapter<List<DayItemView.State>> =
-        object : AbsDelegationAdapter<List<DayItemView.State>>(
-            AdapterDelegatesManager(
-                dayItemAdapterDelegate()
-            )
-        ) {
-            override fun getItemCount(): Int {
-                return items?.count() ?: 0
-            }
-        }.also {
-            adapter = it
-        }
+    private lateinit var _adapter: AbsDelegationAdapter<List<DayItemView.State>>
 
     override fun render(state: List<DayItemView.State>) {
         _adapter.items = state.toMutableList().apply {
-            set(selectedItemPosition, get(selectedItemPosition).copy(isChecked = true))
+            forEachIndexed { ind, s ->
+                if (s.isChecked == true) {
+                    _selectedItemPosition = ind
+                    onItemClick(s)
+                }
+            }
         }
+        _adapter.notifyDataSetChanged()
     }
 
-    private fun dayItemAdapterDelegate(onClick: (() -> Unit)? = null) =
+    private fun dayItemAdapterDelegate() =
         adapterDelegateViewBinding<DayItemView.State, DayItemView.State, ViewDayItemBinding>(
             { layoutInflater, root ->
                 ViewDayItemBinding.inflate(layoutInflater, DayItemView(root.context))
@@ -60,9 +68,13 @@ class DayItemCarousel @JvmOverloads constructor(
 
             onViewAttachedToWindow {
                 (binding.root.layoutParams as? MarginLayoutParams)?.apply {
-                    if (this@adapterDelegateViewBinding.bindingAdapterPosition != 0) {
-                        marginStart = binding.root.context.resources.getDimension(
+                    marginStart = if (this@adapterDelegateViewBinding.bindingAdapterPosition != 0) {
+                        binding.root.context.resources.getDimension(
                             R.dimen.dayItemViewCarousel_marginStart
+                        ).roundToInt()
+                    } else {
+                        binding.root.context.resources.getDimension(
+                            R.dimen.dayItemViewCarousel_noMarginStart
                         ).roundToInt()
                     }
                 }
@@ -73,8 +85,7 @@ class DayItemCarousel @JvmOverloads constructor(
                     dayItem.updateOnClick {
                         if (selectedItemPosition != bindingAdapterPosition) {
                             selectedItemPosition = bindingAdapterPosition
-                            dayItem.isChecked = !dayItem.isChecked
-                            onClick?.invoke()
+                            onItemClick(item)
                         }
                     }
                     dayItem.render(item)
@@ -82,10 +93,22 @@ class DayItemCarousel @JvmOverloads constructor(
             }
         }
 
-    private fun updateSelectedItem(oldPosition: Int) {
+    private fun updateSelectedItem(oldPosition: Int, newPosition: Int) {
         _adapter.items = _adapter.items?.toMutableList()?.apply {
             set(oldPosition, get(oldPosition).copy(isChecked = false))
+            set(newPosition, get(newPosition).copy(isChecked = true))
         }
         _adapter.notifyItemChanged(oldPosition)
+        _adapter.notifyItemChanged(newPosition)
+    }
+
+    // function required to set listeners and configurations when inflation of view is not
+    // controlled
+    fun initialize() {
+        _adapter = object : AbsDelegationAdapter<List<DayItemView.State>>(
+            AdapterDelegatesManager(dayItemAdapterDelegate())
+        ) {
+            override fun getItemCount() = items?.count() ?: 0
+        }.also { adapter = it }
     }
 }

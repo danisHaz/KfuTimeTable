@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.kpfu.kfutimetable.R
 import com.kpfu.kfutimetable.commonwidgets.TopSheetDialog.TopSheetDialog
 import com.kpfu.kfutimetable.databinding.ActivityMainBinding
-import com.kpfu.kfutimetable.presentation.base.utils.BaseApplication
+import com.kpfu.kfutimetable.utils.UserSession
 import com.kpfu.kfutimetable.utils.routing.RouteManager
 import com.kpfu.kfutimetable.utils.routing.ScreenProvider
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
             setContentView(R.layout.layout_top_slidable_menu)
         }
         setListeners()
+        setObservers()
 
         RouteManager.initializeRouter(supportFragmentManager, R.id.mainFragmentContainer)
     }
@@ -45,12 +46,24 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        // initial navigation to calendar fragment (now by default)
         if (!isActivityRestarted) {
-            RouteManager.router?.navigate(
-                screenProvider.get(ScreenProvider.ScreenType.SignInFragment),
-                addToBackStack = false
-            )
+            UserSession.executeOnInitCompletion { user ->
+
+                user?.let {
+                    binding.toolbar.name.text = it.name
+                    binding.toolbar.surname.text = it.surname
+                }
+
+                val initialFragment = if (user != null) {
+                    ScreenProvider.ScreenType.CalendarFragment
+                } else {
+                    ScreenProvider.ScreenType.SignInFragment
+                }
+                RouteManager.router?.navigate(
+                    screenProvider.get(initialFragment),
+                    addToBackStack = false
+                )
+            }
         }
     }
 
@@ -72,51 +85,46 @@ class MainActivity : AppCompatActivity() {
         binding.toolbar.root.visibility = View.VISIBLE
     }
 
+    private fun setObservers() {
+        UserSession.subscribeToUserUpdates(this) { user ->
+            binding.toolbar.let {
+                it.name.text = user?.name ?: ""
+                it.surname.text = user?.surname ?: ""
+            }
+        }
+    }
+
     private fun setListeners() = with(binding) {
-        toolbar.menu.setOnClickListener() {
+        toolbar.menu.setOnClickListener {
             if (menuDialog?.isShowing == true) {
                 menuDialog?.hide()
             } else {
                 menuDialog?.show()
             }
         }
+        toolbar.avatar.setOnClickListener {
+            RouteManager.router?.navigate(
+                screenProvider.get(ScreenProvider.ScreenType.AccountFragment)
+            )
+        }
 
-        menuDialog?.layout?.let<FrameLayout, Unit> {
-            val buttonAccount = it.findViewById<Button>(R.id.buttonAccount)
-            val sendReport = it.findViewById<Button>(R.id.sendReport)
-            val faq = it.findViewById<Button>(R.id.faq)
-            val exit = it.findViewById<Button>(R.id.exit)
-            val timetable = it.findViewById<Button>(R.id.timetable)
+        menuDialog?.layout?.let<FrameLayout, Unit> { frameLayout ->
+            val buttonAccount = frameLayout.findViewById<Button>(R.id.buttonAccount)
+            val sendReport = frameLayout.findViewById<Button>(R.id.sendReport)
+            val faq = frameLayout.findViewById<Button>(R.id.faq)
+            val exit = frameLayout.findViewById<Button>(R.id.exit)
+            val timetable = frameLayout.findViewById<Button>(R.id.timetable)
 
-            buttonAccount?.setOnClickListener {
-                menuDialog?.cancelWithAction {
-                    RouteManager.router?.navigate(
-                        screenProvider.get(ScreenProvider.ScreenType.AccountFragment)
-                    )
-                }
-            }
-
-            timetable?.setOnClickListener {
-                menuDialog?.cancelWithAction {
-                    RouteManager.router?.navigate(
-                        screenProvider.get(ScreenProvider.ScreenType.CalendarFragment)
-                    )
-                }
-            }
-
-            faq?.setOnClickListener {
-                menuDialog?.cancelWithAction {
-                    RouteManager.router?.navigate(
-                        screenProvider.get(ScreenProvider.ScreenType.FqqFragment)
-                    )
-                }
-            }
-
-            sendReport?.setOnClickListener {
-                menuDialog?.cancelWithAction {
-                    RouteManager.router?.navigate(
-                        screenProvider.get(ScreenProvider.ScreenType.FeedbackFragment)
-                    )
+            listOf(
+                Pair(buttonAccount, ScreenProvider.ScreenType.AccountFragment),
+                Pair(timetable, ScreenProvider.ScreenType.CalendarFragment),
+                Pair(faq, ScreenProvider.ScreenType.FqqFragment),
+                Pair(sendReport, ScreenProvider.ScreenType.FeedbackFragment),
+            ).forEach { pair ->
+                pair.first?.setOnClickListener { view ->
+                    menuDialog?.cancelWithAction {
+                        RouteManager.router?.navigate(screenProvider.get(pair.second))
+                    }
                 }
             }
 
@@ -127,6 +135,7 @@ class MainActivity : AppCompatActivity() {
                         screenProvider.get(ScreenProvider.ScreenType.SignInFragment),
                         addToBackStack = false
                     )
+                    UserSession.update(newUser = null, context = applicationContext)
                 }
             }
         }

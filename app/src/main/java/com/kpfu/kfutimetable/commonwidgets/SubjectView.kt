@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import androidx.annotation.ColorInt
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import com.kpfu.kfutimetable.R
 import com.kpfu.kfutimetable.databinding.ViewSubjectBinding
 import com.kpfu.kfutimetable.utils.changeAlpha

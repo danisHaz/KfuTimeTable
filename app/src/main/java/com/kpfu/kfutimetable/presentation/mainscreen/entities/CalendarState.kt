@@ -1,13 +1,29 @@
 package com.kpfu.kfutimetable.presentation.mainscreen.entities
 
+import com.google.gson.annotations.SerializedName
 import com.kpfu.kfutimetable.presentation.base.utils.BaseState
-import java.util.Date
 
 data class CalendarState(
-    val date: Date,
-    val lessons: List<Lesson>,
+    val lessons: List<Lesson>
 ) : BaseState
 
 data class Lesson(
-    val name: String,
+    @SerializedName("subject")
+    val lessonName: String,
+    @SerializedName("lesson_type")
+    val lessonType: LessonType,
+    @SerializedName("teacher")
+    val teacherName: String,
+    @SerializedName("address")
+    val address: String,
+    @SerializedName("classroom")
+    val classroom: String,
+    @SerializedName("day")
+    val day: String,
+    @SerializedName("time")
+    val startTime: String,
 )
+
+enum class LessonType {
+    Lecture, Seminar;
+}

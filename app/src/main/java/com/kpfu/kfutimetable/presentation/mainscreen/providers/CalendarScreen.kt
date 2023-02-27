@@ -21,6 +21,6 @@ class CalendarScreen @Inject constructor(
         calendarViewStateMapper,
         calendarViewModelProvider,
         router,
-        screenProvider
+        screenProvider,
     )
 }

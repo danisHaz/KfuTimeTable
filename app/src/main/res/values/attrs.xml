@@ -29,4 +29,7 @@
     </declare-styleable>
     
     <attr name="topSheetStyle" format="reference" />
+    <declare-styleable name="DayItemCarousel">
+        <attr name="useLazyInitialization" format="boolean" />
+    </declare-styleable>
 </resources>

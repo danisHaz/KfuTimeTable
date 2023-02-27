@@ -1,13 +1,14 @@
 <resources>
     <string name="app_name">KfuTimeTable</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="prompt_email">Логин</string>
     <string name="prompt_password">Пароль</string>
     <string name="action_sign_in">Войти</string>
     <string name="person_page">Личный кабинет</string>
     <string name="TODO">TODO</string>
 
+    <string name="please_try_again">Пожалуйта, попробуйте снова</string>
+    <string name="report_successful">Отзыв успешно отправлен!</string>
     <string name="mainscreen_menu_settings">Настройки</string>
     <string name="mainscreen_menu_leave_comment">Отправить отзыв</string>
     <string name="mainscreen_menu_faq">Справка</string>
@@ -26,4 +27,36 @@
     <string name="queFeedBack">Хотите оставить отзыв?</string>
     <string name="feddback">Оставить отзыв можно здесь....</string>
     <string name="send">Отправить</string>
+
+    <string-array name="daysOfWeek">
+        <item>Понедельник</item>
+        <item>Вторник</item>
+        <item>Среда</item>
+        <item>Четверг</item>
+        <item>Пятница</item>
+        <item>Суббота</item>
+        <item>Воскресенье</item>
+    </string-array>
+
+    <string-array name="months">
+        <item>Сентябрь</item>
+        <item>Октябрь</item>
+        <item>Ноябрь</item>
+        <item>Декабрь</item>
+        <item>Февраль</item>
+        <item>Март</item>
+        <item>Апрель</item>
+        <item>Май</item>
+    </string-array>
+
+    <string-array name="days_short">
+        <item>Пн</item>
+        <item>Вт</item>
+        <item>Ср</item>
+        <item>Чт</item>
+        <item>Пт</item>
+        <item>Сб</item>
+        <item>Вс</item>
+    </string-array>
+
 </resources>
