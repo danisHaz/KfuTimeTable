@@ -78,8 +78,7 @@
             <com.kpfu.kfutimetable.presentation.mainscreen.utils.DayItemCarousel
                 android:id="@+id/dayItemCarousel"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:useLazyInitialization="true" />
+                android:layout_height="wrap_content" />
 
             <com.kpfu.kfutimetable.presentation.mainscreen.utils.TimetableView
                 android:id="@+id/timetableView"

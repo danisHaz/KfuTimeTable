@@ -48,8 +48,17 @@ class CalendarFragment @Inject constructor(
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         setListeners()
         setObservers()
-        binding.dayItemCarousel.initialize()
         viewModel.getCurrentMonthsList()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (monthCarousel?.currentMonth != null && binding.dayItemCarousel.selectedDayViewState != null) {
+            viewModel.getLessonsOnDay(
+                binding.dayItemCarousel.selectedDayViewState?.date?.toInt()!!,
+                monthCarousel?.currentMonth!!
+            )
+        }
     }
 
     override fun onDestroy() {
@@ -65,7 +74,6 @@ class CalendarFragment @Inject constructor(
     private fun setListeners() = with(binding) {
         nextButton.setOnClickListener {
             monthCarousel?.nextMonth()
-            Log.e("kek", monthCarousel?.currentMonth.toString())
         }
         prevButton.setOnClickListener {
             monthCarousel?.prevMonth()

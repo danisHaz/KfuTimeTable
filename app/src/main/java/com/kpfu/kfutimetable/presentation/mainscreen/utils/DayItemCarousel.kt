@@ -27,6 +27,8 @@ class DayItemCarousel @JvmOverloads constructor(
             _selectedItemPosition = value
         }
     var onItemClick: (DayItemView.State) -> Unit = {}
+    val selectedDayViewState: DayItemView.State?
+        get() = _adapter.items?.get(_selectedItemPosition)
     private var needsLazyInit = false
     private var needsScrollToSelectedItem = true
 
