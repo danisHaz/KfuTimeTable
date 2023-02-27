@@ -44,7 +44,7 @@ class AccountFragment @Inject constructor(
             binding.textView1.text = user.login
             val fakePassword = StringBuilder()
             (0 until user.passwordLength).forEach { _ ->
-                fakePassword.append('a')
+                fakePassword.append('•')
             }
             binding.textView2.text = fakePassword
         }
