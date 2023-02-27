@@ -27,7 +27,10 @@ class DayItemCarousel @JvmOverloads constructor(
             _selectedItemPosition = value
         }
     var onItemClick: (DayItemView.State) -> Unit = {}
+    val selectedDayViewState: DayItemView.State?
+        get() = _adapter.items?.get(_selectedItemPosition)
     private var needsLazyInit = false
+    private var needsScrollToSelectedItem = true
 
     init {
         (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
@@ -56,6 +59,7 @@ class DayItemCarousel @JvmOverloads constructor(
                 }
             }
         }
+        needsScrollToSelectedItem = true
         _adapter.notifyDataSetChanged()
     }
 
@@ -67,6 +71,10 @@ class DayItemCarousel @JvmOverloads constructor(
         ) {
 
             onViewAttachedToWindow {
+                if (needsScrollToSelectedItem) {
+                    scrollToPosition(_selectedItemPosition)
+                    needsScrollToSelectedItem = false
+                }
                 (binding.root.layoutParams as? MarginLayoutParams)?.apply {
                     marginStart = if (this@adapterDelegateViewBinding.bindingAdapterPosition != 0) {
                         binding.root.context.resources.getDimension(
@@ -98,6 +106,7 @@ class DayItemCarousel @JvmOverloads constructor(
             set(oldPosition, get(oldPosition).copy(isChecked = false))
             set(newPosition, get(newPosition).copy(isChecked = true))
         }
+        needsScrollToSelectedItem = true
         _adapter.notifyItemChanged(oldPosition)
         _adapter.notifyItemChanged(newPosition)
     }

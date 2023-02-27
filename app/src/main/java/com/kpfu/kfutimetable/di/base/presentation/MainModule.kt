@@ -1,6 +1,7 @@
 package com.kpfu.kfutimetable.di.base.presentation
 
 import android.content.Context
+import com.kpfu.kfutimetable.R
 import com.kpfu.kfutimetable.repository.feedback.FeedbackWebService
 import com.kpfu.kfutimetable.repository.main.CalendarRepository
 import com.kpfu.kfutimetable.repository.main.CalendarRepositoryImpl
@@ -16,7 +17,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import retrofit2.Retrofit
-import retrofit2.create
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -27,7 +27,7 @@ object MainModule {
         @ApplicationContext context: Context,
         calendarWebService: CalendarWebService
     ): CalendarRepository =
-        CalendarRepositoryImpl(context, calendarWebService)
+        CalendarRepositoryMock()
 
     @Provides
     fun provideCalendarService(retrofit: Retrofit): CalendarWebService =
@@ -35,7 +35,7 @@ object MainModule {
 
     @Provides
     fun provideSignInRepository(signInWebService: SignInWebService): SignInRepository =
-        SignInRepositoryImpl(signInWebService)
+        SignInRepositoryMock()
 
     @Provides
     fun provideSignInWebService(retrofit: Retrofit): SignInWebService =
@@ -44,4 +44,8 @@ object MainModule {
     @Provides
     fun provideFeedbackWebService(retrofit: Retrofit): FeedbackWebService =
         retrofit.create(FeedbackWebService::class.java)
+
+    @Provides
+    fun provideDayOfWeekStringArray(@ApplicationContext context: Context): List<String> =
+        context.resources.getStringArray(R.array.daysOfWeek).toList()
 }

@@ -24,6 +24,8 @@ data class SubjectDto(
     val classroom: String,
     @SerializedName("address")
     val address: String,
+    @SerializedName("week")
+    val additionalWeekFilters: List<String>
 ) {
     fun toLesson(): Lesson = Lesson(
         lessonName = name,
@@ -32,7 +34,8 @@ data class SubjectDto(
         address = address,
         classroom = classroom,
         day = day,
-        startTime = time
+        startTime = time,
+        weekFilters = additionalWeekFilters
     )
 }
 

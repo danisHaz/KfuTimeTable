@@ -3,14 +3,12 @@ package com.kpfu.kfutimetable.presentation.mainscreen
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.kpfu.kfutimetable.di.base.DateFormatterAnnotations
 import com.kpfu.kfutimetable.presentation.base.BaseViewModel
 import com.kpfu.kfutimetable.presentation.mainscreen.entities.CalendarState
 import com.kpfu.kfutimetable.presentation.mainscreen.entities.CalendarViewState
 import com.kpfu.kfutimetable.repository.main.CalendarRepository
-import com.kpfu.kfutimetable.utils.LocalDateWrapper
-import com.kpfu.kfutimetable.utils.UserSession
-import com.kpfu.kfutimetable.utils.term1
-import com.kpfu.kfutimetable.utils.term2
+import com.kpfu.kfutimetable.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -26,7 +24,11 @@ import javax.inject.Inject
 @HiltViewModel
 class CalendarViewModel @Inject constructor(
     private val calendarRepository: CalendarRepository,
-    private val formatter: DateTimeFormatter
+    @DateFormatterAnnotations.DateFormatterReversed
+    private val formatter: DateTimeFormatter,
+    @DateFormatterAnnotations.DateFormatterStraight
+    private val timetableFormatter: DateTimeFormatter,
+    private val monthNamesList: List<String>,
 ) : BaseViewModel<CalendarState, CalendarViewState>(
     initialState = {
         CalendarState(
@@ -38,7 +40,7 @@ class CalendarViewModel @Inject constructor(
 
     val monthListData: MutableLiveData<List<Month>> = MutableLiveData(listOf())
 
-    var lessonsForWeek: List<CalendarState>? = null
+    var lessonsForWeek: TimetableDataHolder? = null
 
     var currentDayData: LocalDate? = null
     val dayItemCarouselData: MutableLiveData<List<LocalDateWrapper<Boolean>>> =
@@ -69,13 +71,9 @@ class CalendarViewModel @Inject constructor(
 
     fun getLessonsOnDay(desiredDay: Int, desiredMonth: Month) {
         currentDayData = LocalDate.now().withMonth(desiredMonth.value).withDayOfMonth(desiredDay)
-        val updateState: ((List<CalendarState>) -> Unit) = { lessons ->
+        val updateState: ((TimetableDataHolder) -> Unit) = { timetable ->
             currentDayData?.let { currentDay ->
-                state = if (lessons.size >= currentDay.dayOfWeek.value) {
-                    lessons[currentDay.dayOfWeek.value - 1]
-                } else {
-                    CalendarState(listOf())
-                }
+                state = CalendarState(timetable.filterByDate(currentDay))
             }
         }
 
@@ -87,7 +85,7 @@ class CalendarViewModel @Inject constructor(
     }
 
     private fun getLessonsForWeek(
-        onLessonsRetrievedCallback: ((List<CalendarState>) -> Unit)? = null
+        onLessonsRetrievedCallback: ((TimetableDataHolder) -> Unit)? = null
     ) {
         lessonListJob?.cancel()
 
@@ -98,8 +96,9 @@ class CalendarViewModel @Inject constructor(
                 isError.value = result.error != null
                 result.data?.let { data ->
                     withContext(Dispatchers.Main) {
-                        onLessonsRetrievedCallback?.invoke(data)
-                        lessonsForWeek = data
+                        lessonsForWeek =
+                            TimetableDataHolder(data, timetableFormatter, monthNamesList)
+                        onLessonsRetrievedCallback?.invoke(lessonsForWeek!!)
                     }
                 }
             }.launchIn(viewModelScope)
