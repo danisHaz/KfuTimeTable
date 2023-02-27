@@ -10,7 +10,9 @@ import com.kpfu.kfutimetable.presentation.base.BaseFragment
 import com.kpfu.kfutimetable.presentation.feedbackscreen.entities.FeedbackState
 import com.kpfu.kfutimetable.presentation.feedbackscreen.entities.FeedbackViewState
 import com.kpfu.kfutimetable.presentation.feedbackscreen.providers.FeedbackViewModelProvider
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FeedbackFragment : BaseFragment<FeedbackState, FeedbackViewState, FeedbackViewModel>(
     viewModelProvider = FeedbackViewModelProvider(),
     viewStateMapper = FeedbackViewStateMapper()

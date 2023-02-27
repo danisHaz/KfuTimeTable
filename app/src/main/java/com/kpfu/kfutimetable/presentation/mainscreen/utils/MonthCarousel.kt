@@ -17,9 +17,9 @@ class MonthCarousel(
     container: LinearLayout,
     private val animationInterpolator: TimeInterpolator = AccelerateDecelerateInterpolator()
 ) {
-    val hasNextMonth
+    private val hasNextMonth
         get() = currentMonthPos + 1 < monthNames.size
-    val hasPrevMonth
+    private val hasPrevMonth
         get() = currentMonthPos != 0
 
     var onMonthChangeListener: (Month) -> Unit = {}

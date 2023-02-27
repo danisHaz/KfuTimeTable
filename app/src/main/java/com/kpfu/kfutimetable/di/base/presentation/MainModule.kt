@@ -4,9 +4,11 @@ import android.content.Context
 import com.kpfu.kfutimetable.repository.feedback.FeedbackWebService
 import com.kpfu.kfutimetable.repository.main.CalendarRepository
 import com.kpfu.kfutimetable.repository.main.CalendarRepositoryImpl
+import com.kpfu.kfutimetable.repository.main.CalendarRepositoryMock
 import com.kpfu.kfutimetable.repository.main.CalendarWebService
 import com.kpfu.kfutimetable.repository.signin.SignInRepository
 import com.kpfu.kfutimetable.repository.signin.SignInRepositoryImpl
+import com.kpfu.kfutimetable.repository.signin.SignInRepositoryMock
 import com.kpfu.kfutimetable.repository.signin.dto.SignInWebService
 import dagger.Module
 import dagger.Provides

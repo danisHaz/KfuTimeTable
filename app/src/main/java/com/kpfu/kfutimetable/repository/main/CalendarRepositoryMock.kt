@@ -68,7 +68,7 @@ class CalendarRepositoryMock : CalendarRepository {
                                 "ул. Кремлевская, 35",
                                 "ауд. 216",
                                 DayOfWeek.MONDAY.toString(),
-                                "12:10",
+                                "12.10-13.40",
                             )
                         )
                     ),
@@ -81,7 +81,7 @@ class CalendarRepositoryMock : CalendarRepository {
                                 "ул. Кремлевская, 35",
                                 "ауд. 216",
                                 DayOfWeek.TUESDAY.toString(),
-                                "12:10",
+                                "12.10-13.40",
                             )
                         )
                     ),
@@ -94,7 +94,7 @@ class CalendarRepositoryMock : CalendarRepository {
                                 "ул. Кремлевская, 35",
                                 "ауд. 216",
                                 DayOfWeek.WEDNESDAY.toString(),
-                                "12:10",
+                                "12.10-13.40",
                             )
                         )
                     ),
@@ -107,7 +107,7 @@ class CalendarRepositoryMock : CalendarRepository {
                                 "ул. Кремлевская, 35",
                                 "ауд. 216",
                                 DayOfWeek.THURSDAY.toString(),
-                                "12:10",
+                                "12.10-13.40",
                             )
                         )
                     ),
@@ -120,7 +120,7 @@ class CalendarRepositoryMock : CalendarRepository {
                                 "ул. Кремлевская, 35",
                                 "ауд. 216",
                                 DayOfWeek.FRIDAY.toString(),
-                                "12:10",
+                                "12.10-13.40",
                             )
                         )
                     ),
@@ -133,7 +133,7 @@ class CalendarRepositoryMock : CalendarRepository {
                                 "ул. Кремлевская, 35",
                                 "ауд. 216",
                                 DayOfWeek.SATURDAY.toString(),
-                                "12:10",
+                                "12.10-13.40",
                             )
                         )
                     ),
