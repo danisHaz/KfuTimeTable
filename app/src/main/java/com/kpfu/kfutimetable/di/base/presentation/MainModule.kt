@@ -4,9 +4,11 @@ import android.content.Context
 import com.kpfu.kfutimetable.repository.feedback.FeedbackWebService
 import com.kpfu.kfutimetable.repository.main.CalendarRepository
 import com.kpfu.kfutimetable.repository.main.CalendarRepositoryImpl
+import com.kpfu.kfutimetable.repository.main.CalendarRepositoryMock
 import com.kpfu.kfutimetable.repository.main.CalendarWebService
 import com.kpfu.kfutimetable.repository.signin.SignInRepository
 import com.kpfu.kfutimetable.repository.signin.SignInRepositoryImpl
+import com.kpfu.kfutimetable.repository.signin.SignInRepositoryMock
 import com.kpfu.kfutimetable.repository.signin.dto.SignInWebService
 import dagger.Module
 import dagger.Provides
@@ -25,7 +27,7 @@ object MainModule {
         @ApplicationContext context: Context,
         calendarWebService: CalendarWebService
     ): CalendarRepository =
-        CalendarRepositoryImpl(context, calendarWebService)
+        CalendarRepositoryMock()
 
     @Provides
     fun provideCalendarService(retrofit: Retrofit): CalendarWebService =
@@ -33,7 +35,7 @@ object MainModule {
 
     @Provides
     fun provideSignInRepository(signInWebService: SignInWebService): SignInRepository =
-        SignInRepositoryImpl(signInWebService)
+        SignInRepositoryMock()
 
     @Provides
     fun provideSignInWebService(retrofit: Retrofit): SignInWebService =

@@ -7,7 +7,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import java.time.LocalDate
 import java.time.Month
 
-val BASE_URL = "http://192.168.75.241:5050/"
+val BASE_URL = "http://192.168.114.241:5050/"
 
 data class LocalDateWrapper<AdditionalParam>(
     val date: LocalDate,

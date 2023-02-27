@@ -68,7 +68,7 @@ class CalendarViewModel @Inject constructor(
     }
 
     fun getLessonsOnDay(desiredDay: Int, desiredMonth: Month) {
-        currentDayData = LocalDate.now().withDayOfMonth(desiredDay).withMonth(desiredMonth.value)
+        currentDayData = LocalDate.now().withMonth(desiredMonth.value).withDayOfMonth(desiredDay)
         val updateState: ((List<CalendarState>) -> Unit) = { lessons ->
             currentDayData?.let { currentDay ->
                 state = if (lessons.size >= currentDay.dayOfWeek.value) {

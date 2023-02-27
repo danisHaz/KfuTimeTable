@@ -65,6 +65,7 @@ class CalendarFragment @Inject constructor(
     private fun setListeners() = with(binding) {
         nextButton.setOnClickListener {
             monthCarousel?.nextMonth()
+            Log.e("kek", monthCarousel?.currentMonth.toString())
         }
         prevButton.setOnClickListener {
             monthCarousel?.prevMonth()
