@@ -1,7 +1,10 @@
 package com.kpfu.kfutimetable.presentation.mainscreen.utils
 
 import android.content.Context
+import android.os.Parcel
+import android.os.Parcelable
 import android.util.AttributeSet
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.hannesdorfmann.adapterdelegates4.AbsDelegationAdapter
@@ -29,6 +32,7 @@ class DayItemCarousel @JvmOverloads constructor(
     var onItemClick: (DayItemView.State) -> Unit = {}
     val selectedDayViewState: DayItemView.State?
         get() = _adapter.items?.get(_selectedItemPosition)
+    var isRestored = false
     private var needsLazyInit = false
     private var needsScrollToSelectedItem = true
 
@@ -50,16 +54,44 @@ class DayItemCarousel @JvmOverloads constructor(
 
     private lateinit var _adapter: AbsDelegationAdapter<List<DayItemView.State>>
 
+    override fun onSaveInstanceState(): Parcelable? {
+        val superState = super.onSaveInstanceState()
+        return DayItemCarouselSavedState(superState, _selectedItemPosition)
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        val data = state as DayItemCarouselSavedState
+        super.onRestoreInstanceState(data.superState)
+
+        _selectedItemPosition = data.selectedPosition
+        isRestored = true
+    }
+
     override fun render(state: List<DayItemView.State>) {
         _adapter.items = state.toMutableList().apply {
-            forEachIndexed { ind, s ->
-                if (s.isChecked == true) {
-                    _selectedItemPosition = ind
-                    onItemClick(s)
+            var ind = 0
+            while (ind < size) {
+                val s = get(ind)
+                if (isRestored) {
+                    if (s.isChecked == true) {
+                        removeAt(ind)
+                        add(ind, s.copy(isChecked = false))
+                    }
+                    if (ind == _selectedItemPosition) {
+                        removeAt(ind)
+                        add(ind, s.copy(isChecked = true))
+                        onItemClick(s)
+                    }
+                } else {
+                    if (s.isChecked == true) {
+                        _selectedItemPosition = ind
+                    }
                 }
+                ind++
             }
         }
         needsScrollToSelectedItem = true
+        isRestored = false
         _adapter.notifyDataSetChanged()
     }
 
@@ -119,5 +151,38 @@ class DayItemCarousel @JvmOverloads constructor(
         ) {
             override fun getItemCount() = items?.count() ?: 0
         }.also { adapter = it }
+    }
+
+    companion object {
+        class DayItemCarouselSavedState : View.BaseSavedState {
+            val selectedPosition: Int
+            constructor(
+                superState: Parcelable?,
+                selectedPosition: Int,
+            ) : super(superState) {
+                this.selectedPosition = selectedPosition
+            }
+
+            constructor(savedIn: Parcel) : super(savedIn) {
+                selectedPosition = savedIn.readInt()
+            }
+
+            override fun writeToParcel(parcel: Parcel, flags: Int) {
+                super.writeToParcel(parcel, flags)
+                parcel.writeInt(selectedPosition)
+            }
+
+            override fun describeContents(): Int {
+                return 0
+            }
+
+            companion object CREATOR : Parcelable.Creator<DayItemCarouselSavedState> {
+                override fun createFromParcel(parcel: Parcel): DayItemCarouselSavedState =
+                        DayItemCarouselSavedState(parcel)
+
+                override fun newArray(size: Int): Array<DayItemCarouselSavedState?> =
+                    newArray(size)
+            }
+        }
     }
 }

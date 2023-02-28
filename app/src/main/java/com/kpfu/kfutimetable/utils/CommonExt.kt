@@ -13,6 +13,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.kpfu.kfutimetable.R
 import com.kpfu.kfutimetable.presentation.base.utils.BaseApplication
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import java.time.DayOfWeek
@@ -55,8 +56,8 @@ val Float.pxToDpF: Float get() = this / screenDensity
 
 val Float.pxToDp: Int get() = this.pxToDpF.roundToInt()
 
-fun <T> Flow<T>.launchWhenStarted(scope: LifecycleCoroutineScope) {
-    scope.launchWhenStarted {
+fun <T> Flow<T>.launchWhenStarted(scope: LifecycleCoroutineScope): Job {
+    return scope.launchWhenStarted {
         this@launchWhenStarted.collect()
     }
 }
@@ -98,9 +99,8 @@ fun DayOfWeek.toString(context: Context?): String {
     return daysNamesList[this.value - 1]
 }
 
-fun Month.toString(context: Context?): String {
-    val monthsNamesList = context?.resources?.getStringArray(R.array.months)
-        ?: error("context is null")
+fun Month.toString(monthsNamesList: List<String>?): String {
+    requireNotNull(monthsNamesList)
     term1.plus(term2).forEachIndexed { index, month ->
         if (this.value == month.value) {
             return monthsNamesList[index]

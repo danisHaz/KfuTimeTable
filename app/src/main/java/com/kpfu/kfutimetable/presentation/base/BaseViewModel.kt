@@ -23,6 +23,5 @@ abstract class BaseViewModel<S : BaseState, VS : BaseViewState>(
 }
 
 fun interface BaseViewModelProvider<T> {
-
     fun createInstance(owner: ViewModelStoreOwner): T
 }

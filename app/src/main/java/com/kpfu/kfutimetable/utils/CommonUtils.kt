@@ -34,7 +34,7 @@ val firstDayOfTerm2 = LocalDate.of(LocalDate.now().year, Month.FEBRUARY, 9)
 class TimetableDataHolder(
     private val lessons: LessonsDto,
     private val formatter: DateTimeFormatter,
-    private val monthNamesList: List<String>
+    private val daysOfWeekList: List<String>
 ) {
 
     fun filterByDate(date: LocalDate): List<Lesson> {
@@ -63,7 +63,7 @@ class TimetableDataHolder(
     }
 
     private fun getDayOfWeekFrom(dayOfWeek: String): DayOfWeek {
-        monthNamesList.forEachIndexed { ind, day ->
+        daysOfWeekList.forEachIndexed { ind, day ->
             if (day.lowercase() == dayOfWeek.lowercase()) {
                 return DayOfWeek.of(ind + 1)
             }

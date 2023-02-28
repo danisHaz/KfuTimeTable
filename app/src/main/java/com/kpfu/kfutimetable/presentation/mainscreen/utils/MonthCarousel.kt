@@ -2,19 +2,16 @@ package com.kpfu.kfutimetable.presentation.mainscreen.utils
 
 import android.animation.ObjectAnimator
 import android.animation.TimeInterpolator
-import android.content.Context
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.animation.doOnEnd
-import androidx.core.view.children
-import java.time.Month
 import com.kpfu.kfutimetable.utils.toString
+import java.time.Month
 
 class MonthCarousel(
-    private val context: Context?,
-    private val monthNames: List<Month>,
-    container: LinearLayout,
+    var monthNames: List<Month>,
+    monthHolder: TextView,
+    private val monthNamesLocalized: List<String>?,
     private val animationInterpolator: TimeInterpolator = AccelerateDecelerateInterpolator()
 ) {
     private val hasNextMonth
@@ -26,7 +23,12 @@ class MonthCarousel(
     val currentMonth: Month
         get() = monthNames[currentMonthPos]
 
-    private var monthHolder: TextView
+    var monthHolder: TextView = monthHolder
+        set(value) {
+            field = value
+            monthHolder.text = currentMonth.toString(monthNamesLocalized)
+        }
+
     private var currentMonthPos = 0
 
     private val animTransitionToLeft: Float
@@ -35,11 +37,8 @@ class MonthCarousel(
         get() = monthHolder.width.toFloat()
 
     init {
-        container.children.map { it as TextView }.let {
-            monthHolder = it.first()
-        }
         if (monthNames.isNotEmpty()) {
-            monthHolder.text = monthNames.first().toString(context)
+            this.monthHolder.text = monthNames.first().toString(monthNamesLocalized)
         }
     }
 
@@ -52,7 +51,7 @@ class MonthCarousel(
         onMonthChangeListener(monthNames[currentMonthPos])
 
         animateText(0f, animTransitionToLeft) {
-            monthHolder.text = monthNames[currentMonthPos].toString(context)
+            monthHolder.text = monthNames[currentMonthPos].toString(monthNamesLocalized)
             animateText(animTransitionToRight, 0f)
         }
     }
@@ -66,7 +65,7 @@ class MonthCarousel(
         onMonthChangeListener(monthNames[currentMonthPos])
 
         animateText(0f, animTransitionToRight) {
-            monthHolder.text = monthNames[currentMonthPos].toString(context)
+            monthHolder.text = monthNames[currentMonthPos].toString(monthNamesLocalized)
             animateText(animTransitionToLeft, 0f)
         }
     }

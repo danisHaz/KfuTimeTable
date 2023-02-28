@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.kpfu.kfutimetable.R
 import com.kpfu.kfutimetable.commonwidgets.DayItemView
 import com.kpfu.kfutimetable.databinding.FragmentCalendarBinding
 import com.kpfu.kfutimetable.presentation.base.BaseFragment
@@ -44,21 +45,16 @@ class CalendarFragment @Inject constructor(
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.dayItemCarousel.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         setListeners()
         setObservers()
-        viewModel.getCurrentMonthsList()
     }
 
     override fun onStart() {
         super.onStart()
-        if (monthCarousel?.currentMonth != null && binding.dayItemCarousel.selectedDayViewState != null) {
-            viewModel.getLessonsOnDay(
-                binding.dayItemCarousel.selectedDayViewState?.date?.toInt()!!,
-                monthCarousel?.currentMonth!!
-            )
-        }
+        viewModel.getCurrentMonthsList()
     }
 
     override fun onDestroy() {
@@ -97,11 +93,17 @@ class CalendarFragment @Inject constructor(
 
     private fun setObservers() {
         viewModel.monthListData.observe(this.viewLifecycleOwner) {
-            monthCarousel = MonthCarousel(context, it, binding.monthList)
-            monthCarousel?.onMonthChangeListener = { month ->
-                viewModel.updateDayItemCarousel(month)
+            if (monthCarousel == null) {
+                val monthNamesLocalized =
+                    context?.resources?.getStringArray(R.array.months)?.toList()
+                monthCarousel = MonthCarousel(it, binding.monthHolder, monthNamesLocalized)
+                monthCarousel?.onMonthChangeListener = { month ->
+                    viewModel.updateDayItemCarousel(month)
+                }
+                viewModel.initDayItemCarousel(it)
+            } else {
+                monthCarousel?.monthHolder = binding.monthHolder
             }
-            viewModel.initDayItemCarousel(it)
         }
         viewModel.dayItemCarouselData.observe(this.viewLifecycleOwner) {
             val dayItemStateList = mutableListOf<DayItemView.State>().apply {
@@ -116,6 +118,12 @@ class CalendarFragment @Inject constructor(
                 }
             }
             binding.dayItemCarousel.render(dayItemStateList)
+            if (binding.dayItemCarousel.selectedDayViewState != null) {
+                viewModel.getLessonsOnDay(
+                    binding.dayItemCarousel.selectedDayViewState?.date?.toInt()!!,
+                    monthCarousel?.currentMonth!!
+                )
+            }
         }
     }
 }

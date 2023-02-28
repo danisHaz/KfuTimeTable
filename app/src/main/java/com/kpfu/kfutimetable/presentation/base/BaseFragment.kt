@@ -10,6 +10,7 @@ import com.kpfu.kfutimetable.presentation.base.utils.BaseState
 import com.kpfu.kfutimetable.presentation.base.utils.BaseViewState
 import com.kpfu.kfutimetable.presentation.base.utils.BaseViewStateMapper
 import com.kpfu.kfutimetable.utils.launchWhenStarted
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.onEach
 
 abstract class BaseFragment<S : BaseState, VS : BaseViewState, VM : BaseViewModel<S, VS>>(
@@ -18,15 +19,24 @@ abstract class BaseFragment<S : BaseState, VS : BaseViewState, VM : BaseViewMode
 ) : Fragment() {
 
     protected lateinit var viewModel: VM
+    private var viewStateObserverJob: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (!this::viewModel.isInitialized) {
             viewModel = viewModelProvider.createInstance(this)
         }
-        viewModel.viewStateFlow
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewStateObserverJob = viewModel.viewStateFlow
             .onEach { viewState -> render(viewState) }
             .launchWhenStarted(lifecycleScope)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewStateObserverJob?.cancel()
     }
 
     protected val viewState: VS

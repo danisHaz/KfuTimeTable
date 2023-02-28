@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.kpfu.kfutimetable.di.base.DateFormatterAnnotations
+import com.kpfu.kfutimetable.di.base.presentation.ResourcesAnnotations
 import com.kpfu.kfutimetable.presentation.base.BaseViewModel
 import com.kpfu.kfutimetable.presentation.mainscreen.entities.CalendarState
 import com.kpfu.kfutimetable.presentation.mainscreen.entities.CalendarViewState
@@ -28,7 +29,8 @@ class CalendarViewModel @Inject constructor(
     private val formatter: DateTimeFormatter,
     @DateFormatterAnnotations.DateFormatterStraight
     private val timetableFormatter: DateTimeFormatter,
-    private val monthNamesList: List<String>,
+    @ResourcesAnnotations.DaysOfWeekList
+    private val daysOfWeekList: List<String>,
 ) : BaseViewModel<CalendarState, CalendarViewState>(
     initialState = {
         CalendarState(
@@ -97,7 +99,7 @@ class CalendarViewModel @Inject constructor(
                 result.data?.let { data ->
                     withContext(Dispatchers.Main) {
                         lessonsForWeek =
-                            TimetableDataHolder(data, timetableFormatter, monthNamesList)
+                            TimetableDataHolder(data, timetableFormatter, daysOfWeekList)
                         onLessonsRetrievedCallback?.invoke(lessonsForWeek!!)
                     }
                 }
