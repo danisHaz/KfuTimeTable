@@ -1,8 +1,12 @@
 package com.kpfu.kfutimetable.di.base
 
+import android.app.Application
+import androidx.room.Room
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.kpfu.kfutimetable.utils.BASE_URL
+import com.kpfu.kfutimetable.utils.cache.AppCache
+import com.kpfu.kfutimetable.utils.cache.ProfileImageDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,6 +16,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.time.format.DateTimeFormatter
 import javax.inject.Qualifier
+import javax.inject.Singleton
 
 object CoroutineDispatcherAnnotations {
     @Qualifier
@@ -68,4 +73,15 @@ object AppModule {
         .baseUrl(BASE_URL)
         .addConverterFactory(gsonConverterFactory)
         .build()
+
+    @Singleton
+    @Provides
+    fun provideAppDatabase(context: Application): AppCache
+        = Room.databaseBuilder(context, AppCache::class.java, AppCache.NAME)
+        .fallbackToDestructiveMigration()
+        .build()
+
+    @Singleton
+    @Provides
+    fun provideProfileImageDao(cache: AppCache): ProfileImageDao = cache.getProfileImageDao()
 }

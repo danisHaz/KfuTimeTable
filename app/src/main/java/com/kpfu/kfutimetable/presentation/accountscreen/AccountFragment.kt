@@ -2,12 +2,12 @@ package com.kpfu.kfutimetable.presentation.accountscreen
 
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.graphics.drawable.toBitmapOrNull
 import com.kpfu.kfutimetable.R
 import com.kpfu.kfutimetable.databinding.FragmentAccountBinding
 import com.kpfu.kfutimetable.presentation.accountscreen.entites.AccountState
@@ -36,16 +36,12 @@ class AccountFragment @Inject constructor(
             binding.avatarView.loadImage(uri, onError = { request, error ->
                 val errorMessage = context?.resources?.getString(R.string.unable_load_image)
                 setSnackbar(binding.root, errorMessage, null, null)
-            })
-            UserSession.user?.let { currentUser ->
-                Log.e("kek", "$currentUser, $uri")
+            }, onComplete = {
+                val newImage = binding.avatarView.drawable.toBitmapOrNull()
                 if (uri != null) {
-                    UserSession.update(
-                        currentUser.copy(userProfilePhotoUri = uri),
-                        requireContext()
-                    )
+                    UserSession.updateProfileImage(newImage)
                 }
-            }
+            })
         }
 
     override fun onCreateView(
@@ -58,7 +54,11 @@ class AccountFragment @Inject constructor(
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.avatarView.loadImage(R.drawable.acc)
+        val profileImage = if (UserSession.user != null && UserSession.profileImage != null)
+            UserSession.profileImage
+        else
+            R.drawable.acc
+        binding.avatarView.loadImage(profileImage)
 
         UserSession.user?.let { user ->
             binding.textView1.text = user.login

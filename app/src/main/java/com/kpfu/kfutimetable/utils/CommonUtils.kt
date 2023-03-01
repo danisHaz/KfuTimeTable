@@ -1,14 +1,18 @@
 package com.kpfu.kfutimetable.utils
 
 import android.content.Context
+import android.net.Uri
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import coil.load
 import com.kpfu.kfutimetable.R
 import com.kpfu.kfutimetable.di.base.DateFormatterAnnotations
 import com.kpfu.kfutimetable.presentation.mainscreen.entities.Lesson
 import com.kpfu.kfutimetable.repository.main.dto.LessonsDto
 import dagger.hilt.android.qualifiers.ApplicationContext
+import io.getstream.avatarview.AvatarView
+import io.getstream.avatarview.coil.loadImage
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.Month
@@ -25,6 +29,10 @@ data class LocalDateWrapper<AdditionalParam>(
 )
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "UserSession")
+
+fun loadImage(avatarView: AvatarView, uri: Uri) {
+    avatarView.loadImage(uri)
+}
 
 val term1 = listOf(Month.SEPTEMBER, Month.OCTOBER, Month.NOVEMBER, Month.DECEMBER)
 val term2 = listOf(Month.FEBRUARY, Month.MARCH, Month.APRIL, Month.MAY)

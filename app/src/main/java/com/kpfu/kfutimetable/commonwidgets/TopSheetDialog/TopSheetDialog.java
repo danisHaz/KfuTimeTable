@@ -17,7 +17,11 @@ package com.kpfu.kfutimetable.commonwidgets.TopSheetDialog;
  */
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -46,10 +50,15 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LifecycleRegistry;
 
 import com.google.android.material.R;
+import com.kpfu.kfutimetable.utils.CommonUtilsKt;
 import com.kpfu.kfutimetable.utils.User;
 import com.kpfu.kfutimetable.utils.UserSession;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
 import io.getstream.avatarview.AvatarView;
+import io.getstream.avatarview.coil.AvatarViewExtension;
 import kotlin.Unit;
 
 /**
@@ -163,7 +172,8 @@ public class TopSheetDialog extends AppCompatDialog {
     public void cancelWithAction(IAction action) {
         setOnCancelListener((dialogInterface) -> {
             action.performAction();
-            setOnCancelListener((dialogInterface1) -> {});
+            setOnCancelListener((dialogInterface1) -> {
+            });
         });
         cancel();
     }
@@ -273,11 +283,17 @@ public class TopSheetDialog extends AppCompatDialog {
             if (user != null) {
                 userNameField.setText(user.getName());
                 userSurnameField.setText(user.getSurname());
-                Log.e("kek", user.getUserProfilePhotoUri().toString());
-                avatarView.setImageURI(user.getUserProfilePhotoUri());
             }
             return Unit.INSTANCE;
         });
+
+        UserSession.INSTANCE.subscribeToProfileImageUpdates(lifecycleOwner, (Bitmap imageProfile) -> {
+            if (imageProfile != null) {
+                avatarView.setImageBitmap(imageProfile);
+            }
+            return Unit.INSTANCE;
+        });
+
         // Handle accessibility events
         ViewCompat.setAccessibilityDelegate(
                 bottomSheet,
@@ -375,11 +391,21 @@ public class TopSheetDialog extends AppCompatDialog {
 
         @NonNull
         @Override
-        public Lifecycle getLifecycle() { return registry; }
+        public Lifecycle getLifecycle() {
+            return registry;
+        }
 
-        public void onStart() { registry.handleLifecycleEvent(Lifecycle.Event.ON_START); }
-        public void onStop() { registry.handleLifecycleEvent(Lifecycle.Event.ON_STOP); }
-        public void onDestroy() { registry.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY); }
+        public void onStart() {
+            registry.handleLifecycleEvent(Lifecycle.Event.ON_START);
+        }
+
+        public void onStop() {
+            registry.handleLifecycleEvent(Lifecycle.Event.ON_STOP);
+        }
+
+        public void onDestroy() {
+            registry.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY);
+        }
 
     }
 }
