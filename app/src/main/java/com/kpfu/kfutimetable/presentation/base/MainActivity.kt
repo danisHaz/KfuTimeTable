@@ -1,6 +1,7 @@
 package com.kpfu.kfutimetable.presentation.base
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
@@ -89,6 +90,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setObservers() {
         UserSession.subscribeToUserUpdates(this) { user ->
+            Log.e("kek", "$user, ")
             user?.let {
                 with(binding.toolbar) {
                     name.text = user.name

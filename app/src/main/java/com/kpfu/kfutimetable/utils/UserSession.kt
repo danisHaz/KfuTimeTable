@@ -104,7 +104,7 @@ object UserSession {
 
     fun update(newUser: User?, context: Context) {
         if (user != null && newUser != null) {
-            error("UserSession override is not appropriate")
+            Log.w(this::class.java.name, "Update user: $user with new user: $newUser")
         }
 
         CoroutineScope(Dispatchers.IO).launch {

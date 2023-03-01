@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import retrofit2.await
-import java.time.DayOfWeek
 import java.time.Month
 import javax.inject.Inject
 

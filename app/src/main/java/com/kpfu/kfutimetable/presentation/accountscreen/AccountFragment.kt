@@ -2,6 +2,7 @@ package com.kpfu.kfutimetable.presentation.accountscreen
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,16 +36,16 @@ class AccountFragment @Inject constructor(
             binding.avatarView.loadImage(uri, onError = { request, error ->
                 val errorMessage = context?.resources?.getString(R.string.unable_load_image)
                 setSnackbar(binding.root, errorMessage, null, null)
-            }, onSuccess = { request, result ->
-                UserSession.user?.let { currentUser ->
-                    if (uri != null) {
-                        UserSession.update(
-                            currentUser.copy(userProfilePhotoUri = uri),
-                            requireContext()
-                        )
-                    }
-                }
             })
+            UserSession.user?.let { currentUser ->
+                Log.e("kek", "$currentUser, $uri")
+                if (uri != null) {
+                    UserSession.update(
+                        currentUser.copy(userProfilePhotoUri = uri),
+                        requireContext()
+                    )
+                }
+            }
         }
 
     override fun onCreateView(

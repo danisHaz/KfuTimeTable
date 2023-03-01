@@ -17,7 +17,7 @@ import java.time.temporal.WeekFields
 import java.util.*
 import javax.inject.Inject
 
-val BASE_URL = "http://192.168.114.241:5050/"
+val BASE_URL = "http://10.5.0.111:5050/"
 
 data class LocalDateWrapper<AdditionalParam>(
     val date: LocalDate,
@@ -105,7 +105,8 @@ class TimetableDataHolder(
                         matches = false
                     }
                 } else {
-                    val (fromWeek, toWeek) = filter.split(' ')[0].split('-').map {
+                    val (fromWeek, toWeek) = filter.substring(1, filter.length - 1)
+                        .split(' ')[0].split('-').map {
                         it.toInt()
                     }
                     val weekFields = WeekFields.of(Locale.getDefault())

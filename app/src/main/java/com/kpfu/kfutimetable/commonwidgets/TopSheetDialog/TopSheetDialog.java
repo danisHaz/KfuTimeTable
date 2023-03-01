@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
@@ -272,6 +273,7 @@ public class TopSheetDialog extends AppCompatDialog {
             if (user != null) {
                 userNameField.setText(user.getName());
                 userSurnameField.setText(user.getSurname());
+                Log.e("kek", user.getUserProfilePhotoUri().toString());
                 avatarView.setImageURI(user.getUserProfilePhotoUri());
             }
             return Unit.INSTANCE;
