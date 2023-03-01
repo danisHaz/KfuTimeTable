@@ -7,4 +7,5 @@ import com.kpfu.kfutimetable.presentation.base.BaseViewModel
 class AccountViewModel : BaseViewModel<AccountState, AccountViewState>(
     initialState = { AccountState() },
     viewStateMapper = AccountViewStateMapper()
-)
+) {
+}

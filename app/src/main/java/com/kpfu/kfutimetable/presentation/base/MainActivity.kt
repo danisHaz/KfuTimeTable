@@ -13,6 +13,7 @@ import com.kpfu.kfutimetable.utils.UserSession
 import com.kpfu.kfutimetable.utils.routing.RouteManager
 import com.kpfu.kfutimetable.utils.routing.ScreenProvider
 import dagger.hilt.android.AndroidEntryPoint
+import io.getstream.avatarview.coil.loadImage
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -52,6 +53,7 @@ class MainActivity : AppCompatActivity() {
                 user?.let {
                     binding.toolbar.name.text = it.name
                     binding.toolbar.surname.text = it.surname
+                    binding.toolbar.avatar.loadImage(user.userProfilePhotoUri)
                 }
 
                 val initialFragment = if (user != null) {
@@ -87,9 +89,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun setObservers() {
         UserSession.subscribeToUserUpdates(this) { user ->
-            binding.toolbar.let {
-                it.name.text = user?.name ?: ""
-                it.surname.text = user?.surname ?: ""
+            user?.let {
+                with(binding.toolbar) {
+                    name.text = user.name
+                    surname.text = user.surname
+                    avatar.loadImage(user.userProfilePhotoUri)
+                }
             }
         }
     }

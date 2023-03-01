@@ -1,6 +1,7 @@
 package com.kpfu.kfutimetable.utils
 
 import android.content.Context
+import android.net.Uri
 import android.util.Log
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
@@ -11,6 +12,7 @@ import com.kpfu.kfutimetable.utils.UserSession.PreferenceKeys.GROUP_KEY
 import com.kpfu.kfutimetable.utils.UserSession.PreferenceKeys.USER_LOGIN_KEY
 import com.kpfu.kfutimetable.utils.UserSession.PreferenceKeys.USER_NAME_KEY
 import com.kpfu.kfutimetable.utils.UserSession.PreferenceKeys.USER_PASSWORD_LENGTH_KEY
+import com.kpfu.kfutimetable.utils.UserSession.PreferenceKeys.USER_PROFILE_PHOTO_KEY
 import com.kpfu.kfutimetable.utils.UserSession.PreferenceKeys.USER_SURNAME_KEY
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.first
@@ -21,9 +23,17 @@ data class User(
     val groupNumber: String,
     val login: String,
     val passwordLength: Int,
+    val userProfilePhotoUri: Uri
 ) {
     companion object {
-        val EMPTY = User(name = "", surname = "", groupNumber = "", login = "", passwordLength = 0)
+        val EMPTY = User(
+            name = "",
+            surname = "",
+            groupNumber = "",
+            login = "",
+            passwordLength = 0,
+            userProfilePhotoUri = Uri.EMPTY
+        )
     }
 }
 
@@ -39,6 +49,7 @@ object UserSession {
         val USER_SURNAME_KEY = stringPreferencesKey("UserSurname")
         val USER_PASSWORD_LENGTH_KEY = intPreferencesKey("UserPasswordLength")
         val USER_LOGIN_KEY = stringPreferencesKey("UserLoginKey")
+        val USER_PROFILE_PHOTO_KEY = stringPreferencesKey("UserProfilePhotoKey")
     }
 
     private var initializationJob: Job? = null
@@ -58,10 +69,16 @@ object UserSession {
             val surname = prefs[USER_SURNAME_KEY]
             val login = prefs[USER_LOGIN_KEY]
             val passwordLength = prefs[USER_PASSWORD_LENGTH_KEY]
+            val userProfilePhotoUri = if (prefs[USER_PROFILE_PHOTO_KEY] != null)
+                Uri.parse(prefs[USER_PROFILE_PHOTO_KEY])
+            else
+                Uri.EMPTY
+
             if (name != null && groupNumber != null && surname != null && login != null &&
                 passwordLength != null
             ) {
-                val fetchedUser = User(name, surname, groupNumber, login, passwordLength)
+                val fetchedUser =
+                    User(name, surname, groupNumber, login, passwordLength, userProfilePhotoUri)
                 if (fetchedUser != User.EMPTY) {
                     withContext(Dispatchers.Main) {
                         userData.value = fetchedUser
@@ -96,7 +113,10 @@ object UserSession {
                 prefs[USER_NAME_KEY] = newUser?.name ?: User.EMPTY.name
                 prefs[USER_SURNAME_KEY] = newUser?.surname ?: User.EMPTY.surname
                 prefs[USER_LOGIN_KEY] = newUser?.login ?: User.EMPTY.login
-                prefs[USER_PASSWORD_LENGTH_KEY] = newUser?.passwordLength ?: User.EMPTY.passwordLength
+                prefs[USER_PASSWORD_LENGTH_KEY] =
+                    newUser?.passwordLength ?: User.EMPTY.passwordLength
+                prefs[USER_PROFILE_PHOTO_KEY] =
+                    newUser?.userProfilePhotoUri.toString() ?: User.EMPTY.userProfilePhotoUri.toString()
             }
         }
         userData.value = newUser

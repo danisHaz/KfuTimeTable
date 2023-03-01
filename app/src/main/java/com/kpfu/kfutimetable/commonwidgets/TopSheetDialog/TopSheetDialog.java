@@ -48,6 +48,7 @@ import com.google.android.material.R;
 import com.kpfu.kfutimetable.utils.User;
 import com.kpfu.kfutimetable.utils.UserSession;
 
+import io.getstream.avatarview.AvatarView;
 import kotlin.Unit;
 
 /**
@@ -258,19 +259,20 @@ public class TopSheetDialog extends AppCompatDialog {
         ConstraintLayout toolbarSkeleton = (ConstraintLayout) container.findViewById(
                 com.kpfu.kfutimetable.R.id.toolbar_skeleton
         );
-        AppCompatImageView avatarSkeleton = (AppCompatImageView) toolbarSkeleton.findViewById(
-                com.kpfu.kfutimetable.R.id.avatar
-        );
         TextView userNameField = (TextView) toolbarSkeleton.findViewById(
                 com.kpfu.kfutimetable.R.id.name
         );
         TextView userSurnameField = (TextView) toolbarSkeleton.findViewById(
                 com.kpfu.kfutimetable.R.id.surname
         );
+        AvatarView avatarView = (AvatarView) toolbarSkeleton.findViewById(
+                com.kpfu.kfutimetable.R.id.avatar
+        );
         UserSession.INSTANCE.subscribeToUserUpdates(lifecycleOwner, (User user) -> {
             if (user != null) {
                 userNameField.setText(user.getName());
                 userSurnameField.setText(user.getSurname());
+                avatarView.setImageURI(user.getUserProfilePhotoUri());
             }
             return Unit.INSTANCE;
         });

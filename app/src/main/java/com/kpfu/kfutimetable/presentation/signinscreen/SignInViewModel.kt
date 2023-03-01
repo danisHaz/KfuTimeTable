@@ -1,5 +1,6 @@
 package com.kpfu.kfutimetable.presentation.signinscreen
 
+import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.kpfu.kfutimetable.presentation.base.BaseViewModel
@@ -45,6 +46,7 @@ class SignInViewModel @Inject constructor(
                     surname = authData.userSurname,
                     login = authData.login,
                     passwordLength = authData.passwordLength,
+                    userProfilePhotoUri = Uri.EMPTY
                 )
 
             }

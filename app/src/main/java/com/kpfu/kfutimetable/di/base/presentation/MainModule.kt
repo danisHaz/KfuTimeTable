@@ -38,7 +38,7 @@ object MainModule {
         @ApplicationContext context: Context,
         calendarWebService: CalendarWebService
     ): CalendarRepository =
-        CalendarRepositoryImpl(context, calendarWebService)
+        CalendarRepositoryMock()
 
     @Provides
     fun provideCalendarService(retrofit: Retrofit): CalendarWebService =
@@ -46,7 +46,7 @@ object MainModule {
 
     @Provides
     fun provideSignInRepository(signInWebService: SignInWebService): SignInRepository =
-        SignInRepositoryImpl(signInWebService)
+        SignInRepositoryMock()
 
     @Provides
     fun provideSignInWebService(retrofit: Retrofit): SignInWebService =

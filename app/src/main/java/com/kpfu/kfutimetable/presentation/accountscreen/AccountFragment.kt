@@ -1,9 +1,12 @@
 package com.kpfu.kfutimetable.presentation.accountscreen
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import com.kpfu.kfutimetable.R
 import com.kpfu.kfutimetable.databinding.FragmentAccountBinding
 import com.kpfu.kfutimetable.presentation.accountscreen.entites.AccountState
@@ -26,6 +29,23 @@ class AccountFragment @Inject constructor(
     viewStateMapper = AccountViewStateMapper()
 ) {
     private lateinit var binding: FragmentAccountBinding
+
+    private val avatarImageFinderLauncher: ActivityResultLauncher<Array<String>> =
+        registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
+            binding.avatarView.loadImage(uri, onError = { request, error ->
+                val errorMessage = context?.resources?.getString(R.string.unable_load_image)
+                setSnackbar(binding.root, errorMessage, null, null)
+            }, onSuccess = { request, result ->
+                UserSession.user?.let { currentUser ->
+                    if (uri != null) {
+                        UserSession.update(
+                            currentUser.copy(userProfilePhotoUri = uri),
+                            requireContext()
+                        )
+                    }
+                }
+            })
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,6 +83,10 @@ class AccountFragment @Inject constructor(
             router.navigate(
                 screenProvider.get(ScreenProvider.ScreenType.FeedbackFragment)
             )
+        }
+
+        avatarView.setOnClickListener {
+            avatarImageFinderLauncher.launch(arrayOf("image/png"))
         }
     }
 }
