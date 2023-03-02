@@ -17,14 +17,10 @@ package com.kpfu.kfutimetable.commonwidgets.TopSheetDialog;
  */
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
@@ -39,7 +35,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StyleRes;
 import androidx.appcompat.app.AppCompatDialog;
-import androidx.appcompat.widget.AppCompatImageView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.AccessibilityDelegateCompat;
@@ -54,11 +49,7 @@ import com.kpfu.kfutimetable.utils.CommonUtilsKt;
 import com.kpfu.kfutimetable.utils.User;
 import com.kpfu.kfutimetable.utils.UserSession;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-
 import io.getstream.avatarview.AvatarView;
-import io.getstream.avatarview.coil.AvatarViewExtension;
 import kotlin.Unit;
 
 /**
@@ -135,18 +126,6 @@ public class TopSheetDialog extends AppCompatDialog {
                 behavior.setHideable(cancelable);
             }
         }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        lifecycleOwner.onStop();
-    }
-
-    @Override
-    public void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        lifecycleOwner.onDestroy();
     }
 
     @Override
@@ -289,7 +268,9 @@ public class TopSheetDialog extends AppCompatDialog {
 
         UserSession.INSTANCE.subscribeToProfileImageUpdates(lifecycleOwner, (Bitmap imageProfile) -> {
             if (imageProfile != null) {
-                avatarView.setImageBitmap(imageProfile);
+                CommonUtilsKt.loadImage(avatarView, imageProfile);
+            } else {
+                avatarView.setImageResource(com.kpfu.kfutimetable.R.drawable.logo_avatar_drawable);
             }
             return Unit.INSTANCE;
         });

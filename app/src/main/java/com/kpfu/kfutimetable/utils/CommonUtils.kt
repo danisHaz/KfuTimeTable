@@ -30,8 +30,8 @@ data class LocalDateWrapper<AdditionalParam>(
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "UserSession")
 
-fun loadImage(avatarView: AvatarView, uri: Uri) {
-    avatarView.loadImage(uri)
+fun loadImage(avatarView: AvatarView, data: Any) {
+    avatarView.loadImage(data)
 }
 
 val term1 = listOf(Month.SEPTEMBER, Month.OCTOBER, Month.NOVEMBER, Month.DECEMBER)

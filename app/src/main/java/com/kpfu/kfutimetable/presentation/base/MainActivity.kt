@@ -1,6 +1,7 @@
 package com.kpfu.kfutimetable.presentation.base
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
@@ -53,7 +54,16 @@ class MainActivity : AppCompatActivity() {
                 user?.let {
                     binding.toolbar.name.text = it.name
                     binding.toolbar.surname.text = it.surname
-                    binding.toolbar.avatar.loadImage(user.userProfilePhotoUri)
+                    binding.toolbar.avatar.loadImage(UserSession.profileImage
+                        ?: R.drawable.logo_avatar_drawable,
+                        onSuccess = { request, result -> Log.e("kek", "result is nice") },
+                        onError = { request, result ->
+                            Log.e(
+                                "kek",
+                                result.throwable.message.toString()
+                            )
+                        }
+                    )
                 }
 
                 val initialFragment = if (user != null) {
@@ -98,7 +108,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         UserSession.subscribeToProfileImageUpdates(this) { newImage ->
-            binding.toolbar.avatar.loadImage(newImage ?: R.drawable.logo_avatar_drawable)
+            binding.toolbar.avatar.loadImage(newImage ?: R.drawable.logo_avatar_drawable,
+                onSuccess = { request, result -> Log.e("kek", "result is nice") },
+                onError = { request, result -> Log.e("kek", result.throwable.message.toString()) }
+            )
         }
     }
 
@@ -144,6 +157,7 @@ class MainActivity : AppCompatActivity() {
                         addToBackStack = false
                     )
                     UserSession.update(newUser = null, context = applicationContext)
+                    UserSession.updateProfileImage(null)
                 }
             }
         }
