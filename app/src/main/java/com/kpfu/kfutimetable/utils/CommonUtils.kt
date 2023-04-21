@@ -21,7 +21,7 @@ import java.time.temporal.WeekFields
 import java.util.*
 import javax.inject.Inject
 
-val BASE_URL = "http://10.5.0.111:5050/"
+val BASE_URL = "http://127.0.0.1:5050/"
 
 data class LocalDateWrapper<AdditionalParam>(
     val date: LocalDate,
